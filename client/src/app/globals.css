@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body{
+  background-color: rgb(255, 255, 255);
+}
+
+
+.fit:hover{
+  transition: width 0.3s ease-in-out;
+  transition: height 0.3s ease-in-out;
+
+  height: 90px;
+  z-index: 40;
+
+
+}
+
+
+
+/* Scroll Bar */
+
+
+.scr::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scr {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* Scroll Bar End */
+
+
+
+
