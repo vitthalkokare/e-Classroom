@@ -18,7 +18,6 @@ const page = () => {
 
          {/* Classes Start */}
 
-        <Standards Item={[]}/>
          
 
         {/* Classes End */}
