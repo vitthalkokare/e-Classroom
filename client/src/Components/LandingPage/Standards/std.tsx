@@ -123,12 +123,12 @@ const [slideIndex, setSlideIndex] = useState(0);
         </div>
       )}
 
-      <div className=" relative h-screen md:h-fit    s-colo  flex flex-col justify-evenly m-auto  items-center box-border w-full  rounded-2xl sm:w-[95%]   md:flex-col sm:flex-col sm:justify-start">
+      <div className=" relative  md:h-fit    s-colo  flex flex-col justify-evenly m-auto  items-center box-border w-full  rounded-2xl sm:w-[95%]   md:flex-col sm:flex-col sm:justify-start">
         <div className=" sm:w-full   relative   rounded-2xl flex justify-center flex-col items-center ">
          <div className="flex flex-col relative  justify-center items-center">
          <div className="border-2  relative -left-96 top-20 sm:top-0 md:top-0 sm:relative md:relative sm:left-0 md:left-0  flex  box-border p-2 rounded-xl drop-shadow-xl">
             <select name="" id="" onChange={onSelected}  className="mx-2 box-border outline-none p-3 rounded-xl bg-white">
-              <option value="" selected>Select State</option>
+              <option value="" >Select State</option>
 
               {
               optionss.map((item,index)=>(
@@ -140,10 +140,10 @@ const [slideIndex, setSlideIndex] = useState(0);
             <select name=""  onChange={(e)=>{setBoard(e.target.value)}} onClick={(e)=>{try{if(!sState){console.log('fuck')}}catch{
               console.error('error');
             }}}    className="bg-white box-border rounded-xl outline-none p-3" id="">
-              <option value="" className="" selected>Board</option>
+              <option value="" className="" >Board</option>
               {
                 optionss.map((item,index)=>(
-                  <option>{item.label}</option>
+                  <option key={index}>{item.label}</option>
                 ))
               }
 

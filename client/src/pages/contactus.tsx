@@ -7,9 +7,9 @@ const Contac = () => {
        
        <div className='w-full flex relative box-border p-4 justify-around items-center sm:flex-col bg-white rounded-3xl'>
 
-            <div>
-                <h1>Let's Talk</h1>
-                <p>
+            <div className='w-[50%]'>
+                <h1 className='text-4xl font-bold'>Let's Talk</h1>
+                <p className='text-xl font-medium'>
                     To request a quote or want to meet up fo Discussion,<br />
                     contact us directly or fill outthe form and we will 
                     get back to your promptly.
@@ -27,11 +27,11 @@ const Contac = () => {
                     <button type='submit' className='bg-sky-400 box-border p-2 rounded-full text-white'>Send Message</button>
                 </form>
             </div>
-            <div>
+            <div className=' justify-center items-center'>
                <div>
                 imae
                </div>
-               <div className='flex flex-col'>
+               <div className='flex flex-col justify-around'>
                 <div className=' flex flex-col'>
                     <span>Adress:xyz Road near xyz city india</span>
                     <span>Opening hrs</span>

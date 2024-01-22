@@ -40,7 +40,7 @@ const Servicses:React.FC = () => {
   }
 
   return (
-    <div className='w-full flex flex-col justify-center items-center'>
+    <div className='w-full flex text-white flex-col justify-center items-center'>
          <div className=" flex flex-col justify-center items-center   box-border p-4 text-center">
           <strong>
             Comprehensive learning programs <br />& classes for all students
@@ -56,7 +56,7 @@ const Servicses:React.FC = () => {
               {
                 divarr.map((item,index)=>(
 
-                  <div  className={`flex shrink-0 w-full justify-center  sm:flex-col relative  items-center bg-white rounded-3xl  shadow-3xl transition-all duration-300  h-full ${pItem === index ? 'block':'hidden'}`} >
+                  <div key={index}  className={`flex shrink-0 w-full justify-center  sm:flex-col relative  items-center bg-white rounded-3xl  shadow-3xl transition-all duration-300  h-full ${pItem === index ? 'block':'hidden'}`} >
                       <Image src={item.limg}  alt='img' width={300} height={300}  className={`absolute left-0 sm:top-0 ${index %2 == 0 ? 'block' : 'hidden'}`}/>
                     <div className='absolute sm:bottom-0'>
                       {item.content}{index}
