@@ -1,12 +1,12 @@
 import React from 'react'
 
-const page = () => {
+const Contacts = () => {
   return (
     <div>
-        This is login page
+        fuck
       
     </div>
   )
 }
 
-export default page
+export default Contacts
