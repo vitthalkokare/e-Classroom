@@ -1,48 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import techericon from "../../../../public/pictures/Landingpage/teachericon.jpg";
-import subData from "./subData";
 
+import Img from "../../../../public/pictures/Landingpage/teachericon.jpg";
 
+import {useSelector} from 'react-redux'
+import { RootState } from "@/lib/store";
 
-interface Subobj {
-    Teachers: {
-      name: string;
-      experience: string;
-      vision: string;
-      photo: string;
-      social: string;
-    }[];
-  }
 
 const Faculty:React.FC = () => {
-    const [sub, setSub] = useState<Subobj>({
-        
-        Teachers: [
-          {name:'akash sharma',experience:'4yr',vision:'',photo:'',social:''},
-          {name:'akash sharma',experience:'4yr',vision:'',photo:'',social:''},
-          {name:'akash sharma',experience:'4yr',vision:'',photo:'',social:''},
-          {name:'akash sharma',experience:'4yr',vision:'',photo:'',social:''},
-        ],
-      });
+  const [slideIndex,setSlideIndex] = useState(0)
+   
+  useEffect(() => {
+    const interval = setInterval(() => {
+      showSlides();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const Faculty = useSelector((state:RootState) => state.subslice.Facultys)
 
 
-      function changeHandler(event: React.ChangeEvent<HTMLSelectElement>): void {
-        const dd = event.target.value;
-        const cdata = subData(dd);
-        setSub({ Teachers: cdata.c2 });
-      }
+  const showSlides = () => {
+    let g = Faculty.length;
+    setSlideIndex((prevIndex) => (prevIndex + 1) % g); 
+  };
 
   return (
     <>
-     <section className="scr box-border p-4 flex w-[510px] sm:w-full md:w-full  rounded-2xl  overflow-x-scroll">
-          {sub.Teachers.map((item, index) => (
+     <section className="scr box-border absolute bottom-0 md:relative p-2  sm:relative -left-1/2  md:left-0 sm:left-0  flex w-full  sm:w-full md:w-full  rounded-2xl  overflow-x-scroll">
+          {Faculty.map((item, index) => (
             <div
               key={index}
-              className="hover:scale-105 drop-shadow-xl sm:w-full md:w-full w-[470px] mx-2 justify-center items-center overflow-hidden shrink-0   relative  sm:mt-10 sm:h-[180px]  bg-white   flex    box-border  rounded-3xl sm:flex-row "
+              className={` hover:scale-105 drop-shadow-xl sm:w-full md:w-full w-full mx-2 justify-center items-center overflow-hidden shrink-0   relative   sm:h-[180px]  bg-white   flex    box-border  rounded-3xl sm:flex-row `}
             >
               <Image
-                src={techericon}
+                src={Img}
                 alt="Picture of the author"
                 className="w-[140px] h-[140px] "
                 style={{ borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70% " }}
@@ -51,12 +43,11 @@ const Faculty:React.FC = () => {
               <div className="relative justify-between flex flex-col">
                 <span className="">
                   <h1>name:{item.name}</h1>
-                  <h3>Education: {item.experience}</h3>
+                  <h3>Education: {item.exp}</h3>
                 </span>
                 <span className="">
                   <strong>Vision:</strong>
                   <h2>
-                    some thing went wrong do you really agree with thisquestion
                     {item.vision}
                   </h2>
                 </span>

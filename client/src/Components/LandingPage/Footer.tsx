@@ -1,8 +1,10 @@
 import React from 'react'
 
+
 const Footer = () => {
+
   return (
-    <div className='w-full bg-black text-white box-border p-4 flex flex-col items-center'>
+    <div className='w-full bg-black text-white box-border p-4 flex flex-col items-center' style={{borderRadius:'44% 44% 10% 10% / 45% 45% 0% 0% '}}>
         
      <div>l
         logo info
@@ -55,7 +57,6 @@ const Footer = () => {
       
      </section>
      @2024, E-tutor. All right reserved
-     
     </div>
   )
 }

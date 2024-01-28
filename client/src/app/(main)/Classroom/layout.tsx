@@ -1,10 +1,12 @@
 import MobileNav from '@/Components/Classroom/Navigation/MobileNav'
 import Navigate from '@/Components/Classroom/Navigation/Navigate'
+import StoreProvider from '@/app/StoreProvider'
 import React from 'react'
+import { Provider } from 'react-redux'
 
 export default function Mainlayout({children,}:{children:React.ReactNode}){
   return (
-    <div className='min-h-screen sm:w-[400px] xl:text-[2vw] flex bg-[#f8e9e9]'>
+     <div className='min-h-screen sm:w-[400px] xl:text-[2vw] flex bg-[#f8e9e9]'>
       <div className=' box-border p-2 m-2 rounded-3xl bg-[#33d1f8] sm:hidden'>
         <Navigate/>
       </div>

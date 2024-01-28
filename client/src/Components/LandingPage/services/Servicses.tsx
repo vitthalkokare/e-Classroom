@@ -18,12 +18,12 @@ const Servicses:React.FC = () => {
   const [pW,setpW] = useState(0);
 
   const divarr:divItemProps[] = [
-    {title:'service1',limg:'/pictures/Landingpage/s1.png',rimg:'',content:'this is conternt'},
-    {title:'service1',limg:'',rimg:'/pictures/Landingpage/s2.png',content:'this is conternt'},
-    {title:'service1',limg:'/pictures/Landingpage/s3.png',rimg:'',content:'this is conternt'},
-    {title:'service1',limg:'',rimg:'/pictures/Landingpage/s4.png',content:'this is conternt'},
-    {title:'service1',limg:'/pictures/Landingpage/s5.png',rimg:'',content:'this is conternt'},
-    {title:'service1',limg:'',rimg:'/pictures/Landingpage/s6.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s1.png',rimg:'/pictures/Landingpage/s1.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s2.png',rimg:'/pictures/Landingpage/s2.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s3.png',rimg:'/pictures/Landingpage/s3.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s4.png',rimg:'/pictures/Landingpage/s4.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s5.png',rimg:'/pictures/Landingpage/s5.png',content:'this is conternt'},
+    {title:'service1',limg:'/pictures/Landingpage/s6.png',rimg:'/pictures/Landingpage/s6.png',content:'this is conternt'},
     
 
   ];

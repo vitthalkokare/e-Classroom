@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/globals.css'
+import { indiaState } from '@/api/data'
 
 const Contac = () => {
   return (
@@ -17,11 +18,11 @@ const Contac = () => {
                 <form action="">
                     <span className='flex flex-col'>
                     <label htmlFor="Name">Your Name</label>
-                    <input type="text" required placeholder='Name' className='rounded-2xl box-border p-2 outline-none border-none drop-shadow-2xl'/>
+                    <input type="text" id='Name' required placeholder='Name' className='rounded-2xl box-border p-2 outline-none border-none drop-shadow-2xl'/>
                     </span>
                     <span className='flex flex-col'>
                     <label htmlFor="Email">Your Email</label>
-                    <input type="Email" required={true} placeholder='Email' className='rounded-2xl box-border p-2 outline-none border-none drop-shadow-2xl'/>
+                    <input type="Email" id='Email' required={true} placeholder='Email' className='rounded-2xl box-border p-2 outline-none border-none drop-shadow-2xl'/>
                     </span>
                     <textarea name="" id="" placeholder='Type something if you want..' className='w-full my-2 min-h-[100px] rounded-2xl outline-none  p-2 drop-shadow-xl resize-none box-border'></textarea>
                     <button type='submit' className='bg-sky-400 box-border p-2 rounded-full text-white'>Send Message</button>
@@ -40,12 +41,14 @@ const Contac = () => {
                     <span>Email:etutor@example.com</span>
                     <span>Phone:+0000000000</span>
                 </div>
+               
 
                
                </div>
                <div>
                 social
                </div>
+               
             </div>
 
        </div>

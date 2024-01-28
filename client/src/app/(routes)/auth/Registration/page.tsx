@@ -1,7 +1,7 @@
 'use client'
 import React, { FormEvent, useEffect, useState } from 'react'
 import { Country } from '@/app/types'
-import {User} from '../../../../../../server/src/graphql/newusers/index'
+import {User} from '../../../../server/src/graphql/newusers/index'
 import { useMutation } from '@apollo/client';
 import { set } from 'mongoose';
 import { redirect } from 'next/dist/server/api-utils';
