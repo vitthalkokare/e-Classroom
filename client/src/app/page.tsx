@@ -1,12 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Home from "./App";
-import { Provider } from "react-redux";
-import { store } from "@/lib/store";
+import UserValidate from "./api/Register/UserValidate";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { redirect } from "next/navigation";
 
 const page = () => {
+  const {user} = useUser();
+
+  useEffect(()=>{
+   
+  },[])
   return (
     <>
+     
+      <UserValidate/>
       <Home />
     </>
   );

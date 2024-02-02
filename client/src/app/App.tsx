@@ -1,24 +1,26 @@
 "use client";
 import Intro from "@/Components/LandingPage/Indroduction/Intro";
 import Std from "@/Components/LandingPage/Standards/std";
-import { FaChalkboardTeacher, FaRegUserCircle } from "react-icons/fa";
-import { FaCircleNodes, FaEnvelope, FaSackDollar } from "react-icons/fa6";
+
 
 import React, { useEffect, useRef, useState } from "react";
 import Pricing from "@/Components/LandingPage/Pricing";
 import Fuck from "@/pages/contactus";
 import Footer from "@/Components/LandingPage/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
+import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
 
 const Home = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isNav, setisNav] = useState(0);
 
+
   const Profile = useRef<HTMLDivElement>(null);
+  const Prices = useRef<HTMLDivElement>(null);
+
   const Home = useRef<HTMLDivElement>(null);
   const Services = useRef<HTMLDivElement>(null);
-  const Goals = useRef<HTMLDivElement>(null);
   const Contactus = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     function handleScroll() {
@@ -36,40 +38,20 @@ const Home = () => {
     };
   }, []);
 
-  const handleButtonClick = (sectionRef: React.RefObject<HTMLDivElement>) => {
-    setIsScrolled(true);
-    if (sectionRef.current !== null) {
-      window.scrollTo({
-        top: sectionRef.current.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  };
+ 
+
 
   return (
-    <div className="sm:w-[400px] w-[100%] relative   flex flex-col mx-auto">
-      <div
+    <div className="sm:w-full w-[100%] relative   flex flex-col mx-auto">
+
+     <div
         className={`sm:hidden  overflow-hidden  s-color  transition-all duration-300   z-10 h-[100%]  flex flex-col   justify-center box-borde  fixed right-0   `}
         style={{ borderRadius: "100% 0% 0% 100% / 42% 48% 47% 47%  ", width:`${isNav}%` }}
       >
-        <div className=" box-border flex flex-col w-full overflow-hidden gap-5 justify-center  items-center text-2xl rounded-3xl">
-          <button className="m-2" onClick={() => handleButtonClick(Profile)}>
-            <FaRegUserCircle />
-          </button>
-          <button className="m-2" onClick={() => handleButtonClick(Home)}>
-            <FaChalkboardTeacher />
-          </button>
-          <button className="m-2" onClick={() => handleButtonClick(Services)}>
-            <FaCircleNodes />
-          </button>
-          <button className="m-2" onClick={() => handleButtonClick(Goals)}>
-            <FaSackDollar />
-          </button>
-          <button className="m-2" onClick={() => handleButtonClick(Contactus)}>
-            <FaEnvelope />
-          </button>
-        </div>
-      </div>
+        <SideNavMenu Profile={Profile} Home={Home} Services={Services} Price={Prices} Contactus={Contactus}/>
+        
+        
+      </div> 
 
       <header
         ref={Home}
@@ -91,7 +73,7 @@ const Home = () => {
         <Servicses />
       </section>
 
-      <section ref={Goals} className=" w-[90%] mx-auto relative">
+      <section ref={Prices}  className=" w-[90%] mx-auto relative">
         <Pricing />
       </section>
 

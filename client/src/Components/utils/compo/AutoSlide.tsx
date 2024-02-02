@@ -19,7 +19,7 @@ const AutoSlide: React.FC<AutoSlideProps> = ({images}) => {
   useEffect(() => {
     const interval = setInterval(() => {
       showSlides();
-    }, 3000);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -28,9 +28,9 @@ const AutoSlide: React.FC<AutoSlideProps> = ({images}) => {
         {
             images.map((item,index)=>(
         <div key={index} className={`mySlides fade ${slideIndex === index ? 'block' : 'hidden'}`}>
-        <div className="numbertext">1 / 3</div>
         <img src={item.path} style={{ width: '100%' }} />
-        <div className="text">{item.caption}</div>
+        <div className={`text-center   sm:hidden    ${slideIndex === index ? 'w-full transition-all duration-300 bg-purple-500' : 'w-0'}`}><strong>{item.caption}</strong></div>
+
       </div>
 
 

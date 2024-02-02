@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/globals.css'
-import { indiaState } from '@/api/data'
+import { indiaState } from '@/app/api/data'
 
 const Contac = () => {
   return (
@@ -8,7 +8,7 @@ const Contac = () => {
        
        <div className='w-full flex relative box-border p-4 justify-around items-center sm:flex-col bg-white rounded-3xl'>
 
-            <div className='w-[50%]'>
+            <div className='w-[50%] sm:w-full'>
                 <h1 className='text-4xl font-bold'>Let's Talk</h1>
                 <p className='text-xl font-medium'>
                     To request a quote or want to meet up fo Discussion,<br />

@@ -31,7 +31,7 @@ const Faculty:React.FC = () => {
           {Faculty.map((item, index) => (
             <div
               key={index}
-              className={` hover:scale-105 drop-shadow-xl sm:w-full md:w-full w-full mx-2 justify-center items-center overflow-hidden shrink-0   relative   sm:h-[180px]  bg-white   flex    box-border  rounded-3xl sm:flex-row `}
+              className={`  drop-shadow-xl sm:w-full md:w-full w-full mx-2 justify-center items-center overflow-hidden shrink-0   relative   sm:h-[180px]  bg-white   flex    box-border  rounded-3xl sm:flex-row `}
             >
               <Image
                 src={Img}

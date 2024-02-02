@@ -1,4 +1,4 @@
-import { StateData, indiaStates } from "@/api/SubjectData";
+import { StateData, indiaStates } from "@/app/api/SubjectData";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface SubjectData {
@@ -8,40 +8,25 @@ interface SubjectData {
   Subjects: { name: string; content: string; id: number; img: string }[];
   Standards: string[];
   Facultys: { name: string; exp: string; id: number; vision: string }[];
+  Cart:any[];
 }
 
-const item = () => {
-  return indiaStates;
-};
 
 const initialState: SubjectData = {
   item: indiaStates,
   value: 777,
   BoardLabel: [],
-  Subjects: [{ name: "", id: 0, content: "", img: "" }],
+  Subjects: [],
   Standards: [],
-  Facultys: [
-    {
-      name: "Akash Sharma",
-      exp: "3 year",
-      vision:
-        "To provide mentorship and guidance, serving as a resource for students as they navigate academic and career paths.",
-      id: 0,
-    },
-  ],
+  Facultys: [],
+  Cart:[]
 };
 
 export const subSlice = createSlice({
   name: "subslice",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-
-    decrement: (state) => {
-      state.value -= 1;
-    },
+    
 
     StateSelect: (state, action) => {
       state.BoardLabel = [];
@@ -59,7 +44,7 @@ export const subSlice = createSlice({
       state.Standards = [];
       state.item.forEach((bn) => {
         let ii = bn.Board.filter((b) => action.payload === b.Boardlabel);
-        if (ii.length < 0) {
+        if (ii.length <= 0) {
           console.log("not found");
         } else {
           let f = ii.flatMap((d) => d.Standard.flatMap((s) => s.std));
@@ -88,9 +73,22 @@ export const subSlice = createSlice({
         }
       });
     },
+
+    // Cart Item
+    AddItem: (state,action) => {
+      state.value += 1;
+      let AdeedItem:any[] = action.payload
+      state.Cart.push(AdeedItem)
+
+    },
+
+    decrement: (state) => {
+      state.value -= 1;
+    },
+
   },
 });
 
-export const { increment, decrement, StateSelect, BoardSelect, SetSuject } =
+export const { AddItem, decrement, StateSelect, BoardSelect, SetSuject } =
   subSlice.actions;
 export default subSlice.reducer;

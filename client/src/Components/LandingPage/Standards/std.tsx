@@ -6,11 +6,17 @@ import { RootState } from "@/lib/store";
 
 import Faculty from "./Faculty";
 import SubjectsItem from "./Subjects";
-import { BoardSelect, SetSuject, StateSelect } from "@/lib/Features/slices/SubStdSlice";
+import {
+  BoardSelect,
+  SetSuject,
+  StateSelect,
+} from "@/lib/Features/SubjectsHandler/slices/SubStdSlice";
+import AutoSlide from "@/Components/utils/compo/AutoSlide";
 
 const STD: React.FC = () => {
   const [myStd, setmyStd] = useState("");
-  const [isUser,setisUSer] = useState(false);
+  const [isUser, setisUSer] = useState(false);
+  const [isItem, setItem] = useState(true);
 
   const dispatch = useDispatch();
   const myitem = useSelector((state: RootState) => state.subslice.item);
@@ -22,7 +28,7 @@ const STD: React.FC = () => {
 
   function changeHandler(event: React.ChangeEvent<HTMLSelectElement>): void {
     const dd = event.target.value;
-
+    setItem(false)
     dispatch(SetSuject([dd, myStd]));
   }
 
@@ -37,11 +43,9 @@ const STD: React.FC = () => {
     dispatch(BoardSelect(val));
   }
 
-
-
   return (
     <>
-      <div className=" relative   md:h-fit h-screen  p-2 s-colo  flex flex-col justify-evenly m-auto  items-center box-border w-full  rounded-2xl sm:w-[95%]   md:flex-col sm:flex-col sm:justify-start">
+      <div className=" relative   md:h-fit h-screen sm:h-fit  p-2 s-colo  flex flex-col justify-evenly m-auto  items-center box-border w-full  rounded-2xl sm:w-[95%]   md:flex-col sm:flex-col sm:justify-start">
         <div className="border-2   absolute top-10 -left-1/2 w-[80%]  justify-center items-center  sm:top-0 md:top-0 sm:relative md:relative sm:left-0 md:left-0  flex flex-wrap box-border p-2 rounded-xl drop-shadow-xl">
           {/* State */}
           <select
@@ -95,10 +99,35 @@ const STD: React.FC = () => {
         </div>
 
         {/* Standard */}
-        <SubjectsItem/>
 
-        {/* Faculty */}
-        <Faculty />
+        {isItem ? (
+          <div className="w-full  box-border  p-2  rounded-2xl">
+           
+           <div className="sm:hidden md:hidden mx-[10%] w-[80%]">
+           <AutoSlide
+          images={[
+            { path: "/pictures/Landingpage/s2.png", caption: "Learn at your own pace, anywhere, anytime."
+          },
+            { path: "/pictures/Landingpage/s3.png", caption: "Empowering minds, shaping futures."
+          },
+            { path: "/pictures/Landingpage/s4.png", caption: "Discover, learn, grow - anytime, anywhere." },
+            { path: "/pictures/Landingpage/s7.png", caption: "Empowering you through education." },
+          ]}
+        />
+
+           </div>
+
+          </div>
+        ) : (
+          <div className="w-full">
+            <SubjectsItem />
+
+            {/* Faculty */}
+            <div className="w-full box-border p-2">
+              <Faculty />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

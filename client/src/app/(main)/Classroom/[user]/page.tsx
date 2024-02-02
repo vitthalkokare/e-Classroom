@@ -2,12 +2,10 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='text-black'>
-      goodbye
-
-      
+    <div>
+      <h1>YOurser not found</h1>
     </div>
   )
 }
 
-export default page;
+export default page

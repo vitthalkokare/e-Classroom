@@ -1,10 +1,13 @@
 
 import { configureStore } from "@reduxjs/toolkit/react";
-import subSlice from './Features/slices/SubStdSlice'
+import subSlice from './Features/SubjectsHandler/slices/SubStdSlice'
+import AuthCardSlice from "./Features/Auth/Slices/AuthCardSlice";
 
 export const store = configureStore({
     reducer:{
-        subslice:subSlice
+        subslice:subSlice,
+        AuthCard:AuthCardSlice
+
         
     },
 
