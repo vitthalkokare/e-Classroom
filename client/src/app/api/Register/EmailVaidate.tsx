@@ -6,8 +6,11 @@ const EmailVaidate = (props:any) => {
     <div className='w-full h-full bg-white rounded-3xl flex flex-col  box-border p-4 items-center absolute left-0 top-0'>
         <h1>Validate Emaile</h1>
         <div className='w-full box-border relative p-2 flex flex-col'>
-            <label htmlFor="">Email/Phone</label>
+           <form action="http://localhost:8000/">
+           <label htmlFor="">Email/Phone</label>
             <input type="text" required placeholder='xyz@gmail.com' className='box-border p-3 my-2 drop-shadow-xl border rounded-2xl'/>
+            <button type='submit'>Continue</button>
+           </form>
         </div>
 
 

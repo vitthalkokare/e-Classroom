@@ -22,6 +22,7 @@ function myServer() {
         const PORT = Number(process.env.PORT) || 8000;
         app.use(express_1.default.json());
         (0, connection_1.default)('mongodb://127.0.0.1:27017/');
+        app.use(express_1.default.json());
         app.use('/graphql', (0, express4_1.expressMiddleware)(yield (0, graphql_1.default)()));
         app.get('/', (req, res) => {
             res.send('goodbye');
