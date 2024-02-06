@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import React, { useRef, useState } from "react";
 import { FaChalkboardTeacher, FaRegUserCircle } from "react-icons/fa";
 import { FaCircleNodes, FaEnvelope, FaSackDollar } from "react-icons/fa6";
-import { setCard } from "@/lib/Features/Auth/Slices/AuthCardSlice";
+import {setCard} from '@repo/ui/index'
 import {useDispatch} from 'react-redux'
 import { redirect } from "next/dist/server/api-utils";
 import { Router, useRouter } from "next/router";

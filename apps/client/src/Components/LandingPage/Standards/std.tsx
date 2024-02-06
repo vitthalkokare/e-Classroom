@@ -1,16 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import error from "next/error";
-import { RootState } from "@/lib/store";
+import {RootState} from '@repo/ui/index'
+
+
+import {subData} from '@repo/ui/index'
 
 import Faculty from "./Faculty";
 import SubjectsItem from "./Subjects";
-import {
-  BoardSelect,
-  SetSuject,
-  StateSelect,
-} from "@/lib/Features/SubjectsHandler/slices/SubStdSlice";
+
 import AutoSlide from "@/Components/utils/compo/AutoSlide";
 
 const STD: React.FC = () => {
@@ -24,23 +22,22 @@ const STD: React.FC = () => {
     (state: RootState) => state.subslice.BoardLabel
   );
   const Std = useSelector((state: RootState) => state.subslice.Standards);
-  const Subjects = useSelector((state: RootState) => state.subslice.Subjects);
 
   function changeHandler(event: React.ChangeEvent<HTMLSelectElement>): void {
     const dd = event.target.value;
     setItem(false)
-    dispatch(SetSuject([dd, myStd]));
+    dispatch(subData.SetSuject([dd, myStd]));
   }
 
   function onSelected(event: any) {
     let c = event.target.value;
-    dispatch(StateSelect(c));
+    dispatch(subData.StateSelect(c));
   }
 
   function BoardSelected(event: any) {
     const val = event.target.value;
     setmyStd(val);
-    dispatch(BoardSelect(val));
+    dispatch(subData.BoardSelect(val));
   }
 
   return (

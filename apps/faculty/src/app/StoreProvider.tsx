@@ -1,14 +1,12 @@
 'use client'
-
-import { store } from './store'
 import React, { ReactNode } from 'react'
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
+import {store}  from '@repo/ui/index'
 
 const StoreProvider = ({children}:{children:ReactNode}) => {
-
   return (
     <Provider store={store}>
-       {children}
+      {children}
       
     </Provider>
   )

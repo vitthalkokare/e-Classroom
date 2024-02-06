@@ -1,6 +1,5 @@
+import { StateData, indiaStates } from "../../../../api/subdata/SubjectData";
 import { createSlice } from "@reduxjs/toolkit";
-
-import { indiaStates,StateData } from "@/api/SubjectData/SubjectData";
 
 export interface SubjectData {
   BoardLabel: string[];
