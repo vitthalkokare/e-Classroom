@@ -1,7 +1,7 @@
 import { StateData, indiaStates } from "@/app/api/SubjectData";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface SubjectData {
+export interface SubjectData {
   BoardLabel: string[];
   value: number;
   item: StateData[];

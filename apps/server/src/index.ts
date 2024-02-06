@@ -1,7 +1,6 @@
 import express from 'express';
 import DB from './connection';
 import {expressMiddleware} from '@apollo/server/express4'
-import mongoose from 'mongoose';
 import GraphQlServer from './graphql';
 import UserService from './services/user';
 
