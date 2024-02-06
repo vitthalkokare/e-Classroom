@@ -1,0 +1,21 @@
+{
+  "name": "@repo/ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "exports":{
+    ".": "./src/**/*"
+
+
+  },
+
+
+  "scripts": {},
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.1.0",
+    "react-redux": "^9.1.0",
+    "@repo/typescript-config":"*",
+    "@repo/eslint-config":"*"
+  }
+}
