@@ -1,0 +1,182 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id        String   @id @default(uuid())
+  standard  Std
+  roll      Roll     @default(STUDENT)
+  email     String   @unique
+  phone     String   @unique
+  name      String
+  sirname   String
+  username  String   @unique
+  imageUrl  String
+  dob       DateTime
+  boardName String
+  city      String
+  state     String
+
+  subject Subject[]
+  chats   Chats[]
+  lecture Lectures[]
+  payment Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
+  facultyId String?
+}
+
+model Payment {
+  id        String   @id @default(uuid())
+  isPaid    Boolean  @default(false)
+  isPending Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  Student   Student? @relation(fields: [studentId], references: [id])
+  studentId String?
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   String?
+}
+
+model Subject {
+  id          String  @id @default(uuid())
+  title       String  @unique
+  price       Int
+  description String?
+  isEnrolled  Boolean @default(false)
+  student     Student @relation(fields: [studentID], references: [id])
+  studentID   String
+
+  faculty   Faculty @relation(fields: [FacultyID], references: [id])
+  FacultyID String
+  Admin     Admin?  @relation(fields: [adminId], references: [id])
+  adminId   String?
+
+  @@index([studentID])
+  @@index([FacultyID])
+}
+
+model Lectures {
+  id String @id @default(uuid())
+
+  student   Student @relation(fields: [studentID], references: [id])
+  studentID String
+
+  title      String?
+  lectureUrl String
+  notes      String?
+  contents   String?
+
+  createdAt DateTime @default(now())
+  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
+  facultyId String?
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   String?
+
+  @@index([studentID])
+  @@index([facultyId])
+}
+
+model Chats {
+  id String @id @default(uuid())
+
+  studentMessage String
+  facultyMessage String
+  student        Student @relation(fields: [studentMessage], references: [id])
+  faculty        Faculty @relation(fields: [facultyMessage], references: [id])
+
+  text     String?
+  imageUrl String?
+  videoUrl String?
+  audioUrl String?
+  fileUrl  String?
+  read     Boolean @default(false)
+  isSend   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   String?
+
+  @@index([studentMessage])
+  @@index([facultyMessage])
+}
+
+model Faculty {
+  id     String @id @default(uuid())
+  email  String @unique
+  name   String
+  vision String
+  exp    String
+  role   Roll   @default(FACULTY)
+
+  student      Student[]
+  subject      Subject[]
+  chats        Chats[]
+  lecture      Lectures[]
+  notification Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   String?
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+  isSend    Boolean  @default(false)
+
+  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
+  facultyId String?
+
+  Admin   Admin?  @relation(fields: [adminId], references: [id])
+  adminId String?
+}
+
+model Admin {
+  id   String @id @default(uuid())
+  name String
+  roll Roll   @default(ADMIN)
+
+  payment      Payment[]
+  chats        Chats[]
+  faculty      Faculty[]
+  subject      Subject[]
+  lecture      Lectures[]
+  notification Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Std {
+  FirstStandard
+  SecondStandard
+  ThirdStandard
+  FourthStandard
+  FifthStandard
+  SixthStandard
+  SeventhStandard
+  EightStandard
+  NithStandard
+  tenthStandard
+}
+
+enum Roll {
+  STUDENT
+  FACULTY
+  ADMIN
+}

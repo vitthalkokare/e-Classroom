@@ -1,0 +1,233 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Standard{
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  standard Std
+
+  admin Admin? @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String?
+  student Student[]
+
+
+  StudentStd String
+  subjectId String
+
+  subject Subject @relation(fields:[subjectId],references:[id], onDelete:Cascade)
+
+  @@index([subjectId])
+
+}
+
+
+
+model Subject{
+  id String  @id @default(uuid())
+  State String
+  BoardName String
+  title String @unique
+  price Int
+  description String?
+  isEnrolled Boolean @default(false)
+
+  student Student @relation(fields:[enrolledSubject],references:[studentID])
+  enrolledSubject String
+
+  
+
+   
+
+  admin Admin? @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String
+
+
+
+
+
+
+}
+
+model Student{
+  id String @default(uuid())
+  studentID String
+  name String
+  sirname String
+  city String?
+  username String @unique
+  dob DateTime
+  email String @unique 
+  phone String
+  State String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  notification Notification @relation(fields:[NotId],references:[id])
+  NotId String
+
+  subject Subject[]
+  
+  roll Roll @default(STUDENT)
+
+  
+  admin Admin? @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String
+
+
+  @@index([isAdmin])
+  @@index([NotId])
+
+}
+
+model Lectures{
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  facultyTaugh String
+  subjectId String
+  studentPresent String
+
+  faculty Faculty @relation(fields:[facultyTaugh],references:[id])
+  subject Subject @relation(fields:[subjectId],references:[id])
+
+  admin Admin? @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String
+ 
+  title String?
+  lectureUrl String
+  Notes String?
+  contents String?
+
+
+  @@index([studentPresent])
+  @@index([facultyTaugh])
+  @@index([subjectId])
+  @@index([isAdmin])
+
+}
+
+model Faculty {
+  id String @id @default(uuid())
+  FacultyID String @unique
+  name String
+  exp String
+  vision String?
+  email String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roll Roll @default(FACULTY)
+
+  admin Admin @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String
+
+  notification Notification[]
+
+
+  @@index([isAdmin])
+  
+
+}
+
+model Chats {
+  id String @id @default(uuid())
+
+ 
+
+  faculty Faculty @relation(fields:[SenderFacultyId],references:[FacultyID])
+  SenderFacultyId String
+
+
+  text String?
+  imageUrl String?
+  videoUrl String?
+  audioUrl String?
+  read Boolean @default(false)
+  isSend Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([SenderFacultyId])
+
+
+}
+
+model Notification{
+  id String @id @default(uuid())
+  message String
+  createdAt DateTime @default(now())
+  read Boolean @default(false)
+  isSend Boolean @default(false)
+
+  sendStudent String
+  sendFaculty String
+
+  student Student @relation(fields:[sendStudent],references:[studentID])
+  faculty Faculty @relation(fields:[sendFaculty],references:[FacultyID])
+  admin Admin @relation(fields:[isAdmin],references:[AdminID])
+  isAdmin String
+
+  @@index([isAdmin])
+  @@index([sendStudent])
+  @@index([sendFaculty])
+
+
+  
+}
+
+
+model Admin{
+  name String
+  AdminID String @unique
+  roll Roll @default(ADMIN)
+
+  faculty Faculty[]
+  subject Subject[]
+  lecture Lectures[]
+  notification Notification[]
+
+ 
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  
+
+}
+
+
+enum Std{
+  FirstStandard
+  SecondStandard
+  ThirdStandard
+  FourthStandard
+  FifthStandard
+  SixthStandard
+  SeventhStandard
+  EightStandard
+  NithStandard
+  tenthStandard
+
+
+
+}
+
+enum Roll{
+  STUDENT
+  FACULTY
+  ADMIN
+}
+
+
+
+
