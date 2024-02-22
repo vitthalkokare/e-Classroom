@@ -1,8 +1,8 @@
 import React from 'react'
 import '../styles/globals.css'
-import { indiaState } from '@/app/api/data'
+import { NextPage } from 'next';
 
-const Contac = () => {
+const ContactUs:NextPage = () => {
   return (
     <div className='sm:w-[90%]  md:h-full box-border p-2 w-[80%]  rounded-3xl shadow-2xl relative mx-auto items-center justify-center   flex flex-col'>
        
@@ -56,4 +56,4 @@ const Contac = () => {
   )
 }
 
-export default Contac;
+export default ContactUs;

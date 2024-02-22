@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,31 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
+model User {
   id        String   @id @default(uuid())
-  standard  Std
-  roll      Roll     @default(STUDENT)
   email     String   @unique
-  phone     String   @unique
-  name      String
-  sirname   String
-  username  String   @unique
-  imageUrl  String
-  dob       DateTime
-  boardName String
-  city      String
-  state     String
-
-  subject Subject[]
-  chats   Chats[]
-  lecture Lectures[]
-  payment Payment[]
-
+  headers   String?
+  authToken String?
+  password  String
+  salt      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  studentId String?
+  student   Student? @relation(fields: [studentId], references: [id])
 
-  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
-  facultyId String?
+  @@index([studentId])
+  @@map("user")
+}
+
+model Student {
+  id         String     @id @default(uuid())
+  roll       Roll       @default(STUDENT)
+  email      String     @unique
+  password   String
+  standard   Std?
+  salt       String?
+  phone      BigInt     @unique
+  name       String
+  sirname    String
+  imageUrl   String?
+  dob        DateTime?
+  board_name String?
+  city       String
+  state      String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
+  facultyId  String?
+  chats      Chats[]
+  lecture    Lectures[]
+  payment    Payment[]
+  Faculty    Faculty?   @relation(fields: [facultyId], references: [id])
+  subject    Subject[]
+  user       User[]
+
+  @@map("student")
 }
 
 model Payment {
@@ -42,94 +56,94 @@ model Payment {
   isPaid    Boolean  @default(false)
   isPending Boolean  @default(false)
   createdAt DateTime @default(now())
-
-  Student   Student? @relation(fields: [studentId], references: [id])
   studentId String?
-  Admin     Admin?   @relation(fields: [adminId], references: [id])
   adminId   String?
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  student   Student? @relation(fields: [studentId], references: [id])
+
+  @@map("payment")
 }
 
 model Subject {
-  id          String  @id @default(uuid())
-  title       String  @unique
+  id          String   @id @default(uuid())
+  title       String   @unique
   price       Int
   description String?
-  isEnrolled  Boolean @default(false)
-  student     Student @relation(fields: [studentID], references: [id])
-  studentID   String
-
-  faculty   Faculty @relation(fields: [FacultyID], references: [id])
-  FacultyID String
-  Admin     Admin?  @relation(fields: [adminId], references: [id])
-  adminId   String?
+  isEnrolled  Boolean  @default(false)
+  studentID   String?
+  FacultyID   String
+  adminId     String?
+  faculty     Faculty  @relation(fields: [FacultyID], references: [id])
+  Admin       Admin?   @relation(fields: [adminId], references: [id])
+  student     Student? @relation(fields: [studentID], references: [id])
 
   @@index([studentID])
   @@index([FacultyID])
+  @@map("subject")
 }
 
 model Lectures {
-  id String @id @default(uuid())
-
-  student   Student @relation(fields: [studentID], references: [id])
-  studentID String
-
-  title      String?
+  id         String   @id @default(uuid())
+  studentID  String?
+  title      String
   lectureUrl String
   notes      String?
-  contents   String?
-
-  createdAt DateTime @default(now())
-  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
-  facultyId String?
-  Admin     Admin?   @relation(fields: [adminId], references: [id])
-  adminId   String?
+  contents   String
+  createdAt  DateTime @default(now())
+  facultyId  String?
+  adminId    String?
+  admin      Admin?   @relation(fields: [adminId], references: [id])
+  Faculty    Faculty? @relation(fields: [facultyId], references: [id])
+  student    Student? @relation(fields: [studentID], references: [id])
 
   @@index([studentID])
   @@index([facultyId])
+  @@map("lectures")
 }
 
 model Chats {
-  id String @id @default(uuid())
-
-  studentMessage String
-  facultyMessage String
-  student        Student @relation(fields: [studentMessage], references: [id])
-  faculty        Faculty @relation(fields: [facultyMessage], references: [id])
-
-  text     String?
-  imageUrl String?
-  videoUrl String?
-  audioUrl String?
-  fileUrl  String?
-  read     Boolean @default(false)
-  isSend   Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  Admin     Admin?   @relation(fields: [adminId], references: [id])
-  adminId   String?
+  id             String   @id @default(uuid())
+  studentMessage String?
+  facultyMessage String?
+  text           String?
+  imageUrl       String?
+  videoUrl       String?
+  audioUrl       String?
+  fileUrl        String?
+  read           Boolean  @default(false)
+  isSend         Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  adminId        String?
+  Admin          Admin?   @relation(fields: [adminId], references: [id])
+  faculty        Faculty? @relation(fields: [facultyMessage], references: [id])
+  student        Student? @relation(fields: [studentMessage], references: [id])
 
   @@index([studentMessage])
   @@index([facultyMessage])
+  @@map("chats")
 }
 
 model Faculty {
-  id     String @id @default(uuid())
-  email  String @unique
-  name   String
-  vision String
-  exp    String
-  role   Roll   @default(FACULTY)
-
-  student      Student[]
-  subject      Subject[]
+  id           String         @id @default(uuid())
+  email        String         @unique
+  name         String
+  sirname      String
+  password     String
+  salt         String
+  vision       String
+  exp          String
+  role         Roll           @default(FACULTY)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  adminId      String?
   chats        Chats[]
+  Admin        Admin?         @relation(fields: [adminId], references: [id])
   lecture      Lectures[]
   notification Notification[]
+  student      Student[]
+  subject      Subject[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Admin     Admin?   @relation(fields: [adminId], references: [id])
-  adminId   String?
+  @@map("faculty")
 }
 
 model Notification {
@@ -138,28 +152,28 @@ model Notification {
   createdAt DateTime @default(now())
   read      Boolean  @default(false)
   isSend    Boolean  @default(false)
-
-  Faculty   Faculty? @relation(fields: [facultyId], references: [id])
   facultyId String?
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id])
+  faculty   Faculty? @relation(fields: [facultyId], references: [id])
 
-  Admin   Admin?  @relation(fields: [adminId], references: [id])
-  adminId String?
+  @@map("notification")
 }
 
 model Admin {
-  id   String @id @default(uuid())
-  name String
-  roll Roll   @default(ADMIN)
-
-  payment      Payment[]
+  id           String         @id @default(uuid())
+  name         String
+  roll         Roll           @default(ADMIN)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   chats        Chats[]
   faculty      Faculty[]
-  subject      Subject[]
   lecture      Lectures[]
   notification Notification[]
+  payment      Payment[]
+  subject      Subject[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@map("admin")
 }
 
 enum Std {

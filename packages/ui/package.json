@@ -3,19 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./index":"./src/index.ts"
-   
+    "./index": "./src/index.ts"
   },
   "scripts": {
     "lint": "eslint *.ts* src/**",
     "generate:component": "turbo gen react-component"
   },
   "dependencies": {
-    "@repo/tailwind-config":"*"
+    "@apollo/client": "^3.9.4",
+    "@repo/tailwind-config": "*",
+    "graphql": "^16.8.1"
   },
-
-
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@turbo/gen": "^1.11.3",

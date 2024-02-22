@@ -5,7 +5,7 @@ import Std from "@/Components/LandingPage/Standards/std";
 
 import React, { useEffect, useRef, useState } from "react";
 import Pricing from "@/Components/LandingPage/Pricing";
-import Fuck from "@/pages/contactus";
+import ContactUS from "@/pages/contactus";
 import Footer from "@/Components/LandingPage/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
@@ -78,7 +78,7 @@ const Home = () => {
       </section>
 
       <section ref={Contactus} className="w-[100%] mx-auto">
-        <Fuck />
+        <ContactUS />
       </section>
 
       <footer className="">

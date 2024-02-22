@@ -1,9 +1,10 @@
 import "./globals.css";
 import First from "@/Components/LandingPage/Indroduction/First";
 import { Provider } from "react-redux";
-import { store } from "@/lib/store";
-import StoreProvider from "./StoreProvider";
+import {StoreProvider} from "@repo/ui/index";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import {GqlProvider} from '@repo/ui/index'
+
 
 export default function RootLayout({
   children,
@@ -12,11 +13,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <GqlProvider>
+
       <UserProvider>
         <StoreProvider>
           <body className="scr">{children}</body>
         </StoreProvider>
       </UserProvider>
+    </GqlProvider>
+
     </html>
   );
 }
