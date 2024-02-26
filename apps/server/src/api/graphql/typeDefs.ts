@@ -4,14 +4,18 @@ export const  typeDefs = buildSchema (
     `
     type Query{
 
-        good(data:String):String
         
-        currentUser:User
+        varyfyEmail(email:String):String
+        currentUser(email:String):User
+        findAll(id:String):[User]
         
 
     }
     type Mutation{
-        saveUser:User
+
+        saveUser(email:String,password:String):String
+
+       
     }
 
   

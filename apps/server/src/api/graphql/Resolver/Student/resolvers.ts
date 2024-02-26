@@ -1,5 +1,7 @@
 // import UserService, { createUserPyload } from "../../services/user";
 
+import { GraphQlServerContext } from "../../../../context";
+
 
 
 // const queries = {
@@ -36,11 +38,8 @@
 
 
 export const studentResolver = {
+    
 
-    // createStudent:async (_:any,payload:StudentPayload)=>{
-    //     const result = await StudentService.createStudent(payload);
-    //     return result;
-
-    // }
+   
 }
 

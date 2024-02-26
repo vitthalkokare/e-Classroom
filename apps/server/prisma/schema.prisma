@@ -8,16 +8,18 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   email     String   @unique
   headers   String?
   authToken String?
   password  String
+  role      Roll     @default(USER)
   salt      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  studentId String?
+
   student   Student? @relation(fields: [studentId], references: [id])
+  studentId String?
 
   @@index([studentId])
   @@map("user")
@@ -25,8 +27,8 @@ model User {
 
 model Student {
   id         String     @id @default(uuid())
-  roll       Roll       @default(STUDENT)
-  email      String     @unique
+  roll       Roll
+  email      String
   password   String
   standard   Std?
   salt       String?
@@ -46,7 +48,7 @@ model Student {
   payment    Payment[]
   Faculty    Faculty?   @relation(fields: [facultyId], references: [id])
   subject    Subject[]
-  user       User[]
+  User       User[]
 
   @@map("student")
 }
@@ -193,4 +195,5 @@ enum Roll {
   STUDENT
   FACULTY
   ADMIN
+  USER
 }

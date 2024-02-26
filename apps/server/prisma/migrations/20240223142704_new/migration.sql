@@ -2,7 +2,7 @@
 CREATE TYPE "Std" AS ENUM ('FirstStandard', 'SecondStandard', 'ThirdStandard', 'FourthStandard', 'FifthStandard', 'SixthStandard', 'SeventhStandard', 'EightStandard', 'NithStandard', 'tenthStandard');
 
 -- CreateEnum
-CREATE TYPE "Roll" AS ENUM ('STUDENT', 'FACULTY', 'ADMIN');
+CREATE TYPE "Roll" AS ENUM ('STUDENT', 'FACULTY', 'ADMIN', 'USER');
 
 -- CreateTable
 CREATE TABLE "user" (
@@ -11,6 +11,7 @@ CREATE TABLE "user" (
     "headers" TEXT,
     "authToken" TEXT,
     "password" TEXT NOT NULL,
+    "role" "Roll" NOT NULL DEFAULT 'USER',
     "salt" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -22,10 +23,10 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "student" (
     "id" TEXT NOT NULL,
-    "roll" "Roll" NOT NULL DEFAULT 'STUDENT',
+    "roll" "Roll" NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "standard" "Std" NOT NULL,
+    "standard" "Std",
     "salt" TEXT,
     "phone" BIGINT NOT NULL,
     "name" TEXT NOT NULL,
@@ -144,13 +145,13 @@ CREATE TABLE "admin" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "user_id_key" ON "user"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE INDEX "user_studentId_idx" ON "user"("studentId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "student_email_key" ON "student"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "student_phone_key" ON "student"("phone");
