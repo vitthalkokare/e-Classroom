@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Home from "./App";
 import UserValidate from "./api/Register/UserValidate";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import LoginUser from "@/pages/login";
 
 const page = () => {
   const {user} = useUser();

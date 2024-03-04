@@ -1,11 +1,20 @@
 import { store } from "./lib/store";
 
 
-import GqlProvider from "./lib/gqlProvider";
 import StoreProvider from "./lib/StoreProvider";
 
-export {GqlProvider}
 export {StoreProvider}
+
+import GqlProvider from "./lib/GqlProvider";
+
+
+export { validateSchemas } from "./api/Schemas";
+export { gqlclient } from "./api/graphql";
+
+
+
+export {GqlProvider} 
+
 
 export { store, type RootState } from "./lib/store";
 

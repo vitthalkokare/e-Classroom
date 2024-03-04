@@ -19,10 +19,10 @@ const Navigate:React.FC = () => {
 
     const MenuItem:NavItem[] =[
       {label: 'Home',path:'/Classroom', icon:<FaHome/>},
-      {label: 'Tasks',path:'/Classroom/user/Tasks', icon:<FaTasks/>},
-      {label: 'Lecture',path:'/user/Classroom', icon:<MdOutlineVideoSettings/>},
-      {label: 'More',path:'/user/Classroom', icon:<FaHome/>},
-      {label: 'Setting',path:'/Classroom/user/setting', icon:<FaGear/>},
+      {label: 'Tasks',path:'/Classroom/Tasks', icon:<FaTasks/>},
+      {label: 'Lecture',path:'/Classroom', icon:<MdOutlineVideoSettings/>},
+      {label: 'More',path:'/Classroom', icon:<FaHome/>},
+      {label: 'Setting',path:'/Classroom/setting', icon:<FaGear/>},
 
 
      
@@ -34,15 +34,15 @@ const Navigate:React.FC = () => {
     <div className='flex box-border flex-col items-center   h-[70%] w-full '>
        
        <header className=' flex justify-center items-center flex-col text-5xl md:mb-2 mb-4'>
-        <span><FaUser/></span>
-        <Link href={'/Classroom/user/Profile'}><span className='md:hidden '>Profile</span></Link>
+        <Link href={'/Classroom/user/Profile'}><FaUser/></Link>
+        <Link href={'/Classroom/Profile'}><span className='md:hidden '>Profile</span></Link>
 
 
 
        </header>
        <nav className='flex flex-col md:p-4 box-border'>
         {MenuItem.map((item,index)=>(
-          <Link href={item.path} className='flex box-border  md:text-blue-800 relative  items-center p-2'><span className='text-4xl  md:my-2 md:text-4xl md:p-2 box-border'>{item.icon}</span><span className='text-xl mx-4 box-border md:hidden '>{item.label}</span></Link>
+          <Link key={index} href={item.path} className='flex box-border  md:text-blue-800 relative  items-center p-2'><span className='text-4xl  md:my-2 md:text-4xl md:p-2 box-border'>{item.icon}</span><span className='text-xl mx-4 box-border md:hidden '>{item.label}</span></Link>
         ))}
 
        </nav>

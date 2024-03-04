@@ -47,7 +47,9 @@ const STD: React.FC = () => {
           {/* State */}
           <select
             name=""
-            id=""
+            id="selectState"
+            autoComplete="false"
+
             onChange={onSelected}
             className="mx-2 box-border w-[45%] outline-none p-3 rounded-xl bg-white"
           >
@@ -67,7 +69,8 @@ const STD: React.FC = () => {
             value={myStd}
             onChange={BoardSelected}
             className="bg-white box-border rounded-xl outline-none p-3  w-[45%]"
-            id=""
+            id="selectBorad"
+            autoComplete="false"
           >
             <option value="" className=" bg-white">
               Board
@@ -81,6 +84,8 @@ const STD: React.FC = () => {
 
           <div className="bg-white text-center w-[60%] m-2 shadow-2xl border-1 border   box-border  flex items-center justify-center rounded-xl sm:w-[200px] sm:p-2">
             <select
+              autoComplete="false"
+              id="selectStandard"
               onChange={changeHandler}
               className="w-[90%] bg-white p-3 sm:p-2  outline-none border-0 text-2xl "
             >

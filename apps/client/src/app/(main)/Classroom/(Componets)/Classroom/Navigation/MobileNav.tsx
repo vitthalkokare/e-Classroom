@@ -42,7 +42,7 @@ const MobileNav:React.FC = () => {
        </header> */}
        <nav className='sm:flex w-full justify-center items-center hidden md:hidden md:p-4 box-border'>
         {MenuItem.map((item,index)=>(
-          <Link href={item.path} className='flex box-border justify-evenly w-full md:text-blue-800 relative  items-center p-2'><span className='text-4xl  md:my-2 md:text-4xl md:p-2 box-border'>{item.icon}</span><span className='text-xl mx-4 box-border md:hidden hidden'>{item.label}</span></Link>
+          <Link key={index} href={item.path} className='flex box-border justify-evenly w-full md:text-blue-800 relative  items-center p-2'><span className='text-4xl  md:my-2 md:text-4xl md:p-2 box-border'>{item.icon}</span><span className='text-xl mx-4 box-border md:hidden hidden'>{item.label}</span></Link>
         ))}
 
        </nav>

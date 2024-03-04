@@ -58,6 +58,7 @@ const SideNavMenu: React.FC<ref> = ({
       <div className=" box-border flex flex-col  overflow-hidden  justify-center  items-center text-2xl">
         {mm.map((item, index) => (
           <button
+            key={index}
             onMouseDown={()=> {index === 0 && dispatch(setCard(true))}}
             onClick={() => handleButtonClick(item.reff)}
             className="flex box-border m-2 p-2"
