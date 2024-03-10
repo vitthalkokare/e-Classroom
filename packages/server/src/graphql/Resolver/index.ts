@@ -1,28 +1,8 @@
 
-import { studetnQueryResolver } from "./Student/studentQuerisResolver";
-import { studentMutationResolver} from "./Student/studentMutationResolver";
-import { userQueryResolver } from "./User/userQuery";
-import userMutationResolver from "./User/userMutation";
+import { mergeResolvers } from '@graphql-tools/merge';
+import userMutationResolver from './User/user.mutation';
+import userQueryResolver from './User/user.queries';
 
-export const resolvers= {
-    Query:{
-        
-        ...userQueryResolver,
-        ...studetnQueryResolver,
+ const mergeResolver = mergeResolvers([userQueryResolver,userMutationResolver]);
 
-        
-        
-
-    },
-
-    Mutation:{        
-        ...userMutationResolver,
-        ...studentMutationResolver,
-        
-
-
-
-    }
-
-
-}
+export default mergeResolver;

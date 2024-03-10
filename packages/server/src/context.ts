@@ -1,8 +1,5 @@
 
 import {Faculty, PrismaClient, User} from '@prisma/client'
-import UserUseCase from './UseCases/UserUseCases';
-import FacultyUseCases from './UseCases/FacultyUseCases';
-import StudentUseCases from './UseCases/StudetnUseCases';
 import { UseCaseContext } from './common/useCase';
 
 
@@ -25,12 +22,7 @@ export const prisma = new PrismaClient({
 
 export interface GraphQlServerContext{
     prisma: PrismaClient
-    useCases:{
-        user:UserUseCase
-        student:StudentUseCases
-        faculty:FacultyUseCases 
-
-    }
+   
     auth?:{
         sub: string
         iss: string
@@ -48,9 +40,9 @@ export interface GraphQlServerContext{
 
 }
 
-function createContext(ctx:Pick<GraphQlServerContext,'auth' | 'currentStudent' | 'currentFaculty' | 'prisma' | 'useCases'> & {req:Request}):GraphQlServerContext{
+function createContext(ctx:Pick<GraphQlServerContext,'auth' | 'currentStudent' | 'currentFaculty' | 'prisma'> & {req:Request}):GraphQlServerContext{
 
-    const {auth,currentFaculty,currentStudent,prisma,useCases,req} = ctx
+    const {auth,currentFaculty,currentStudent,prisma,req} = ctx
     const authToken = req.headers.get('Authorization') ?? '';     
 
     const useCaseContext:UseCaseContext ={
@@ -63,7 +55,6 @@ function createContext(ctx:Pick<GraphQlServerContext,'auth' | 'currentStudent' |
 
     return{
         prisma,
-        useCases,
         currentFaculty,
         currentStudent
     }

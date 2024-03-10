@@ -6,7 +6,8 @@ import React from 'react'
 const GqlProvider = ({children}:{children:any}) => {
     const client = new ApolloClient({
         uri: "http://localhost:8000/api/graphql",
-        cache: new InMemoryCache()
+        cache: new InMemoryCache(),
+        credentials:"include"
     })
   return (
     <ApolloProvider client={client}>

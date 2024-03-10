@@ -1,6 +1,8 @@
 {
   "name": "e-classroom",
-  "private": true,
+  "private": true,   
+   "type": "module",
+
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
@@ -30,6 +32,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@types/cookie": "^0.6.0",
     "zod": "^3.22.4"
   }
 }

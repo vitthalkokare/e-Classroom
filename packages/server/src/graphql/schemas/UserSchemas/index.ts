@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserSchema = z.object({
+export const creaeUserSchema = z.object({
   email: z.string().email(),
   password: z
     .string({ required_error: "password is required" })
@@ -10,5 +10,14 @@ export const UserSchema = z.object({
     
 });
 
+export const loginUserSchrma = z.object({
+  email:z.string({ required_error: "invalid credentials"}).email(),
+  password:z.string({ required_error: "password is required"})
+  .trim()
+  .min(6,{message:"invalid credentials"})
+})
 
-export type IuserSchema = z.infer<typeof UserSchema> 
+export type IloginUserSchema = z.infer<typeof loginUserSchrma>
+
+
+export type IuserCreateSchema = z.infer<typeof creaeUserSchema> 

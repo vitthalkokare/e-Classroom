@@ -3,15 +3,8 @@
 import { useEffect, useState } from "react";
 import {
   gql,
-  useMutation,
   useQuery,
-  useSuspenseQuery,
-  UseFragmentOptions,
-  useFragment,
 } from "@apollo/client";
-import { NextApiRequest, NextApiResponse } from "next/types";
-import { NextRequest, NextResponse } from "next/server";
-import { json } from "stream/consumers";
 
 const LoginUser = () => {
   const [Email, setEmail] = useState("");

@@ -2,7 +2,8 @@ import JWT from "jsonwebtoken";
 import { prisma } from "../../context";
 
 import { createHmac, randomBytes } from "crypto";
-import { IuserSchema, UserSchema } from "../../graphql/schemas/UserSchemas";
+import { IloginUserSchema, IuserCreateSchema,creaeUserSchema, loginUserSchrma } from "../../graphql/schemas/UserSchemas";
+import { User } from "@prisma/client";
 
 class UserService {
   constructor() {}
@@ -30,8 +31,8 @@ class UserService {
     return HashPassword;
   }
 
-  static async createUser(createUserPayload: IuserSchema) {
-    const userSchema = UserSchema.parse(createUserPayload);
+  static async createUser(createUserPayload: IuserCreateSchema):Promise<User | string> {
+    const userSchema = creaeUserSchema.parse(createUserPayload);
     const { email, password } = userSchema;
     const salt = randomBytes(34).toString("hex");
     const hashedPassword = await UserService.generateHash(password, salt);
@@ -44,17 +45,18 @@ class UserService {
           salt,
         },
       });
+      return Promise.resolve(result);
     } catch (error) {
-      return error;
+      return "Error creating user"
     }
   }
 
  
 
-  static async SignUserToken(veryfyUserPayload: IuserSchema) {
-    const { email, password } = veryfyUserPayload;
+  static async SignUserToken(loginUserPayload: IloginUserSchema) {
+    const { email, password } = loginUserPayload;
     const user = await UserService.findUserByEmail(email);
-    if (!user) throw new Error("user not found");
+    if (!user) throw new Error("user not found,Create new Account.!");
 
     const userSalt = user.salt;
     const veryfyPassword = await UserService.generateHash(password, userSalt);
@@ -70,14 +72,14 @@ class UserService {
   static  veryfyUserToken(token: string) {
     try{
       if(!token){
-          throw new Error("Token is missing");
+          throw new Error("User not authenticated");
 
       }
       const verifiedToken = JWT.verify(token, 'superman');
       return {success:true,data:verifiedToken}
       
     }catch(err){
-     return {success:false, data:err}
+     return {success:false, data:"token is not valid"}
     }
   }
 }

@@ -7,11 +7,9 @@ export const  typeDefs = buildSchema (
     type Query{
 
         getUserToken(email:String, password:String):String
-        getCurrentUser(token:String):User
+        CurrentUser(token:String):User
         findAll(id:String):[User] 
-        getAllInfo:String
-
-
+        
         currentStudent(phone:Int):Student
         currentFaculty(email:String):Faculty 
         hello:String
@@ -24,7 +22,7 @@ export const  typeDefs = buildSchema (
     type Mutation{
 
         createUser(email:String,password:String):String
-        authUserSignToken(email:String!,password:String!):String
+        userSignToken(email:String!,password:String!):String
 
 
         createFaculty(email:String,password:String):Faculty
@@ -63,7 +61,7 @@ export const  typeDefs = buildSchema (
       type User{
         id:ID!
         email:String!
-        currentStudent:Student
+        
        
       }
 

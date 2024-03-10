@@ -3,7 +3,7 @@ import React from 'react'
 const Tasks:React.FC = () => {
   return (
     <div>
-        this is task page
+        this is more page
       
     </div>
   )

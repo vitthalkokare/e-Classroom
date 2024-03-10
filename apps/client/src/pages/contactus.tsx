@@ -1,5 +1,4 @@
 import React from 'react'
-import '../styles/globals.css'
 import { NextPage } from 'next';
 
 const ContactUs:NextPage = () => {
