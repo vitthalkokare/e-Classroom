@@ -1,64 +1,28 @@
-"use client";
+'use client'
+import useAuth from '@/app/util/useAuth'
+import React, { useEffect } from 'react'
 
-import { useEffect, useState } from "react";
-import {
-  gql,
-  useQuery,
-} from "@apollo/client";
+const page = () => {
+  const {isAuthenticated,data,user,loading,error} = useAuth();
+ 
 
-const LoginUser = () => {
-  const [Email, setEmail] = useState("");
-  const [Pass, setPass] = useState("");
-
-  const [udata,setudata] = useState<any>()
-
-  useEffect(()=>{
-
-  },[udata])
-
-  const Mtoken = gql`
-    mutation Mutation($email: String, $password: String) {
-      setUserToken(email: $email, password: $password)
-    }
-  `;
-
-  const cUser = gql`
-  query GetCurrentUser($token: String) {
-    getCurrentUser(token: $token) {
-      id
-      email
-      
-    }
-  }
-
-  `
-  const token = localStorage.getItem('token');
-
-    const {loading,data,error} = useQuery(cUser,{
-        variables:{token:token}
-    })
-    
-    const bt =()=>{
-        const item = JSON.stringify(data)
-        console.log(item)
-
-
-        setudata(item);
-    
-
-    }
-
+  
   return (
-    <div className=" w-full bg-slate-400 box-border p-5 flex items-center justify-center">
-     <h1>goodmoring</h1>
-     <button onClick={bt}>give data</button>
+    <div>
+      {loading ? (<>loading....</>):(<>
       
-
+            <h1>this is profile</h1>
+            {data && data.authUser?.studentData ? (<>
+                <div>
+                  <h1>{data.authUser.studentData.email}</h1>
+                </div>
+            </>):(<>Data is not avalable</>)}
 
       
+      </>)}
       
     </div>
-  );
-};
+  )
+}
 
-export default LoginUser;
+export default page

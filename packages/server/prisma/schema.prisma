@@ -10,44 +10,44 @@ datasource db {
 model User {
   id        String   @id @unique @default(uuid())
   email     String   @unique
-  headers   String?
-  authToken String?
   password  String?
-  role      Roll     @default(USER)
+  sid       String?
+  sub       String?
+  role      Roll
   salt      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  student   Student? @relation(fields: [studentId], references: [id])
-  studentId String?
+  student Student?
 
-  @@index([studentId])
   @@map("user")
 }
 
 model Student {
   id        String     @id @default(uuid())
-  roll      Roll
-  email     String    @unique
-  standard  Std?
-  phone     BigInt     @unique
-  name      String
-  sirname   String
+  roll      Roll       @default(STUDENT)
+  email     String     @unique
+  standard  Class?
+  phone     String    @unique
+  name      String?
+  gender    Gender?
+  sirname   String?
   imageUrl  String?
   dob       DateTime?
   boardName String?
-  city      String
-  state     String
+  city      String?
+  state     String?
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
   chats     Chats[]
   lecture   Lectures[]
   payment   Payment[]
   subject   Subject[]
+  user      User?      @relation(fields: [userId], references: [id])
 
+  userId    String   @unique
   Faculty   Faculty? @relation(fields: [facultyId], references: [id])
   facultyId String?
-  User      User[]
 
   @@map("student")
 }
@@ -71,14 +71,13 @@ model Subject {
   price       Int
   description String?
   isEnrolled  Boolean  @default(false)
-  studentID   String?
-  FacultyID   String
   adminId     String?
-  faculty     Faculty  @relation(fields: [FacultyID], references: [id])
-  Admin       Admin?   @relation(fields: [adminId], references: [id])
+  admin       Admin?   @relation(fields: [adminId], references: [id])
+  facultyId   String?
+  Faculty     Faculty? @relation(fields: [facultyId], references: [id])
+  studentId   String?
+  student     Student? @relation(fields: [studentId], references: [id])
 
-  @@index([studentID])
-  @@index([FacultyID])
   @@map("subject")
 }
 
@@ -91,10 +90,10 @@ model Lectures {
   contents   String
   createdAt  DateTime @default(now())
   facultyId  String?
-  adminId    String?
-  admin      Admin?   @relation(fields: [adminId], references: [id])
   Faculty    Faculty? @relation(fields: [facultyId], references: [id])
   student    Student? @relation(fields: [studentID], references: [id])
+  adminId    String?
+  admin      Admin?   @relation(fields: [adminId], references: [id])
 
   @@index([studentID])
   @@index([facultyId])
@@ -176,17 +175,23 @@ model Admin {
   @@map("admin")
 }
 
-enum Std {
-  FirstStandard
-  SecondStandard
-  ThirdStandard
-  FourthStandard
-  FifthStandard
-  SixthStandard
-  SeventhStandard
-  EightStandard
-  NithStandard
-  tenthStandard
+enum Class {
+  Class1  @map("1st Class")
+  Class2  @map("2nd Class")
+  Class3  @map("3rd Class")
+  Class4  @map("4th Class")
+  Class5  @map("5th Class")
+  Class6  @map("6th Class")
+  Class7  @map("7th Class")
+  Class8  @map("8th Class")
+  Class9  @map("9th Class")
+  Class10 @map("10th Class")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum Roll {
@@ -194,4 +199,5 @@ enum Roll {
   FACULTY
   ADMIN
   USER
+  AUTH0
 }

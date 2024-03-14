@@ -9,7 +9,7 @@ import {subData} from '@repo/ui/index'
 import Faculty from "./Faculty";
 import SubjectsItem from "./Subjects";
 
-import AutoSlide from "@/Components/utils/compo/AutoSlide";
+import AutoSlide from "@/Components/ui/compo/AutoSlide";
 
 const STD: React.FC = () => {
   const [myStd, setmyStd] = useState("");

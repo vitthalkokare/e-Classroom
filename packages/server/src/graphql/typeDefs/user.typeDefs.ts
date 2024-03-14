@@ -12,6 +12,8 @@ type Mutation{
        
        createUser(email:String,password:String):String
        userSignToken(email:String,password:String):String
+       userLogout:StatusMessage
+       auth0(email:String,sid:String,sub:String):User
 
 
 }
@@ -20,6 +22,7 @@ type User{
     id:ID!
     email:String!
     authToken:String
+    studentData:Student
 }
 
 input userCreateInput{

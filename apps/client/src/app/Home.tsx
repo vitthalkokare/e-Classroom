@@ -1,12 +1,12 @@
 "use client";
-import Intro from "@/Components/LandingPage/Indroduction/Intro";
+import Intro from "@/Components/LandingPage/intro/Intro";
 import Std from "@/Components/LandingPage/Standards/std";
 
 
 import React, { useEffect, useRef, useState } from "react";
-import Pricing from "@/Components/LandingPage/Pricing";
+import Pricing from "@/Components/ui/Pricing";
 import ContactUS from "@/pages/contactus";
-import Footer from "@/Components/LandingPage/Footer";
+import Footer from "@/Components/ui/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
 

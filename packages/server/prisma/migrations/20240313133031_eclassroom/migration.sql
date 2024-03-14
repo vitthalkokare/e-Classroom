@@ -1,21 +1,23 @@
 -- CreateEnum
-CREATE TYPE "Std" AS ENUM ('FirstStandard', 'SecondStandard', 'ThirdStandard', 'FourthStandard', 'FifthStandard', 'SixthStandard', 'SeventhStandard', 'EightStandard', 'NithStandard', 'tenthStandard');
+CREATE TYPE "Class" AS ENUM ('1st Class', '2nd Class', '3rd Class', '4th Class', '5th Class', '6th Class', '7th Class', '8th Class', '9th Class', '10th Class');
 
 -- CreateEnum
-CREATE TYPE "Roll" AS ENUM ('STUDENT', 'FACULTY', 'ADMIN', 'USER');
+CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
+
+-- CreateEnum
+CREATE TYPE "Roll" AS ENUM ('STUDENT', 'FACULTY', 'ADMIN', 'USER', 'AUTH0');
 
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "headers" TEXT,
-    "authToken" TEXT,
-    "password" TEXT NOT NULL,
-    "role" "Roll" NOT NULL DEFAULT 'USER',
+    "password" TEXT,
+    "sid" TEXT,
+    "sub" TEXT,
+    "role" "Roll" NOT NULL,
     "salt" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "studentId" TEXT NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -23,19 +25,21 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "student" (
     "id" TEXT NOT NULL,
-    "roll" "Roll" NOT NULL,
+    "roll" "Roll" NOT NULL DEFAULT 'STUDENT',
     "email" TEXT NOT NULL,
-    "standard" "Std",
-    "phone" BIGINT NOT NULL,
-    "name" TEXT NOT NULL,
-    "sirname" TEXT NOT NULL,
+    "standard" "Class",
+    "phone" TEXT NOT NULL,
+    "name" TEXT,
+    "gender" "Gender",
+    "sirname" TEXT,
     "imageUrl" TEXT,
     "dob" TIMESTAMP(3),
     "boardName" TEXT,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
+    "city" TEXT,
+    "state" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
+    "userId" TEXT NOT NULL,
     "facultyId" TEXT,
 
     CONSTRAINT "student_pkey" PRIMARY KEY ("id")
@@ -60,9 +64,9 @@ CREATE TABLE "subject" (
     "price" INTEGER NOT NULL,
     "description" TEXT,
     "isEnrolled" BOOLEAN NOT NULL DEFAULT false,
-    "studentID" TEXT,
-    "FacultyID" TEXT NOT NULL,
     "adminId" TEXT,
+    "facultyId" TEXT,
+    "studentId" TEXT,
 
     CONSTRAINT "subject_pkey" PRIMARY KEY ("id")
 );
@@ -149,19 +153,16 @@ CREATE UNIQUE INDEX "user_id_key" ON "user"("id");
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
-CREATE INDEX "user_studentId_idx" ON "user"("studentId");
+CREATE UNIQUE INDEX "student_email_key" ON "student"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "student_phone_key" ON "student"("phone");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "student_userId_key" ON "student"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "subject_title_key" ON "subject"("title");
-
--- CreateIndex
-CREATE INDEX "subject_studentID_idx" ON "subject"("studentID");
-
--- CreateIndex
-CREATE INDEX "subject_FacultyID_idx" ON "subject"("FacultyID");
 
 -- CreateIndex
 CREATE INDEX "lectures_studentID_idx" ON "lectures"("studentID");
@@ -179,7 +180,7 @@ CREATE INDEX "chats_facultyMessage_idx" ON "chats"("facultyMessage");
 CREATE UNIQUE INDEX "faculty_email_key" ON "faculty"("email");
 
 -- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "student" ADD CONSTRAINT "student_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "student" ADD CONSTRAINT "student_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -191,22 +192,22 @@ ALTER TABLE "payment" ADD CONSTRAINT "payment_adminId_fkey" FOREIGN KEY ("adminI
 ALTER TABLE "payment" ADD CONSTRAINT "payment_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subject" ADD CONSTRAINT "subject_FacultyID_fkey" FOREIGN KEY ("FacultyID") REFERENCES "faculty"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "subject" ADD CONSTRAINT "subject_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subject" ADD CONSTRAINT "subject_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "subject" ADD CONSTRAINT "subject_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lectures" ADD CONSTRAINT "lectures_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "subject" ADD CONSTRAINT "subject_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "lectures" ADD CONSTRAINT "lectures_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "lectures" ADD CONSTRAINT "lectures_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "lectures" ADD CONSTRAINT "lectures_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "chats" ADD CONSTRAINT "chats_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;

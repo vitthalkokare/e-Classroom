@@ -1,9 +1,9 @@
 import {useState,useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-import { RootState } from '@/lib/store'
 import UserInfoCard from './UserInfoCard'
 import SubjectItem from './Subjects/SubjectItem'
 import Cart from './Subjects/Cart'
+import { RootState } from '@repo/ui/index'
 
 
 const MainCard = (props:any) => {

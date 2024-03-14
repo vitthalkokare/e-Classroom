@@ -1,5 +1,5 @@
 import React from 'react'
-import Card1 from '../../utils/compo/Card1'
+import Card1 from '../../ui/compo/Card1'
 
 
 const Servicecard = () => {

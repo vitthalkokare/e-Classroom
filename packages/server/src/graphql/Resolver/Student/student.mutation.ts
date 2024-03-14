@@ -1,60 +1,53 @@
-import { PrismaClient } from "@prisma/client";
+import { Gender, PrismaClient } from "@prisma/client";
 import { prisma } from "../../../context";
+import {
+  IstudentInputSchema,
+  studentInputSchema,
+} from "../../schemas/StudentSchemas";
+import UserService from "../../../services/User/UserService";
+import StudentService, {
+  Istd,
+} from "../../../services/Student/StudentServices";
 
-export const pp = new PrismaClient({}) 
+export const pp = new PrismaClient({});
 
 export const studentMutationResolver = {
-
-  
-  registerStudent: async(_:any,{name,sirname}:{name:string,sirname:string},ctx:any)=>{
-
-     try{
-      return await prisma.student.create({
-        
-        data:{
-         name,
-         sirname, 
-         roll:"STUDENT",
-         state:"maharashtra",
-         city:"uk",
-         standard:"FourthStandard",
-         email:"ok@gmail.com",
-         phone:45389798
-
-        }
-      })
-
-
-     }catch(err){
-      return err
-     }
-  },
-
-
-  createFaculty:async(_:any,{email,password}:{email:string,password:string})=>{
-
-    try{
-        const result = await prisma.faculty.create({
+  Mutation: {
+   
+    createStudent:async(_:any,args:IstudentInputSchema,ctx:any)=>{
+      const uid = await ctx.user;
+      const user = await UserService.findUserByEmail(args.email)
+      try{
+        if(!user){
+          await prisma.user.create({
             data:{
-                email,
-                password,
-                name:'manager',
-                sirname:'manager',
-                salt:'lkfjs',
-                vision:"klfj",
-                exp:'4rwj'
+              email:args.email,
+
+              salt:"",
+              role:"AUTH0"
 
             }
-        })
-        return result;
+          })
+        
+        } 
+
+     
+
+        
+      }catch(err){}
+     
+
+      const student = await StudentService.createStudent(args,user,uid)
+      return student;
 
 
+    
 
-    }catch(err){
-            return err
     }
 
-}
+    
+  }
 
 
+  
 };

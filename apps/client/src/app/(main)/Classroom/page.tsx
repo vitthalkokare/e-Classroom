@@ -1,32 +1,20 @@
 'use client'
 import MainCard from '@/Components/(Classroom)/MainCard'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import { FaArrowsAltV } from 'react-icons/fa'
-import Header from './[user]/Profile/Header'
-import { useQuery } from '@apollo/client'
-import { AUTH_USER } from '@/graphql/user/queries'
 import StudentinfoCard from '@/Components/(Classroom)/Student/StudentinfoCard'
+import useAuth from '@/app/util/useAuth'
 
 const page = () => {
   const [openSubjectCard, closeSubjectCard] = useState(false)
   const [LiveDriver,setLiveDriver] = useState(300)
   const [User,setUser] = useState<Boolean>()
 
-  const {data,loading,error} = useQuery(AUTH_USER)
-
-  useEffect(()=>{
-    
-    if(data && data.authUser.authToken === null){
-      setUser(true)
-    }setUser(false);
-
-    
-
-  },[data,loading,error])
-
+  const {isAuthenticated,loading,error,user,data} = useAuth();
+ 
 
   return (
-    <div className='flex flex-col w-full  items-center'>
+    <div className='flex flex-col w-full relative  '>
       {openSubjectCard && <MainCard onClick={(e:any) => closeSubjectCard(false)}/>}
 
       <section className='w-full bg-red-400 h-full p-2 flex-col flex box-border  rounded-3xl'>
@@ -38,18 +26,13 @@ const page = () => {
 
           </div>
           <div>
-            <button onClick={()=>{
-            }}>check</button>
-            {error && ("sometingwent")}
-            {loading && <>loading....</>}
-            { data ? (<>{data.authUser.email}</>):(<h1>user not found</h1>)}
-            {User && (<StudentinfoCard/>)}
+            <h1>{data?.authUser?.email}</h1>
 
-            <Header/>
           </div>
           <div>right</div>
       </section>
 
+      {isAuthenticated && (data?.authUser?.studentData === null || user?.studentData === undefined) ? (<StudentinfoCard/>) : (<>{data?.authUser?.email}</>)}
 
         
     </div>

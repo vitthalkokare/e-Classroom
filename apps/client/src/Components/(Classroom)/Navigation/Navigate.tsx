@@ -6,6 +6,8 @@ import { FaHome, FaTasks } from 'react-icons/fa';
 import { MdOutlineVideoSettings } from "react-icons/md";
 
 import { FaGear, FaUser } from 'react-icons/fa6';
+import { useMutation } from '@apollo/client';
+import { USER_LOG_out } from '@/graphql/user/mutation';
 
 interface NavItem{
   label: string;
@@ -16,6 +18,7 @@ interface NavItem{
 
 const Navigate:React.FC = () => {
     const [smallNav, setsmallNav] = useState('none')
+    const [userLogout,{loading}] = useMutation(USER_LOG_out)
 
     const MenuItem:NavItem[] =[
       {label: 'Home',path:'/Classroom', icon:<FaHome/>},
@@ -46,7 +49,7 @@ const Navigate:React.FC = () => {
 
        </nav>
 
-       <span className='box-border p-2 bg-blue-700 rounded-xl'><a href="/api/auth/logout">Logout</a></span>
+       <span className='box-border p-2 bg-blue-700 rounded-xl'><a onClick={()=>{userLogout()}} href="/api/auth/logout">{loading && <>...</>}Logout</a></span>
 
 
        

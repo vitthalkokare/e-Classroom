@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
-import AutoSlide from "@/Components/utils/compo/AutoSlide";
-import Tryitfreeauth from "@/Components/utils/buttons/Tryitfreeauth";
+import AutoSlide from "@/Components/ui/compo/AutoSlide";
+import Tryitfreeauth from "@/app/util/Authbtn";
 
 const Intro: React.FC = () => {
   const ScrollItem1 = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ const Intro: React.FC = () => {
           <strong className="whitespace-nowrap">Academic Excellence.</strong>
         </span>
 
-        {(<Tryitfreeauth/>)}
+        {(<Tryitfreeauth btn={"try It Free"}/>)}
       </div>
 
       <div className={` md:w-[200px] md:h-[200px]  scr  sm:w-[200px] hidden sm:flex md:flex overflow-x-scroll  box-border items-center content-center   rounded-full   sm:h-[200px] bg-white-500`}>

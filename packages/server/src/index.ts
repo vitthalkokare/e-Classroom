@@ -9,7 +9,8 @@ import cookieParser from "cookie-parser";
 import UserService from "./services/User/UserService";
 import mergeResolver from "./graphql/Resolver";
 import mergeTypeDef from "./graphql/typeDefs/index";
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
+import { auth, requiresAuth } from "express-openid-connect";
 
 async function myServer() {
   const app = express();
@@ -18,10 +19,32 @@ async function myServer() {
 
   dotenv.config();
 
+
+
+  const config = {
+    authRequired: false,
+    auth0Logout: true,
+    baseURL: 'http://localhost:3000',
+    clientID: '1I8QtC5B6lXM0ZP732TQHzIIxQR1kaPi',
+    issuerBaseURL: 'https://dev-6snnvh2bx675qods.us.auth0.com',
+    secret: 'ELz9xygRxHCt31dBfn6DHUy8wGE2UlHVS-Tj4JfiLPcWW7Z3vmm2N_l_7D0PvnJr'
+  };
+
+  
+
+ 
+
+app.use(auth(config));
+
+
+
+
+
   app.use(express.json());
   app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(express.urlencoded({ extended: false }));
+  
 
   const gqlServer = new ApolloServer({
     typeDefs: mergeTypeDef,
@@ -31,27 +54,29 @@ async function myServer() {
   });
 
   await gqlServer.start();
+ 
+  
 
   app.use(
     "/api/graphql",
     cors({
-      origin: "http://localhost:3000",
-      credentials: true,
+      origin: 'http://localhost:3000',
+      credentials:true,
     }),
-    express.json(),
-    cookieParser(),
-
+    json(),
+ 
     expressMiddleware(gqlServer, {
       context: async ({ req, res }) => {
          const token =  req.headers.cookie
          const t = token?.trim().slice(6);
 
+        
+         const tok = req.headers["authorization"] || ""
 
-         const tok = req.headers["authorization"] || t
+        const user =  UserService.veryfyUserToken(t as string);
+        
 
-        const user = UserService.veryfyUserToken(tok as string);
-
-        return { req, res, user };   
+        return { req, res, user, t,token};   
       },
     })
   );
@@ -62,4 +87,8 @@ async function myServer() {
   });
 }
 
+
 myServer();
+
+
+

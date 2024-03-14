@@ -34,6 +34,7 @@ class UserService {
   static async createUser(createUserPayload: IuserCreateSchema):Promise<User | string> {
     const userSchema = creaeUserSchema.parse(createUserPayload);
     const { email, password } = userSchema;
+    if(email === "" || password ==="") throw new Error("all fields are required");
     const salt = randomBytes(34).toString("hex");
     const hashedPassword = await UserService.generateHash(password, salt);
 
@@ -43,6 +44,7 @@ class UserService {
           email,
           password: hashedPassword,
           salt,
+          role:"USER"
         },
       });
       return Promise.resolve(result);
@@ -57,6 +59,8 @@ class UserService {
     const { email, password } = loginUserPayload;
     const user = await UserService.findUserByEmail(email);
     if (!user) throw new Error("user not found,Create new Account.!");
+
+    if(email === "" || password === "" ) throw new Error("all fields are required");
 
     const userSalt = user.salt;
     const veryfyPassword = await UserService.generateHash(password, userSalt);
@@ -76,12 +80,12 @@ class UserService {
 
       }
       const verifiedToken = JWT.verify(token, 'superman');
-      return {success:true,data:verifiedToken}
+      return verifiedToken
       
     }catch(err){
-     return {success:false, data:"token is not valid"}
+     return "token is not valid"
     }
   }
 }
-
+ 
 export default UserService;

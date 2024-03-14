@@ -19,8 +19,8 @@ const MobileNav:React.FC = () => {
 
     const MenuItem:NavItem[] =[
       {label: 'Home',path:'/Classroom', icon:<FaHome/>},
-      {label: 'Tasks',path:'/Classroom/user/Tasks', icon:<FaTasks/>},
-      {label: 'Lecture',path:'/user/Classroom/Lectures', icon:<MdOutlineVideoSettings/>},
+      {label: 'Tasks',path:'/Classroom/user/tasks', icon:<FaTasks/>},
+      {label: 'Lecture',path:'/user/Classroom/user/lectures', icon:<MdOutlineVideoSettings/>},
       {label: 'More',path:'/Classroom/user/more', icon:<FaHome/>},
       {label: 'Profile',path:'/Classroom/user/Profile', icon:<FaUser/>},
 

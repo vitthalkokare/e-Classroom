@@ -7,25 +7,14 @@ import toast from 'react-hot-toast';
 
 
 
+
 const SignupPage = () => {
   const [SignupData,setLoginData] = useState({
     email:'',
     password:''
   });
 
-  const ok = gql`
-  query Query{
-    hello
-  }
-  
-  `
-
-
-
-  const [createUser,{loading,error}] = useMutation(CREATE_USER,{
-    refetchQueries:["hello"]
-    
-  })
+  const [createUser,{loading,error}] = useMutation(CREATE_USER)
 
   function changeHandler(e:React.ChangeEvent<HTMLInputElement>) {
     const {name,value} = e.target;
@@ -41,8 +30,8 @@ const SignupPage = () => {
     if(!SignupData.email && !SignupData.password) return toast.error("please enter all required fields")
 		try{
        const user = await createUser({variables:{email:SignupData.email, password:SignupData.password}});
-       console.log(user);
-        return {message:"user created successfully"};
+        toast.success("user created successfully")
+        return window.location.href = '/api/login'
   }catch(error){
     toast.error('fuck');
   }
@@ -85,3 +74,5 @@ const SignupPage = () => {
 }
 
 export default SignupPage
+
+

@@ -1,5 +1,8 @@
-import { User } from "@prisma/client";
+import { Student, User } from "@prisma/client";
 import UserService from "../../../services/User/UserService";
+import StudentService from "../../../services/Student/StudentServices";
+import { object } from "zod";
+import { Result } from "../../../common/result";
 
 const userQueryResolver = {
   Query: {
@@ -13,25 +16,32 @@ const userQueryResolver = {
     },
 
 
-    authUser: (_: any, arg:any, ctx: any):Promise<User | null> => {
-      console.log(ctx.user)
-      const uid = ctx.user.data
+    authUser: async(_: any, arg:any, ctx: any)=> {
+      const uid = ctx.user.id || ''
+      const userEmail = await ctx.req.oidc.user;
+      console.log( userEmail)
+
+
       try{
-        if(uid === null) {
-          return Promise.resolve(null)
-        }
         
-        return Promise.resolve(uid)
+        const userData = UserService.FindUserById(uid)
+        if(!userData) return null;
+
+        return userData; 
+        
 
       }catch(error){
-        console.log(error)
-        throw new Error("User not authenticated");
+        return error;
       }
       
       
     },
   
   },
+
+
+
+ 
 };
 
 export default userQueryResolver;

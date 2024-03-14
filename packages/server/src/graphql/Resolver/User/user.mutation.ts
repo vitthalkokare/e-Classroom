@@ -1,7 +1,9 @@
-import { User } from "@prisma/client";
+import { Student } from "@prisma/client";
+import StudentService from "../../../services/Student/StudentServices";
 import UserService from "../../../services/User/UserService";
-import { IuserCreateSchema, creaeUserSchema } from "../../schemas/UserSchemas";
-import JWT from "jsonwebtoken";
+import { IloginUserSchema, IuserCreateSchema, authSchema, creaeUserSchema, loginUserSchrma } from "../../schemas/UserSchemas";
+import { prisma } from "../../../context";
+import { GraphQLError } from "graphql";
 
 
 const userMutationResolver = {
@@ -22,44 +24,104 @@ const userMutationResolver = {
         try {
           const user = await UserService.createUser(creaeUserInput);
           console.log(user);
-          return { message: "user created successfully" };
+          return  "user created successfully"
         } catch (error) {
-          return error;
+          return GraphQLError
         }
       }
     },
 
-    userSignToken: async (
-      _: any,
-      creaeUserInput: IuserCreateSchema,
-      ctx: any
-    ) => {
-      creaeUserSchema.parse(creaeUserInput);
-      const { email, password } = creaeUserInput;
+    auth0:async(_:any,{email,sid,sub}:{email:string,sid:string,sub:string},ctx:any)=>{
+      authSchema.parse({email})
 
-      const Token = await UserService.SignUserToken(creaeUserInput);
-
-      try{
-        if(ctx.req.cookies && ctx.req.cookies.token){
-          ctx.res.clearCookie('token');
-        }
-  
-  
-      }catch(err){}
-      ctx.res.cookie('token',Token);
-
-
-
-        if (!Token) return Promise.resolve("Enternal Server Error");
-          console.log(ctx.user)
-        
+      const user = await UserService.findUserByEmail(email);
       
-        return Promise.resolve(Token);
+      if(!user){
+        try{
+          return await prisma.user.create({
+            data:{
+              email:email,
+              sid:sid,
+              sub:sub,
+              salt:"",
+              role:"AUTH0"
+            }
+          });
 
+         
+        
+
+      }catch(err){
+        console.log(err);
+         return GraphQLError
+      }
+
+      }
+     
+
+      return user;
+      
 
     },
 
+    userSignToken: async (
+      _: any,
+      creaeUserInput: IloginUserSchema,
+      ctx: any
+    ) => {
+      const { email, password } = creaeUserInput;
+
+
+      try{
+
+      const Token = await UserService.SignUserToken(creaeUserInput);
+
+        if(ctx.req.cookies && ctx.req.cookies.token){
+          ctx.res.clearCookie('token');
+        }
+
+        ctx.res.cookie('token',Token);
+       
+        return Token;
+
+      }catch(err:any){
+        
+        return err;
+         
+      }
+
+    },
+
+    userLogout:async(_:any,args:any,ctx:any)=>{
+      try{
+        if(ctx.req.cookies && ctx.req.cookies.token){
+          ctx.res.clearCookie("token");
+        }
+        return {message:"User logged out successfully"}
+
+
+      }catch(error){
+        return {message:error}
+      }
+
+    }
+
   },
+
+  User: {
+    studentData: async (parent: any, args: any, ctx: any)=> {
+      const useremail = ctx.user.email;
+      try {
+       
+  
+        const student = await StudentService.findStudentByEmail(useremail);
+        return student;
+      } catch (err) {
+        throw new Error("Error: User not found");
+      } 
+    }
+  }
+
 };
 
 export default userMutationResolver;

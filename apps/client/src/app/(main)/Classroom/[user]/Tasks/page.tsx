@@ -1,12 +1,19 @@
 import React from 'react'
+import { getSession } from '@auth0/nextjs-auth0';
 
-const Tasks:React.FC = () => {
+
+
+const page = async() => {
+ 
+
+
   return (
     <div>
-        this is task page
+      <h1>this is tasks page</h1>
+
       
     </div>
   )
 }
 
-export default Tasks
+export default page

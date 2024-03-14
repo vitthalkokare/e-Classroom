@@ -7,6 +7,9 @@ import {setCard} from '@repo/ui/index'
 import {useDispatch} from 'react-redux'
 import { redirect } from "next/dist/server/api-utils";
 import { Router, useRouter } from "next/router";
+import useAuth from "@/app/util/useAuth";
+
+
 
 
 interface ref {
@@ -34,6 +37,7 @@ const SideNavMenu: React.FC<ref> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const dispatch = useDispatch();
   const {user} = useUser();
+  
 
   const mm: MenuItem[] = [
     { label: "Profile", icon: <FaRegUserCircle />, reff: Profile },
@@ -52,6 +56,7 @@ const SideNavMenu: React.FC<ref> = ({
       });
     }
   };
+  const {isAuthenticated,loading,error} = useAuth();
 
   return (
     <>
@@ -59,7 +64,7 @@ const SideNavMenu: React.FC<ref> = ({
         {mm.map((item, index) => (
           <button
             key={index}
-            onMouseDown={()=> {index === 0 && dispatch(setCard(true))}}
+            onMouseDown={()=> {index === 0 && isAuthenticated ? window.location.href = '/Classroom' : dispatch(setCard(true)) }}
             onClick={() => handleButtonClick(item.reff)}
             className="flex box-border m-2 p-2"
           >
