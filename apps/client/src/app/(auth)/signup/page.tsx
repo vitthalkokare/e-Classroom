@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 
 
-const SignupPage = () => {
+const SignupPage = (props:any) => {
   const [SignupData,setLoginData] = useState({
     email:'',
     password:''
@@ -27,18 +27,18 @@ const SignupPage = () => {
   }
   const LoginHandler = async(e:any)=>{
     e.preventDefault();
-    if(!SignupData.email && !SignupData.password) return toast.error("please enter all required fields")
 		try{
        const user = await createUser({variables:{email:SignupData.email, password:SignupData.password}});
         toast.success("user created successfully")
-        return window.location.href = '/api/login'
-  }catch(error){
-    toast.error('fuck');
+        return window.location.href = '/login'
+  }catch(err:any){
+    return toast.error(err.message)
+
   }
   }
 
   return (
-    <div className='flex justify-evenly items-center box-border p-4 bg-white w-1/2 m-auto rounded-xl'>
+    <div className='flex w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
      <div>
       <form action="" onSubmit={LoginHandler}>
         <InputField
@@ -61,13 +61,18 @@ const SignupPage = () => {
         />
 
  
-        <button type='submit'>Login</button>
+        <button type='submit'>SignUp</button>
        
       </form>
      </div>
      <div>
 
      </div>
+     <button onClick={()=>{
+      props.onClick;
+      window.location.href = "/login"}}>
+        <h1>logIn</h1>
+      </button>
       
     </div>
   )

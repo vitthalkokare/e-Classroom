@@ -10,18 +10,29 @@ class UserService {
  
   
   public  static async findUserByEmail(email: string){
-    const result = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    return Promise.resolve(result);
+    if(!email) return null;
+    try{
+      const result = await prisma.user.findUnique({
+        where: {
+          email:email
+        },
+      });
+      return result;
+    }catch(e){
+    }
   }
 
   static async FindUserById(id: string){
-    return await prisma.user.findUnique({
-      where: { id },
-    });
+    if(!id) return null;
+    try{
+      const result = await prisma.user.findUnique({
+        where: {
+          id:id
+        },
+      });
+      return result;
+    }catch(e){
+    }
   }
 
   private static async generateHash(password: string, salt: string) {

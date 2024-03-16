@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setCard } from "@repo/ui/index";
-import LoginPage from "../api/login/page";
+import LoginPage from "../(auth)/login/page";
 
 const UserValidate = () => {
   const [valEmail,setvalEmail]  = useState<Boolean>(false)

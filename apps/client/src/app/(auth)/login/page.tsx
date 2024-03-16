@@ -8,9 +8,12 @@ import { FaBackward } from "react-icons/fa";
 import { error } from "@material-tailwind/react/types/components/input";
 import { useDispatch } from "react-redux";
 import { setCard } from "@repo/ui/index";
+import SignupPage from "../signup/page";
 
 
 const LoginPage = (props:any) => {
+  const [Signup,setSignup] = useState(false);
+
   const [LoginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -93,6 +96,16 @@ const LoginPage = (props:any) => {
       >
         <FaBackward />
       </button>
+      <button onClick={()=>{
+        setSignup(true)
+        window.location.href = "/signup"
+      }}>
+        <h1>create new account</h1>
+      </button>
+      {Signup ? (<div className="bg-red-400 absolute w-full h-full flex justify-center items-center">
+      <SignupPage onClick={()=>setSignup(false)}/>
+      </div>):(<></>)}
+      
     </div>
   );
 };

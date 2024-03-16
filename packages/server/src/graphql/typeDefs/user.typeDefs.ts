@@ -2,7 +2,7 @@
  const userTypeDefs = `
 
 type Query{
-    authUser:User
+    authUser(email:String):User
     currentUser(id:ID!):User
     
 

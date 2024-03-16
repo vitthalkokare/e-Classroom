@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Img from "../../../../public/pictures/Landingpage/teachericon.jpg";
 
 import {useSelector} from 'react-redux'
-import { RootState } from "@/lib/store";
+import { RootState } from '@repo/ui/index';
 
 
 const Faculty:React.FC = () => {

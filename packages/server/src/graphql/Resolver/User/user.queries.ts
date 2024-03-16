@@ -7,25 +7,22 @@ import { Result } from "../../../common/result";
 const userQueryResolver = {
   Query: {
     currentUser: async (_: any, { id }: { id: string }, ctx: any) => {
-      console.log(ctx.user)
       const uid = ctx.user.data.id
      const user = UserService.FindUserById(uid)
-     console.log(user);
       return user
 
     },
 
 
-    authUser: async(_: any, arg:any, ctx: any)=> {
-      const uid = ctx.user.id || ''
-      const userEmail = await ctx.req.oidc.user;
-      console.log( userEmail)
+    authUser: async(_: any, args:any, ctx: any)=> {
+      const uid = await ctx.user.email || args.email
+        const userData = await UserService.findUserByEmail(uid)
+
+              if(!userData) return null;
 
 
       try{
         
-        const userData = UserService.FindUserById(uid)
-        if(!userData) return null;
 
         return userData; 
         

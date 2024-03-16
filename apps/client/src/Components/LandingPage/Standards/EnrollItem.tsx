@@ -41,9 +41,9 @@ const STD: React.FC = () => {
   }
 
   return (
-    <>
-      <div className=" relative   md:h-fit h-screen sm:h-fit  p-2 s-colo  flex flex-col justify-evenly m-auto  items-center box-border w-full  rounded-2xl sm:w-[95%]   md:flex-col sm:flex-col sm:justify-start">
-        <div className="border-2   absolute top-10 -left-1/2 w-[80%]  justify-center items-center  sm:top-0 md:top-0 sm:relative md:relative sm:left-0 md:left-0  flex flex-wrap box-border p-2 rounded-xl drop-shadow-xl">
+    
+      <div className=" relative w-[100%]  md:h-fit h-screen sm:h-fit  p-2  justify-center flex flex-col    box-border  rounded-2xl   md:flex-col sm:flex-col ">
+      <div className="border-2 w-[70%] sm:w-full  absolute top-10 -left-1/2   justify-center items-center  sm:top-0 md:top-0 sm:relative md:relative sm:left-0 md:left-0  flex flex-wrap box-border p-2 rounded-xl drop-shadow-xl">
           {/* State */}
           <select
             name=""
@@ -121,8 +121,10 @@ const STD: React.FC = () => {
 
           </div>
         ) : (
-          <div className="w-full">
+          <div className="w-full flex  flex-col justify-center items-center">
+            <div className="w-[60%] relative -top-10 sm:top-0 md:top-0 sm:w-[90%] scr h-[350px] overflow-y-scroll">
             <SubjectsItem />
+            </div>
 
             {/* Faculty */}
             <div className="w-full box-border p-2">
@@ -131,7 +133,7 @@ const STD: React.FC = () => {
           </div>
         )}
       </div>
-    </>
+    
   );
 };
 

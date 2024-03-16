@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 
 const ContactUs:NextPage = () => {
   return (
-    <div className='sm:w-[90%]  md:h-full box-border p-2 w-[80%]  rounded-3xl shadow-2xl relative mx-auto items-center justify-center   flex flex-col'>
+    <div className='sm:w-[100%]  md:h-full box-border p-2 w-[80%]  rounded-3xl shadow-2xl relative mx-auto items-center justify-center   flex flex-col'>
        
        <div className='w-full flex relative box-border p-4 justify-around items-center sm:flex-col bg-white rounded-3xl'>
 

@@ -2,10 +2,10 @@ import { gql } from "@apollo/client";
 
 
 export const AUTH_USER = gql`
-query AuthUser {
-  authUser {
-    email
+query AuthUser($email: String) {
+  authUser(email: $email) {
     authToken
+    email
     id
     studentData {
       id
@@ -20,15 +20,13 @@ query AuthUser {
       userId
       phone
       subjects {
+        title
+        price
         description
         isEnrolled
-        price
-        title
       }
     }
   }
 }
-
-
 
 `

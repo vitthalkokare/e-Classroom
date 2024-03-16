@@ -22,7 +22,7 @@ export const studentMutationResolver = {
           await prisma.user.create({
             data:{
               email:args.email,
-
+              
               salt:"",
               role:"AUTH0"
 

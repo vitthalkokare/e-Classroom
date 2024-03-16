@@ -3,6 +3,8 @@ import { StoreProvider } from "@repo/ui/index";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import GqlProvider from "./api/GqlProvider";
 import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
+
 
 export default function RootLayout({
   children,
@@ -12,13 +14,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GqlProvider>
-        <UserProvider>
+      <UserProvider>
+
           <StoreProvider>
+
             <body className="scr">{children}
             <Toaster/>
             </body>
           </StoreProvider>
-        </UserProvider>
+          </UserProvider>
+
       </GqlProvider>
     </html>
   );

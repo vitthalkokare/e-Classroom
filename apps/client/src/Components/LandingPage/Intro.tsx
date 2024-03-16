@@ -20,7 +20,7 @@ const Intro: React.FC = () => {
   };
 
   return (
-    <div className="flex  w-full  text-white justify-evenly items-center       rounded-xl box-border p-4 " >
+    <div className="flex  w-full  text-white justify-evenly items-center     rounded-xl box-border p-4 " >
       <div className="flex box-border drop-shadow-xl text-black flex-col  relative z-10">
         <span className="sm:text-3xl text-[5vw] whitespace-nowrap">
           <strong>e-Classroom:</strong>

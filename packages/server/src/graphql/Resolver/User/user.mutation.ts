@@ -110,7 +110,7 @@ const userMutationResolver = {
 
   User: {
     studentData: async (parent: any, args: any, ctx: any)=> {
-      const useremail = ctx.user.email;
+      const useremail = ctx.user.email || parent.email;
       try {
        
   

@@ -26,16 +26,15 @@ const page = () => {
 
           </div>
           <div>
-            <h1>{data?.authUser?.email}</h1>
+
 
           </div>
           <div>right</div>
       </section>
-
-      {isAuthenticated && (data?.authUser?.studentData === null || user?.studentData === undefined) ? (<StudentinfoCard/>) : (<>{data?.authUser?.email}</>)}
+      {isAuthenticated && (data?.authUser?.studentData === null || user?.authUser === null) ? (<StudentinfoCard/>) : (<>{data?.authUser?.email || user?.authUser}</>)}
 
         
-    </div>
+    </div> 
   )
 }
 

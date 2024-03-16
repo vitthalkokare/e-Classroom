@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",
+    "@clerk/backend": "^0.38.3",
+    "@clerk/clerk-sdk-node": "^4.13.11",
     "@graphql-tools/merge": "^9.0.3",
     "@prisma/client": "^5.10.2",
     "@types/express-session": "^1.18.0",

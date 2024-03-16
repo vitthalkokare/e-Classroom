@@ -1,6 +1,6 @@
 "use client";
-import Intro from "@/Components/LandingPage/intro/Intro";
-import Std from "@/Components/LandingPage/Standards/std";
+import Intro from "@/Components/LandingPage/Intro";
+import Std from "@/Components/LandingPage/Standards/EnrollItem";
 
 
 import React, { useEffect, useRef, useState } from "react";
@@ -9,9 +9,11 @@ import ContactUS from "@/pages/contactus";
 import Footer from "@/Components/ui/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
+import { FaUser } from "react-icons/fa";
 
 const Home = () => {
   const [isNav, setisNav] = useState(0);
+  const [topNav, settopNav] = useState({height:40,width:0,opacity:0})
 
 
   const Profile = useRef<HTMLDivElement>(null);
@@ -25,10 +27,12 @@ const Home = () => {
   useEffect(() => {
     function handleScroll() {
       const currentScrollPos = window.scrollY;
-      if (currentScrollPos < 10) {
+      if (currentScrollPos < 70) {
         setisNav(0);
+        settopNav(topNav);
       } else {
         setisNav(5);
+        settopNav({height:50,width:100,opacity:50})
       }
     }
     window.addEventListener("scroll", handleScroll);
@@ -42,20 +46,28 @@ const Home = () => {
 
 
   return (
-    <div className="sm:w-full w-[100%] relative   flex flex-col mx-auto">
+    <div className=" w-[100%] sm:min-w-[200px]  sm:w-[400px] relative   flex flex-col">
 
      <div
         className={`sm:hidden  overflow-hidden  s-color  transition-all duration-300   z-10 h-[100%]  flex flex-col   justify-center box-borde  fixed right-0   `}
         style={{ borderRadius: "100% 0% 0% 100% / 42% 48% 47% 47%  ", width:`${isNav}%` }}
       >
         <SideNavMenu Profile={Profile} Home={Home} Services={Services} Price={Prices} Contactus={Contactus}/>
+       
         
         
       </div> 
+      <div className={`sticky top-0 transition-all duration-300 w-full  overflow-hidden  bg-yellow-200 text-2xl hidden sm:flex  justify-between    items-center box-border p-2  z-50  h-[50px]`} style={{height:`${topNav.height}px`}}>
+        <strong className={`opacity-${topNav.opacity}`} >E-Classroom</strong>
+        <span className="box-border p-4">
+        <FaUser/>
+        </span>
+
+      </div>
 
       <header
         ref={Home}
-        className="box-border justify-around h-screen sm:h-auto md:h-auto md:w-[90%]   md:flex-col  flex sm:flex-col relative  w-[100%] bg-yellow-200  mx-auto  "
+        className="box-border justify-around h-screen sm:h-auto md:h-auto md:flex-col  flex sm:flex-col relative  w-[100%] bg-yellow-200   "
         style={{ borderRadius: "" }}
       >
         <Intro />
