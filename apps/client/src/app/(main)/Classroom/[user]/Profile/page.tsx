@@ -1,23 +1,17 @@
 "use client";
 import useAuth from "@/app/util/useAuth";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import ProfileCard from "./ProfileCard";
-import { FaAccessibleIcon, FaAddressCard } from "react-icons/fa";
 import StudentProgress from "./StudentProgress";
 import EnrolledSubject from "./EnrolledSubject";
+import SubjectEnrollCard from "@/Components/(Classroom)/Subjects/SubjectEnrollCard";
+import userUtil from "../userUtil";
 
 const page = () => {
-  const { isAuthenticated, data, user, loading, error } = useAuth();
+  const { StudentData, userPCard, loading } = userUtil();
   const [StudentItem, setStudentItem] = useState<ReactNode | null>(
     <StudentProgress />
   );
-
-  const [sData, setStudentData] = useState<any | null>(null);
-  useEffect(() => {
-    if (data?.authUser?.studentData) {
-      setStudentData(data.authUser.studentData);
-    }
-  }, [data]);
 
   return (
     <div>
@@ -25,14 +19,17 @@ const page = () => {
         <>loading....</>
       ) : (
         <>
-          {sData ? (
+          {StudentData ? (
             <>
               <ProfileCard
-                name={sData?.name}
-                sirname={sData?.sirname}
+                name={StudentData?.name}
+                sirname={StudentData?.sirname}
                 profileUrl="/pictures/Landingpage//introimg3.jpg"
-                standard="ok"
+                Class="ok"
+                city={StudentData?.city}
+                boardname={StudentData?.boardName}
                 children={StudentItem}
+                state={StudentData.state}
                 btn={[
                   {
                     btn: "Progress",
@@ -46,9 +43,10 @@ const page = () => {
                       setStudentItem(<EnrolledSubject />);
                     },
                   },
-
                 ]}
               />
+
+              {false ? (<>{loading ? <>loading...</> : <SubjectEnrollCard />}</>) : <></>}
             </>
           ) : (
             <>Data is not avalable</>

@@ -30,7 +30,7 @@ const SignupPage = (props:any) => {
 		try{
        const user = await createUser({variables:{email:SignupData.email, password:SignupData.password}});
         toast.success("user created successfully")
-        return window.location.href = '/login'
+        return window.location.href = '/login';
   }catch(err:any){
     return toast.error(err.message)
 
@@ -38,9 +38,9 @@ const SignupPage = (props:any) => {
   }
 
   return (
-    <div className='flex w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
-     <div>
-      <form action="" onSubmit={LoginHandler}>
+    <div className='flex  w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
+     <div className=''>
+      <form action="" className='flex flex-col items-center' onSubmit={LoginHandler}>
         <InputField
           label='email'
           id='email'
@@ -61,17 +61,17 @@ const SignupPage = (props:any) => {
         />
 
  
-        <button type='submit'>SignUp</button>
+        <button className='box-border px-4 py-1 rounded-lg  bg-blue-500 my-2' type='submit'>SignUp</button>
        
       </form>
      </div>
      <div>
 
      </div>
-     <button onClick={()=>{
-      props.onClick;
-      window.location.href = "/login"}}>
-        <h1>logIn</h1>
+     <button className='box-border p-2' onClick={()=>{
+      props.onClick()
+      }}>
+        <h1>Already Have Account?</h1>
       </button>
       
     </div>

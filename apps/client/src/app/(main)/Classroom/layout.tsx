@@ -16,7 +16,7 @@ export default function Mainlayout({children,}:{children:React.ReactNode}){
 
   return (
     <>
-    {true ? ( <div className=' sm:min-w-[400px] h-screen    w-[100%] box-border relative flex'>
+    {isAuthenticated ? ( <div className=' sm:min-w-[400px] h-screen    w-[100%] box-border relative flex'>
      
      <aside className='box-border justify-between h-full flex-col items-center flex bg-pink-400  p-2 rounded-3xl mx-2 md:tex-4xl  left-0   sm:hidden   '>
        <Navigate/>

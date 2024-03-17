@@ -9,7 +9,7 @@ const StudentinfoCard = () => {
 
   const [studentData, setStudentData] = useState({
     name: "",
-    email:(data && data?.authUser?.email) || user?.primaryEmailAddress?.emailAddress,
+    email:(data && data?.authUser?.email) || user?.email,
     sirname: "",
     state: "",
     city: "",

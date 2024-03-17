@@ -98,11 +98,10 @@ const LoginPage = (props:any) => {
       </button>
       <button onClick={()=>{
         setSignup(true)
-        window.location.href = "/signup"
       }}>
         <h1>create new account</h1>
       </button>
-      {Signup ? (<div className="bg-red-400 absolute w-full h-full flex justify-center items-center">
+      {Signup ? (<div className="bg-red-400 absolute box-border -inset-1 w-full h-full flex  rounded-xl justify-center items-center">
       <SignupPage onClick={()=>setSignup(false)}/>
       </div>):(<></>)}
       

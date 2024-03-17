@@ -76,14 +76,15 @@ export const subSlice = createSlice({
 
     // Cart Item
     AddItem: (state,action) => {
-      state.value += 1;
+      
       let AdeedItem:any[] = action.payload
       state.Cart.push(AdeedItem)
 
     },
 
-    decrement: (state) => {
-      state.value -= 1;
+    decrement: (state,action) => {
+      
+      state.Cart = state.Cart.filter((item) => item.id !== action.payload);      
     },
 
   },

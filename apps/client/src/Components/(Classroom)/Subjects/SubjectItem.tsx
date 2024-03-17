@@ -1,11 +1,9 @@
 import React, { useState ,useRef } from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-import { BoardSelect, SetSuject, StateSelect,AddItem} from '../../../../../lib/Features/slices/SubStdSlice'
-import { RootState } from '@/lib/store'
 import Cart from './Cart'
 import SubjectInfo from './SubjectInfo'
-import Image from 'next/image'
 import { FaBook } from "react-icons/fa";
+import { RootState, subData } from '@repo/ui/index'
 
 
 const SubjectItem = (props:any) => {
@@ -35,19 +33,19 @@ const stylee = {
   function StateHandler(event:any) {
     let st =  event.target.value;
     setState(st)
-    dispatch(StateSelect(st));
+    dispatch(subData.StateSelect(st));
   }
   function BoardHandler(event:any){
     let bd = event.target.value;
     setBoard(bd)  
-    dispatch(BoardSelect(bd));
+    dispatch(subData.BoardSelect(bd));
 
 
 
   }
   function changeHandler(event: React.ChangeEvent<HTMLSelectElement>): void {
     const dd = event.target.value;
-    dispatch(SetSuject([dd, Board]));
+    dispatch(subData.SetSuject([dd, Board]));
 
   }
 
@@ -72,6 +70,10 @@ const stylee = {
    
   
      
+  }
+
+  function AddItem(item: { name: string; content: string; id: number; img: string }): any {
+    throw new Error('Function not implemented.')
   }
 
   return (
@@ -150,3 +152,5 @@ const stylee = {
 }
 
 export default SubjectItem
+
+

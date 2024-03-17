@@ -1,5 +1,4 @@
 'use client'
-import MainCard from '@/Components/(Classroom)/MainCard'
 import {useState} from 'react'
 import { FaArrowsAltV } from 'react-icons/fa'
 import StudentinfoCard from '@/Components/(Classroom)/Student/StudentinfoCard'
@@ -15,7 +14,6 @@ const page = () => {
 
   return (
     <div className='flex flex-col w-full relative  '>
-      {openSubjectCard && <MainCard onClick={(e:any) => closeSubjectCard(false)}/>}
 
       <section className='w-full bg-red-400 h-full p-2 flex-col flex box-border  rounded-3xl'>
           <div className='w-full rounded-xl bg-white relative transition-all duration-300' style={{height:`${LiveDriver}px`}}>
