@@ -10,7 +10,6 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const router = useRouter();
 
   const {user} = useUser()
 

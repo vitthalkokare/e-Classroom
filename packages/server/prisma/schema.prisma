@@ -2,6 +2,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -28,7 +31,7 @@ model Student {
   roll      Roll       @default(STUDENT)
   email     String     @unique
   standard  Class?
-  phone     String    @unique
+  phone     String     @unique
   name      String?
   gender    Gender?
   sirname   String?
@@ -37,6 +40,7 @@ model Student {
   boardName String?
   city      String?
   state     String?
+  sid       String?
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
   chats     Chats[]
@@ -53,31 +57,33 @@ model Student {
 }
 
 model Payment {
-  id        String   @id @default(uuid())
+  id        String @unique   @id @default(uuid())
   isPaid    Boolean  @default(false)
-  isPending Boolean  @default(false)
+  Paidstatus Paymentstatus
   createdAt DateTime @default(now())
-  studentId String?
-  adminId   String?
-  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  subject Subject[]
+
+   studentId String?
   student   Student? @relation(fields: [studentId], references: [id])
+  
 
   @@map("payment")
 }
 
 model Subject {
-  id          String   @id @default(uuid())
-  title       String   @unique
-  price       Int
-  description String?
-  isEnrolled  Boolean  @default(false)
-  adminId     String?
-  admin       Admin?   @relation(fields: [adminId], references: [id])
-  facultyId   String?
-  Faculty     Faculty? @relation(fields: [facultyId], references: [id])
-  studentId   String?
-  student     Student? @relation(fields: [studentId], references: [id])
+  id       String @unique @id @default(uuid())
+  title    String
+  price    Int
+  about    String?
+  isEnroll Enrollstatus
 
+  studentId String?
+  student   Student? @relation(fields: [studentId], references: [id])
+
+  PaymentId String?
+  payment   Payment? @relation(fields: [PaymentId], references: [id])
+
+  @@unique([title, studentId])
   @@map("subject")
 }
 
@@ -140,7 +146,6 @@ model Faculty {
   lecture      Lectures[]
   notification Notification[]
   student      Student[]
-  subject      Subject[]
 
   @@map("faculty")
 }
@@ -169,8 +174,6 @@ model Admin {
   faculty      Faculty[]
   lecture      Lectures[]
   notification Notification[]
-  payment      Payment[]
-  subject      Subject[]
 
   @@map("admin")
 }
@@ -200,4 +203,15 @@ enum Roll {
   ADMIN
   USER
   AUTH0
+}
+
+enum Paymentstatus{
+  Pending
+  Success
+  Cancelled
+}
+
+enum Enrollstatus {
+  Success
+  Pending
 }

@@ -11,6 +11,7 @@ import mergeResolver from "./graphql/Resolver";
 import mergeTypeDef from "./graphql/typeDefs/index";
 import bodyParser, { json } from "body-parser";
 import { Clerk } from "@clerk/backend";
+import { PrismaClient } from "@prisma/client";
 
 async function myServer() {
   const clerk = Clerk({
@@ -20,6 +21,7 @@ async function myServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 8000;
   const httpServer = createServer(app);
+  const prisma = new PrismaClient();
 
   dotenv.config();
 
@@ -47,14 +49,12 @@ async function myServer() {
 
     expressMiddleware(gqlServer, {
       context: async ({ req, res }) => {
-        const token = req.headers.cookie;
-        const t = token?.trim().slice(6);
-        const a = req.headers.authorization || "";
- 
-        const user = UserService.veryfyUserToken(t as string);
+        const token = req.cookies.token;
 
-        return { req, res, user, t, token };
-      },
+        const user =  UserService.veryfyUserToken(token as string);
+
+        return { req, res, user , prisma };
+      },  
     })
   );
 

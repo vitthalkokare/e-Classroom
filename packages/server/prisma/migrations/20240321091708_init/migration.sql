@@ -7,6 +7,12 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 -- CreateEnum
 CREATE TYPE "Roll" AS ENUM ('STUDENT', 'FACULTY', 'ADMIN', 'USER', 'AUTH0');
 
+-- CreateEnum
+CREATE TYPE "Paymentstatus" AS ENUM ('Pending', 'Success', 'Cancelled');
+
+-- CreateEnum
+CREATE TYPE "Enrollstatus" AS ENUM ('Success', 'Pending');
+
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
@@ -37,6 +43,7 @@ CREATE TABLE "student" (
     "boardName" TEXT,
     "city" TEXT,
     "state" TEXT,
+    "sid" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "userId" TEXT NOT NULL,
@@ -49,10 +56,9 @@ CREATE TABLE "student" (
 CREATE TABLE "payment" (
     "id" TEXT NOT NULL,
     "isPaid" BOOLEAN NOT NULL DEFAULT false,
-    "isPending" BOOLEAN NOT NULL DEFAULT false,
+    "Paidstatus" "Paymentstatus" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "studentId" TEXT,
-    "adminId" TEXT,
 
     CONSTRAINT "payment_pkey" PRIMARY KEY ("id")
 );
@@ -62,11 +68,10 @@ CREATE TABLE "subject" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
-    "description" TEXT,
-    "isEnrolled" BOOLEAN NOT NULL DEFAULT false,
-    "adminId" TEXT,
-    "facultyId" TEXT,
+    "about" TEXT,
+    "isEnroll" "Enrollstatus" NOT NULL,
     "studentId" TEXT,
+    "PaymentId" TEXT,
 
     CONSTRAINT "subject_pkey" PRIMARY KEY ("id")
 );
@@ -162,7 +167,13 @@ CREATE UNIQUE INDEX "student_phone_key" ON "student"("phone");
 CREATE UNIQUE INDEX "student_userId_key" ON "student"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "subject_title_key" ON "subject"("title");
+CREATE UNIQUE INDEX "payment_id_key" ON "payment"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "subject_id_key" ON "subject"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "subject_title_studentId_key" ON "subject"("title", "studentId");
 
 -- CreateIndex
 CREATE INDEX "lectures_studentID_idx" ON "lectures"("studentID");
@@ -186,19 +197,13 @@ ALTER TABLE "student" ADD CONSTRAINT "student_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "student" ADD CONSTRAINT "student_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "payment" ADD CONSTRAINT "payment_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "payment" ADD CONSTRAINT "payment_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subject" ADD CONSTRAINT "subject_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "subject" ADD CONSTRAINT "subject_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "subject" ADD CONSTRAINT "subject_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "subject" ADD CONSTRAINT "subject_PaymentId_fkey" FOREIGN KEY ("PaymentId") REFERENCES "payment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "lectures" ADD CONSTRAINT "lectures_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;

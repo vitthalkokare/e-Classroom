@@ -1,10 +1,28 @@
 import { gql } from "@apollo/client";
 
-export const REGISTER_STIDENT = gql `
-mutation CreateStudent($name: String, $email: String, $sirname: String, $userId: ID, $phone: String, $state: String, $gender: Gender, $city: String, $boardName: String, $standard: Class) {
-    createStudent(name: $name, email: $email, sirname: $sirname, userId: $userId, phone: $phone, state: $state, gender: $gender, city: $city, boardName: $boardName, standard: $standard) {
-      name
-    }
+export const REGISTER_STIDENT = gql`
+mutation RegisterStudent($input: studentInput!) {
+  RegisterStudent(input: $input) {
+    standard
   }
+}
+`;
 
+
+export const ENROLL_PAYMENT = gql`
+
+mutation MakePaymet($studentId: ID!, $isEnroll: Enrollstatus, $about: String, $paidstatus: Paymentstatus, $title: String!, $price: Int!) {
+  makePaymet(studentId: $studentId, isEnroll: $isEnroll, about: $about, Paidstatus: $paidstatus, title: $title, price: $price) {
+    status
+  }
+}
+
+`
+
+
+export const ENROLL_SUBJECT = gql`
+
+mutation EnrollSubject($input: [Enrollinput!]!) {
+  enrollSubject(input: $input)
+}
 `

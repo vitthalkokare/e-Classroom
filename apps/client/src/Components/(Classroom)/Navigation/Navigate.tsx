@@ -1,36 +1,40 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import Image from "next/image";
 import { FaHome, FaTasks } from "react-icons/fa";
 import { MdOutlineVideoSettings } from "react-icons/md";
 
 import { FaGear, FaUser } from "react-icons/fa6";
 import { useMutation } from "@apollo/client";
 import { USER_LOG_out } from "@/graphql/user/mutation";
-import { UserButton } from "@clerk/nextjs";
+import userUtil from "@/app/util/userUtil";
 
 interface NavItem {
   label: string;
   icon: React.ReactNode;
   path: string;
+  as?: string;
 }
 [];
 
 const Navigate: React.FC = () => {
   const [smallNav, setsmallNav] = useState("none");
   const [userLogout, { loading }] = useMutation(USER_LOG_out);
+  const {userroute} = userUtil();
+
+  
 
   const MenuItem: NavItem[] = [
-    { label: "Home", path: "/Classroom", icon: <FaHome /> },
-    { label: "Tasks", path: "/Classroom/user/tasks", icon: <FaTasks /> },
+    { label: "Home", path: "/Classroom",   icon: <FaHome /> },
+    { label: "Tasks", path: "/Classroom/user/tasks", as:`/Classroom/${userroute}/tasks` , icon: <FaTasks /> },
     {
       label: "Lecture",
       path: "/Classroom/user/lectures",
       icon: <MdOutlineVideoSettings />,
+      as:`/Classroom/${userroute}/lectures`
     },
-    { label: "More", path: "/Classroom/user/more", icon: <FaHome /> },
-    { label: "Setting", path: "/Classroom/user/setting", icon: <FaGear /> },
+    { label: "More", path: "/Classroom/user/more", as:`/Classroom/${userroute}/more`,  icon: <FaHome /> },
+    { label: "Setting", path: "/Classroom/user/setting", as:`/Classroom/${userroute}/setting` , icon: <FaGear /> },
   ];
 
   return (
@@ -39,12 +43,13 @@ const Navigate: React.FC = () => {
 
       <nav className="flex flex-col md:p-2 box-border">
         <span className=" flex justify-center items-center flex-col text-5xl md:mb-2 mb-4">
-          <Link href={"/Classroom/user/Profile"}>
+          <Link href="/Classroom/user/Profile" as={`/Classroom/${userroute}/Profile`} >
             <FaUser />
           </Link>
         </span>
         {MenuItem.map((item, index) => (
           <Link
+            as={item.as}
             key={index}
             href={item.path}
             className="flex box-border  relative  items-center p-2"

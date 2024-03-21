@@ -10,6 +10,7 @@ import Faculty from "./Faculty";
 import SubjectsItem from "./Subjects";
 
 import AutoSlide from "@/Components/ui/compo/AutoSlide";
+import SubjectData from "@/Components/(Classroom)/Subjects/SubjectData";
 
 const STD: React.FC = () => {
   const [myStd, setmyStd] = useState("");
@@ -123,7 +124,7 @@ const STD: React.FC = () => {
         ) : (
           <div className="w-full flex  flex-col justify-center items-center">
             <div className="w-[60%] relative -top-10 sm:top-0 md:top-0 sm:w-[90%] scr h-[350px] overflow-y-scroll">
-            <SubjectsItem />
+            <SubjectData/>
             </div>
 
             {/* Faculty */}

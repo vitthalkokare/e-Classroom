@@ -3,6 +3,8 @@
 export const studentTypeDefs = `
 
     scalar BigInt
+    scalar PhoneNumber
+    scalar Date
 
     type Query{
         currentStudent(id:ID!):Student
@@ -10,14 +12,49 @@ export const studentTypeDefs = `
 
     }
 
+    
+
     type Mutation{
-        createStudent(name:String,sirname:String,email:String,userId:ID,phone:String,gender:Gender,state:String,city:String,boardName:String,standard:Class):Student
+        enrollSubject(input:[Enrollinput!]!):String
+        RegisterStudent(input:studentInput):Student
+ 
+        makePaymet(Paidstatus:Paymentstatus,title:String!,price:Int!,about:String,studentId:ID!,isEnroll:Enrollstatus):Status
 
     }
 
+    type Payment{
+        id:ID
+
+    }
+
+
+
+    enum Paymentstatus{
+        Pending
+        Success
+        Cancelled
+
+    }
+
+
+
+    type Status{
+        message:String
+    }
+
+    input Enrollinput {
+        title:String
+        price:Int
+        about:String
+        isInroll:Enrollstatus
+        studentId:ID
+    }
+
+   
+
     type Student{
         id:ID
-        standard:String
+        standard:Class
         name: String
         sirname: String
         gender:String
@@ -28,6 +65,8 @@ export const studentTypeDefs = `
         userId:ID
         phone:String
         subjects:[Subject]
+        dob:Date
+
 
 
     }
@@ -35,27 +74,37 @@ export const studentTypeDefs = `
     input studentInput{
         name: String
         sirname: String
-        gender:String
+        gender:Gender
         email:String
         city:String
         state:String
         boardName:String
         userId:ID
         phone:String
+        sid:String
+        standard:Class
   
 
 
     }
 
     type Subject{
+        id:ID
         title:String
         price:Int
-        description:String
-        isEnrolled:Boolean
+        about:String
+        isEnroll:Enrollstatus
+        studentId:ID
 
 
 
     }
+
+    enum Enrollstatus{
+        Success
+        Pending
+    }
+
     enum Gender{
         MALE
         FEMALE

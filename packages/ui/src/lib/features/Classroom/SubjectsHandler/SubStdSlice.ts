@@ -5,10 +5,11 @@ export interface SubjectData {
   BoardLabel: string[];
   value: number;
   item: StateData[];
-  Subjects: { name: string; content: string; id: number; img: string }[];
+  Subjects: { title: string; about: string; id: number; img: string, price:number }[];
   Standards: string[];
-  Facultys: { name: string; exp: string; id: number; vision: string }[];
+  Facultys: { title: string; exp: string; id: number; vision: string }[];
   Cart:any[];
+  Total:number
 }
 
 
@@ -19,7 +20,8 @@ const initialState: SubjectData = {
   Subjects: [],
   Standards: [],
   Facultys: [],
-  Cart:[]
+  Cart:[],
+  Total:0
 };
 
 export const subSlice = createSlice({
@@ -59,7 +61,7 @@ export const subSlice = createSlice({
       state.Facultys = [];
       state.item.forEach((sub) => {
         let g = sub.Board.find(
-          (b) =>
+          (b) => 
             b.Boardlabel === action.payload[1] &&
             b.Standard.flatMap((s) => s.std === action.payload[0])
         );
@@ -76,15 +78,18 @@ export const subSlice = createSlice({
 
     // Cart Item
     AddItem: (state,action) => {
-      
-      let AdeedItem:any[] = action.payload
+      state.Total = state.Total + action.payload[1];
+
+      let AdeedItem:any[] = action.payload[0]
       state.Cart.push(AdeedItem)
 
     },
 
     decrement: (state,action) => {
+      if(state.Total >= 0) state.Total = state.Total - action.payload[1];
       
-      state.Cart = state.Cart.filter((item) => item.id !== action.payload);      
+      state.Cart = state.Cart.filter((item) => item.id !== action.payload[0]);
+            
     },
 
   },

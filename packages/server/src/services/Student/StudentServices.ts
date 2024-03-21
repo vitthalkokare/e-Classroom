@@ -1,5 +1,5 @@
 import { IStudentServices } from "./IStudentServices";
-import { PrismaClient, User } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { prisma } from "../../context";
 import {
   IstudentInputSchema,
@@ -16,15 +16,14 @@ export interface Istd {
 class StudentService {
   static async findStudentById(userId: string) {
     if (!userId) throw new Error("user not authorized");
-    try {
-      return await prisma.student.findUnique({
+    
+      const student = await prisma.student.findUnique({
         where: {
           userId,
         },
       });
-    } catch (err) {
-      return err;
-    }
+      return student;
+   
   }
   static async findStudentByEmail(email: string) {
     if (!email) throw new Error("not a valid email");
@@ -41,17 +40,88 @@ class StudentService {
     }
   }
 
+    static async RegisterStudent(studentInput:IstudentInputSchema,uid:any){
+      studentInputSchema.parse(studentInput)
+      const {name,email,sirname,gender,standard,state,city,boardName,sid,phone} = studentInput
+
+
+      const user = await UserService.findUserByEmail(uid.email);
+
+      try{
+       if(!user){
+         return await prisma.user.create({
+           data:{
+             email,
+             sid,
+             salt:"",
+             role:"AUTH0"
+
+           }
+         })
+       }
+      }catch(err){ return err}
+
+      const student = await prisma.student.findUnique({
+        where:{
+          email:uid.email,
+  
+        }
+      })
+      if(student) return student;
+
+        try{
+
+          if(!student){
+            const date = new Date().toISOString();
+
+            const newstudent = await prisma.student.create({
+              // @ts-ignore
+             data:{
+              email:uid.email,
+              name,
+              sirname,
+              gender,
+              standard,
+              state,
+              phone,
+              city,
+              boardName,
+              userId:uid.id,
+             }
+              
+            })
+            return newstudent;
+          }
+        }catch(err:any){ 
+          if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === 'P2002') {
+              return "A Student with the same Phone already exists";
+            }
+          }
+          console.error(err);
+          return "An error occurred while enrolling in subjects";
+        
+        }
+
+
+
+    }
+
+
+
+
+
+
   static async createStudent(
     studentInput: IstudentInputSchema,
     uid:any,
-    user:any
   ) {
       studentInputSchema.parse(studentInput)
     const {email, name, sirname, gender, phone, city, state,boardName } = studentInput;
 
     const student = await prisma.student.findUnique({
       where:{
-        email:uid.email || email,
+        email:uid.email,
 
       }
     })
@@ -63,8 +133,8 @@ class StudentService {
          data:{
            name,
            sirname,
-           email:uid.email || user.email,
-           userId:uid.id || user.id,
+           email:uid.email,
+           userId:uid.id,
            state,
            city,
            phone,

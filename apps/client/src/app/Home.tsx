@@ -10,6 +10,7 @@ import Footer from "@/Components/ui/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
 import { FaUser } from "react-icons/fa";
+import Enroll from "@/Components/LandingPage/Standards/Enroll";
 
 const Home = () => {
   const [isNav, setisNav] = useState(0);
@@ -70,8 +71,8 @@ const Home = () => {
         className="box-border justify-around h-screen sm:h-auto md:h-auto md:flex-col  flex sm:flex-col relative  w-[100%] bg-yellow-200   "
         style={{ borderRadius: "" }}
       >
-        <Intro />
-        <Std />
+        <Intro/>
+        <Std/>
 
       </header>
 

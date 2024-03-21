@@ -24,9 +24,8 @@ mutation userLogout {
 `
 
 export const  CREATE_AUTH_USER = gql `
-
-mutation Auth0($email: String, $sid: String, $sub: String) {
-  auth0(email: $email, sid: $sid, sub: $sub) {
+query CurrentStudent($email: String) {
+  authUser(email: $email) {
     authToken
     email
     id
@@ -42,11 +41,11 @@ mutation Auth0($email: String, $sid: String, $sub: String) {
       boardName
       userId
       phone
-      subjects {
+      Subjects {
         title
         price
-        description
-        isEnrolled
+        about
+        isEnroll
       }
     }
   }

@@ -6,7 +6,6 @@ query AuthUser($email: String) {
   authUser(email: $email) {
     authToken
     email
-    id
     studentData {
       id
       standard
@@ -20,13 +19,14 @@ query AuthUser($email: String) {
       userId
       phone
       subjects {
+        id
         title
         price
-        description
-        isEnrolled
+        about
+        isEnroll
+        studentId
       }
     }
   }
 }
-
 `

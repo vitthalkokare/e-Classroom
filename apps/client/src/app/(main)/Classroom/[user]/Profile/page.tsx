@@ -5,13 +5,14 @@ import ProfileCard from "./ProfileCard";
 import StudentProgress from "./StudentProgress";
 import EnrolledSubject from "./EnrolledSubject";
 import SubjectEnrollCard from "@/Components/(Classroom)/Subjects/SubjectEnrollCard";
-import userUtil from "../userUtil";
+import userUtil from "../../../../util/userUtil";
 
 const page = () => {
-  const { StudentData, userPCard, loading } = userUtil();
+  const { StudentData,isAuthenticated,user,data,loading, userPCard,SubjectData ,} = userUtil();
   const [StudentItem, setStudentItem] = useState<ReactNode | null>(
     <StudentProgress />
   );
+
 
   return (
     <div>
@@ -19,13 +20,13 @@ const page = () => {
         <>loading....</>
       ) : (
         <>
-          {StudentData ? (
+          {isAuthenticated && data?.authUser?.studentData ? (
             <>
               <ProfileCard
                 name={StudentData?.name}
                 sirname={StudentData?.sirname}
                 profileUrl="/pictures/Landingpage//introimg3.jpg"
-                Class="ok"
+                Class={StudentData?.standard}
                 city={StudentData?.city}
                 boardname={StudentData?.boardName}
                 children={StudentItem}
@@ -46,7 +47,7 @@ const page = () => {
                 ]}
               />
 
-              {false ? (<>{loading ? <>loading...</> : <SubjectEnrollCard />}</>) : <></>}
+              {userPCard ? (<>{loading ? <>loading...</> : <SubjectEnrollCard />}</>) : <></>}
             </>
           ) : (
             <>Data is not avalable</>

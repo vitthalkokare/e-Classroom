@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import MainCard from '../MainCard'
-import { FaUser } from 'react-icons/fa'
 import SubjectHandler from './SubjectHandler'
 import { useSelector } from 'react-redux'
 import { RootState } from '@repo/ui/index'
-import EnrolledSubject from './EnrolledSubject'
+import EnrolledSubject from './SubjectCart'
 
 
 

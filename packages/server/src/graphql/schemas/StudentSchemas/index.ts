@@ -2,7 +2,7 @@
 import zod from 'zod'
 
 export const studentInputSchema = zod.object({
-  
+  sid:zod.string(),
   email:zod.string().email(),
   boardName:zod.string({required_error:"Please enter a board name"}),
   name:zod.string({required_error:"name not provided"}),
@@ -11,8 +11,7 @@ export const studentInputSchema = zod.object({
   gender:zod.enum(["MALE", "FEMALE","OTHER"]),
   state:zod.string({required_error:"state not provided"}),
   city:zod.string({required_error:"city not provided"}),
-  // standard:zod.enum(["Class1", "Class2", "Class3", "Class4", "Class5", "Class6", "Class7", "Class8", "Class9", "Class10"]),
-  // dob:zod.date().refine(date=>{return date <= new Date()},{message:"Date of Biirth cannot be in the future"}),
+ standard:zod.enum(["Class1", "Class2", "Class3", "Class4", "Class5", "Class6", "Class7", "Class8", "Class9", "Class10"]),
   
   
 

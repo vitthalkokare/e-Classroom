@@ -26,9 +26,8 @@ const ProfileCard = ({
 }: studentProps) => {
   const [Active,setActive] = useState(0)
   return (
-    <div className="relative w-full h-full min-h-[600px]">
-      <section className="flex flex-col box-border  mb-2 sticky top-0 z-50 bg-slate-400 rounded-2xl shadow-lg ">
-        <div className=" flex items-center">
+    <div>
+      <section className="flex box-border p-2 items-center">
         <span className="rounded-full overflow-hidden">
           <img src={profileUrl} alt={"img"} width={150} height={150} />
         </span>
@@ -48,8 +47,9 @@ const ProfileCard = ({
         </span>
 
         </span>
-        </div>
-        <nav className=" mt-4 text-md font-bold box-border  rounded-xl my-1 inline-block ">
+        
+      </section>
+      <nav className="flex text-md font-bold box-border  rounded-xl my-1 bg-slate-400 ">
       {btn.map((item,inx)=>(
             <button className={`${inx === Active && `bg-white rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{
                     item.onclick()
@@ -59,13 +59,10 @@ const ProfileCard = ({
         }}>{item.btn}</button>
       ))}
       </nav>
-        
-      </section>
-     
       
 
 
-      <section className="w-full flex  h-fit mb-20   p-4  box-border scr bg-white rounded-2xl shadow-lg ">
+      <section className="w-full flex overflow-y-scroll  p-4 rounded-xl box-border scr bg-purple-500 h-full">
         {children}
       </section>
     </div>

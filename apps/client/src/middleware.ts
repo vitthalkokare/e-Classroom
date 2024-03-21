@@ -14,15 +14,18 @@ export default async function middeware(req: NextRequest, res: NextResponse) {
 
     
     
-     if ((!isAuthenticated || !user)  && ppath.some((path) => req.nextUrl.pathname.startsWith(path))) {
-        return NextResponse.redirect(new URL('/login', req.url)); 
-    } else if ((isAuthenticated || user)  &&  authpath.some((path)=>req.nextUrl.pathname.startsWith(path))) {
-        return NextResponse.redirect(new URL('/Classroom', req.url)); 
-    }
+    //  if ((!user)  && ppath.some((path) => req.nextUrl.pathname.startsWith(path))) {
+    //     return NextResponse.redirect(new URL('/login', req.url)); 
+    // } else if ((user)  &&  authpath.some((path)=>req.nextUrl.pathname.startsWith(path))) {
+    //     return NextResponse.redirect(new URL('/Classroom', req.url)); 
+    // }
+    const ss = NextResponse.next();
+    ss.headers.set('authorization','ljslfkdj');
 
-    return NextResponse.next(); // Continue with the request if no redirection is needed
+
+    return NextResponse.next();  
 }
-
+ 
 export const config = {
     matcher: '/Classroom:path*' // Define the matcher for all paths
 };

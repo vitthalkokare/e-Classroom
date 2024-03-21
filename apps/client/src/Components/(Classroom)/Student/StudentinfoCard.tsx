@@ -1,23 +1,28 @@
 import InputField from "@/Components/ui/InputField";
 import useAuth from "@/app/util/useAuth";
+import userUtil from "@/app/util/userUtil";
 import { REGISTER_STIDENT } from "@/graphql/students/mutation";
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 
 const StudentinfoCard = () => {
   const { data, user } = useAuth();
+  const {userroute} = userUtil();
+
+  
 
   const [studentData, setStudentData] = useState({
     name: "",
-    email:(data && data?.authUser?.email) || user?.email,
+    email:data && data?.authUser?.email || user?.email,
+    sid:user?.sid || "",
     sirname: "",
     state: "",
     city: "",
     gender: "",
-    boardname: "",
+    boardName: "",
     standard: "",
     phone: "",
-    dob: "",
+    
   });
   const [registerStudent, { data: student, loading, error }] = useMutation(
     REGISTER_STIDENT,
@@ -52,24 +57,17 @@ const StudentinfoCard = () => {
 
     try {
       await registerStudent({
-        variables: {
-          name: studentData.name,
-          sirname:studentData.sirname,
-          email: studentData.email,
-          standard: studentData.standard,
-          gender: studentData.gender,
-          boardName: studentData.boardname,
-          phone: studentData.phone,
-          state: studentData.state,
-          city: studentData.city,
-        },
+        variables: {input:studentData},
       });
-      return (window.location.href = "Classroom/user/Profile");
+
+
+      return (window.location.href = `/Classroom/${userroute}/Profile`);
     } catch (err) {
       console.log(err);
     }
-
     console.log(studentData);
+
+
   }
 
   return (
@@ -134,10 +132,7 @@ const StudentinfoCard = () => {
           <span className="flex gap-5">
             <input
               name="dob"
-              value={studentData.dob}
               type="date"
-              required={true}
-              onChange={studentInput}
             />
 
             <select
@@ -175,10 +170,10 @@ const StudentinfoCard = () => {
             <InputField
               label={"BoardName"}
               id={"Boardname"}
-              name={"boardname"}
+              name={"boardName"}
               type={"text"}
               onChange={studentInput}
-              value={studentData.boardname}
+              value={studentData.boardName}
             />
           </span>
           {loading ? "Loading..." : <button type="submit">Register</button>}

@@ -7,3 +7,4 @@ import { studentTypeDefs } from "./student.typeDefs";
  const  mergeTypeDef = mergeTypeDefs([userTypeDefs, studentTypeDefs]);
  
  export default mergeTypeDef;
+  

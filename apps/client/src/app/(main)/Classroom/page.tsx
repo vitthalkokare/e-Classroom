@@ -3,14 +3,14 @@ import {useState} from 'react'
 import { FaArrowsAltV } from 'react-icons/fa'
 import StudentinfoCard from '@/Components/(Classroom)/Student/StudentinfoCard'
 import useAuth from '@/app/util/useAuth'
+import userUtil from '@/app/util/userUtil'
 
 const page = () => {
   const [openSubjectCard, closeSubjectCard] = useState(false)
   const [LiveDriver,setLiveDriver] = useState(300)
   const [User,setUser] = useState<Boolean>()
 
-  const {isAuthenticated,loading,error,user,data} = useAuth();
- 
+  const {StudentData,SubjectData,loading,} = userUtil();
 
   return (
     <div className='flex flex-col w-full relative  '>
@@ -29,9 +29,8 @@ const page = () => {
           </div>
           <div>right</div>
       </section>
-      {isAuthenticated && (data?.authUser?.studentData === null || user?.authUser === null) ? (<StudentinfoCard/>) : (<>{data?.authUser?.email || user?.authUser}</>)}
+      {StudentData ? (<>{StudentData?.email}</>) : (<StudentinfoCard/>)}
 
-        
     </div> 
   )
 }
