@@ -1,31 +1,30 @@
-import React, { useState } from 'react'
+import React from 'react'
 import userUtil from '../../../../util/userUtil'
-import SubjectEnrollCard from '@/Components/(Classroom)/Subjects/SubjectEnrollCard'
-import { useMutation } from '@apollo/client';
-import { ENROLL_SUBJECT } from '@/graphql/students/mutation';
 import { useDispatch } from 'react-redux';
 import { setCard } from '@repo/ui/index';
+import useAuth from '@/app/util/useAuth';
+import SubjectEnrollCard from '@/Components/(Classroom)/Subjects/SubjectEnrollCard';
 
 const EnrolledSubject = () => {
 
   const dispatch = useDispatch();
-    const {SubjectData,userPCard,loading} = userUtil();
+    const {StudentInfo,loading,SubjectData} = useAuth();
+
   return (
     <div className='relative w-full h-full  flex-col'>
       
       <h1>Enrolled Subjects</h1>
-      {userPCard && (<>{loading ? <>loading...</> : <SubjectEnrollCard />}</>)}
 
-      <div className='sm:w-full w-[60%] relative'>
 
-            {SubjectData && (<>
+           {SubjectData.length <= 0 ? <SubjectEnrollCard/> : (
+            <>
+             {SubjectData && (<>
             {SubjectData.map((item:any,index:number)=>(
-              <div className='flex gap-4 overflow-y-scroll scr w-full shadow-xl items-center  justify-between box-border rounded-xl p-4 m-2'  key={index}>
+              <div className='grid grid-cols-3  gap-4 overflow-y-scroll scr w-full border-2  box-border rounded-xl p-4 m-2'  key={index}>
                 <span>{item.title}</span>
-               <span>{item.price}</span>
                {item.isEnroll === "Pending" ? (<>
 
-                <button><h1>Status</h1><strong>{item.isEnroll} <span>Enroll</span></strong></button>
+                <button onClick={()=>{window.location.href = "/api/auth/payment"}}><strong>{item.isEnroll} <span>Enroll</span></strong></button>
 
                
                </>):(<>
@@ -39,16 +38,14 @@ const EnrolledSubject = () => {
             
             </>)}
 
+            </>
+           )}
 
            
       
       
-      </div>
 
-      <div className='  flex justify-center items-center bg-blue-500 rounded-xl  box-border p-4  '>
-             <button onClick={(()=>{dispatch(setCard(true))})}>EnrollSubject</button>
-             {userPCard && <SubjectEnrollCard/>}
-            </div>
+             <button onClick={(()=>{dispatch(setCard(true))})}>Enroll</button>
       
     </div>
   )

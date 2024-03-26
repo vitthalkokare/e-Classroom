@@ -1,14 +1,24 @@
 {
   "name": "@repo/tailwind-config",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "private":"true",
-  
- 
+  "description": "Shared Tailwind CSS configuration for projects within the @repo organization.",
+  "private": true,
+  "main": "tailwind.config.js",
+  "files": [
+     "tailwind.config.js"
+  ],
+  "scripts": {
+     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+     "tailwind",
+     "css",
+     "configuration",
+     "shared"
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "tailwindcss": "^3.4.1"
-
-
+     "tailwindcss": "^3.4.1"
   }
-}
+ }
+ 

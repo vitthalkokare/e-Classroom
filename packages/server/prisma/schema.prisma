@@ -2,9 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
-
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -30,16 +27,16 @@ model Student {
   id        String     @id @default(uuid())
   roll      Roll       @default(STUDENT)
   email     String     @unique
-  standard  Class?
+  standard  Class
   phone     String     @unique
-  name      String?
-  gender    Gender?
-  sirname   String?
+  name      String
+  gender    Gender
+  sirname   String
   imageUrl  String?
   dob       DateTime?
-  boardName String?
-  city      String?
-  state     String?
+  boardName String
+  city      String
+  state     String
   sid       String?
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
@@ -57,21 +54,29 @@ model Student {
 }
 
 model Payment {
-  id        String @unique   @id @default(uuid())
-  isPaid    Boolean  @default(false)
-  Paidstatus Paymentstatus
-  createdAt DateTime @default(now())
-  subject Subject[]
+  id            String        @id @unique @default(uuid())
+  Paystatus     Boolean       @default(false)
+  Paidstatus    PaymentStatus
+  createdAt     DateTime      @default(now())
+  subject       Subject[]
+  info          String?
+  paymentMethod PaymentType
 
-   studentId String?
+  studentId String?
   student   Student? @relation(fields: [studentId], references: [id])
-  
 
   @@map("payment")
 }
 
+enum PaymentType {
+  DebitCard
+  CreditCard
+  NetBanking
+  UPI
+}
+
 model Subject {
-  id       String @unique @id @default(uuid())
+  id       String       @id @unique @default(uuid())
   title    String
   price    Int
   about    String?
@@ -82,6 +87,9 @@ model Subject {
 
   PaymentId String?
   payment   Payment? @relation(fields: [PaymentId], references: [id])
+
+  adminId String?
+  admin   Admin?  @relation(fields: [adminId], references: [id])
 
   @@unique([title, studentId])
   @@map("subject")
@@ -134,6 +142,7 @@ model Faculty {
   name         String
   sirname      String
   password     String
+  secretKey    String
   salt         String
   vision       String
   exp          String
@@ -166,6 +175,10 @@ model Notification {
 
 model Admin {
   id           String         @id @default(uuid())
+  email        String         @unique
+  password     String
+  salt         String
+  secretKey    String
   name         String
   roll         Roll           @default(ADMIN)
   createdAt    DateTime       @default(now())
@@ -173,6 +186,8 @@ model Admin {
   chats        Chats[]
   faculty      Faculty[]
   lecture      Lectures[]
+  subject      Subject[]
+  Subjectdata  SubjectData[]
   notification Notification[]
 
   @@map("admin")
@@ -205,13 +220,32 @@ enum Roll {
   AUTH0
 }
 
-enum Paymentstatus{
+enum PaymentStatus {
+  Successful
   Pending
-  Success
   Cancelled
 }
 
 enum Enrollstatus {
   Success
   Pending
+}
+
+model SubjectData {
+  id        String  @id @default(uuid())
+  price     Int
+  state     String
+  boardName String
+  standard  Class
+  title     String
+  about     String
+  info      String?
+  fname     String
+  exp       String
+  vision    String
+
+  adminId String?
+  admin   Admin?  @relation(fields: [adminId], references: [id])
+
+  @@map("subject_data")
 }

@@ -1,4 +1,4 @@
-import studentEnrollService from "../Student/studentEnrollService";
+import studentEnrollService from "../Student/subjectEnrollServices";
 
 
 class PaymentService extends studentEnrollService{

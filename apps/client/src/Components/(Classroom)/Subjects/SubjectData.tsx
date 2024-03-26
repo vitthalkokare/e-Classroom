@@ -33,9 +33,9 @@ const SubjectData = () => {
 
   return (
     <>
-      <section className="sm:w-full relative w-[50%] md:w-full  h-[400px] overflow-y-scroll scr">
+      <section className="sm:w-full relative w-full md:w-full  h-[400px] overflow-y-scroll scr">
         {SubItem ? (
-          <>
+          <div className="w-full">
             {SubItem.map((item, index) => (
               <div
                 key={index}
@@ -73,7 +73,7 @@ const SubjectData = () => {
                 
                 </div>
             ))}
-          </>
+          </div>
         ) : (
           <>
             <h1>Please Enroll Subject</h1>

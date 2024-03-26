@@ -1,4 +1,4 @@
-import EnrollHandler from '@/Components/(Classroom)/Subjects/EnrolHandler'
+import EnrollHandler from '@/Components/(Classroom)/Subjects/ItemSelector'
 import SubjectHandler from '@/Components/(Classroom)/Subjects/SubjectHandler'
 import React from 'react'
 

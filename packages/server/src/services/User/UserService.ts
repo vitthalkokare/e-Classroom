@@ -4,9 +4,9 @@ import { prisma } from "../../context";
 import { createHmac, randomBytes } from "crypto";
 import { IloginUserSchema, IuserCreateSchema,creaeUserSchema, loginUserSchrma } from "../../graphql/schemas/UserSchemas";
 import { User } from "@prisma/client";
+import Auth from "../Auth/auth";
 
-class UserService {
-  constructor() {}
+class UserService{
  
   
   public  static async findUserByEmail(email: string){
@@ -80,8 +80,10 @@ class UserService {
 
     // Generate Token
 
-    const token = JWT.sign({ id: user.id, email: user.email }, "superman");
-    return token;
+   const token = await Auth.signToken({id:user.id,email:user.email,roll:user.role})
+   return token;
+
+   
   }
 
   static  veryfyUserToken(token: string) {

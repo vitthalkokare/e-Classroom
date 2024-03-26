@@ -1,6 +1,13 @@
 import { StateData, indiaStates } from "../../../../api/subdata/SubjectData";
 import { createSlice } from "@reduxjs/toolkit";
 
+interface cartItem {
+  title: string
+  price: number
+  about: string
+  id:number
+}
+
 export interface SubjectData {
   BoardLabel: string[];
   value: number;
@@ -16,7 +23,7 @@ export interface SubjectData {
 const initialState: SubjectData = {
   item: indiaStates,
   value: 777,
-  BoardLabel: [],
+  BoardLabel: [], 
   Subjects: [],
   Standards: [],
   Facultys: [],
@@ -79,9 +86,9 @@ export const subSlice = createSlice({
     // Cart Item
     AddItem: (state,action) => {
       state.Total = state.Total + action.payload[1];
-
-      let AdeedItem:any[] = action.payload[0]
-      state.Cart.push(AdeedItem)
+      const {title,price,about,id} = action.payload[0]
+      const ad:cartItem = {title:title,price:price,about:about,id:id}
+      state.Cart.push(ad as object)
 
     },
 

@@ -11,7 +11,7 @@ const UserValidate = () => {
   return (
     <>
       {isuser ? (
-        <div className="w-[60%] sm:w-[90%] sm:left-[5%]  min-h-[400px] md:min-h[400px] sm:min-h-[400px] fixed  top-5  left-[20%] flex justify-center  rounded-xl sm:flex-col z-50 box-border   bg-white text-black">
+        <div className="w-[60%] sm:w-[90%] sm:left-[5%]  min-h-[400px]  fixed top-5  sm:top-14  left-[20%] flex justify-center  rounded-xl sm:flex-col z-50 box-border   bg-white text-black">
           <div className="flex flex-col box-border p-4">
             <h1>Log in or sign up in second</h1>
             <p>Use Yuor Email or Phone to Continue with E-classroom</p>

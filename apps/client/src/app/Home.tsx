@@ -10,11 +10,10 @@ import Footer from "@/Components/ui/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
 import { FaUser } from "react-icons/fa";
-import Enroll from "@/Components/LandingPage/Standards/Enroll";
 
 const Home = () => {
   const [isNav, setisNav] = useState(0);
-  const [topNav, settopNav] = useState({height:40,width:0,opacity:0})
+  const [topNav, settopNav] = useState({height:50,width:0,opacity:0})
 
 
   const Profile = useRef<HTMLDivElement>(null);
@@ -28,7 +27,7 @@ const Home = () => {
   useEffect(() => {
     function handleScroll() {
       const currentScrollPos = window.scrollY;
-      if (currentScrollPos < 70) {
+      if (currentScrollPos < 40) {
         setisNav(0);
         settopNav(topNav);
       } else {
@@ -59,7 +58,7 @@ const Home = () => {
         
       </div> 
       <div className={`sticky top-0 transition-all duration-300 w-full  overflow-hidden  bg-yellow-200 text-2xl hidden sm:flex  justify-between    items-center box-border p-2  z-50  h-[50px]`} style={{height:`${topNav.height}px`}}>
-        <strong className={`opacity-${topNav.opacity}`} >E-Classroom</strong>
+        <strong className={``} style={{opacity:`${topNav.opacity}`}} >E-Classroom</strong>
         <span className="box-border p-4">
         <FaUser/>
         </span>

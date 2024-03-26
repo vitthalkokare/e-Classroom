@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { useMutation} from "@apollo/client";
 import InputField from "@/Components/ui/InputField";
 import { USER_SIGN_In } from "@/graphql/user/mutation";
-import toast, { Toast, Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaBackward } from "react-icons/fa";
-import { error } from "@material-tailwind/react/types/components/input";
 import { useDispatch } from "react-redux";
 import { setCard } from "@repo/ui/index";
 import SignupPage from "../signup/page";
+import { ClipLoader } from "react-spinners";
 
 
 const LoginPage = (props:any) => {
@@ -18,6 +18,8 @@ const LoginPage = (props:any) => {
     email: "",
     password: "",
   });
+
+  
   
 
   const [userSignToken, { data, loading, error }] = useMutation(USER_SIGN_In);
@@ -45,13 +47,13 @@ const LoginPage = (props:any) => {
 
         }
         dispatch(setCard(false));
-        toast.success('Login successful')
         
-  
+        
+        toast.success(data)
+        console.log(data);
         window.location.href = '/Classroom';
     } catch (err:any) { 
-      console.log(err);
-
+      
       setLoginData({ email: "", password: "" });
 
         return toast.error(err.message)
@@ -60,7 +62,11 @@ const LoginPage = (props:any) => {
 
 
   return (
-    <div className="w-full h-full bg-white rounded-3xl flex flex-col  box-border p-4 items-center absolute left-0 top-0">
+
+    <>
+    {loading ? ( <ClipLoader color="#000000" loading={true} size={100} />
+):(<>
+      <div className="w-full h-full bg-white rounded-3xl flex flex-col  box-border p-4 items-center absolute left-0 top-0">
     			<Toaster />
       <div>
         <form  onSubmit={LoginHandler}>
@@ -106,6 +112,11 @@ const LoginPage = (props:any) => {
       </div>):(<></>)}
       
     </div>
+    
+    
+    </>)}
+    </>
+    
   );
 };
 

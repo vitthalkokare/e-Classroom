@@ -8,9 +8,10 @@ const page = () => {
  
   return (
     <>
-      <UserValidate/>
-      <Home />
+    <Home/>
+    <UserValidate/>
 
+      
     </>
   );
 };

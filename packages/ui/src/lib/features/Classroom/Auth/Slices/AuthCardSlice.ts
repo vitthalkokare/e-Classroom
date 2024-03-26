@@ -14,7 +14,12 @@ const AuthCardSlice = createSlice({
     reducers:{
         setCard:(state,action)=>{
             
-            action.payload == true ? state.isUser = true : state.isUser = false;
+            if(action.payload === true){
+                state.isUser = true;
+            }
+            if(action.payload === false){
+                state.isUser = false;
+            }
         }
 
     }

@@ -9,14 +9,15 @@ export const studentTypeDefs = `
     type Query{
         currentStudent(id:ID!):Student
         curretnStudent(email:String):Student
+        EnrolledSubject:[Subject]
 
     }
 
     
 
     type Mutation{
-        enrollSubject(input:[Enrollinput!]!):String
         RegisterStudent(input:studentInput):Student
+        RemoveSubject(id:String):[Subject]
  
         makePaymet(Paidstatus:Paymentstatus,title:String!,price:Int!,about:String,studentId:ID!,isEnroll:Enrollstatus):Status
 

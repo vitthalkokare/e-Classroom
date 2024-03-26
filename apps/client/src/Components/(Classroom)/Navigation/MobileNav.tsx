@@ -6,6 +6,7 @@ import { FaBell, FaHome, FaTasks } from 'react-icons/fa';
 import { MdOutlineVideoSettings } from "react-icons/md";
 
 import { FaGear, FaUser } from 'react-icons/fa6';
+import useAuth from '@/app/util/useAuth';
 
 interface NavItem{
   label: string;
@@ -16,15 +17,20 @@ interface NavItem{
 
 const MobileNav:React.FC = () => {
     const [smallNav, setsmallNav] = useState('none')
+    const {userRoute} = useAuth()
 
     const MenuItem:NavItem[] =[
-      {label: 'Tasks',path:'/Classroom/user/tasks', icon:<FaTasks/>},
-      {label: 'Lecture',path:'/Classroom/user/lectures', icon:<MdOutlineVideoSettings/>},
-      {label: 'Home',path:'/Classroom', icon:<FaHome/>},
+      {
+        label: "Lecture",
+        icon: <MdOutlineVideoSettings />,
+        path:`/Classroom/${userRoute}/lectures`
+      },
+      { label: "Tasks",  path:`/Classroom/${userRoute}/tasks` , icon: <FaTasks /> },
 
-      {label: 'More',path:'/Classroom/user/more', icon:<FaBell/>},
-      {label: 'Profile',path:'/Classroom/user/Profile', icon:<FaUser/>},
+      { label: "Home", path: "/Classroom",   icon: <FaHome /> },
 
+      { label: "More",  path:`/Classroom/${userRoute}/more`,  icon: <FaHome /> },
+      { label: "Profile",  path:`/Classroom/${userRoute}/Profile` , icon: <FaUser /> },
 
      
 

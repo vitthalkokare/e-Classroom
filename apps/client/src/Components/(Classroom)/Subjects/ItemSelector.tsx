@@ -6,13 +6,12 @@ import SubjectData from "./SubjectData";
 
 
 
-interface EnrollhandlerProps{
-    stateClass: string;
-    BoardClass: string;
-    standardClass: string;
+export interface EnrollhandlerProps{
+    
+    State?:string,board?:string,Standard?:string,main?:string,Section_1?:string
 
 }
-const EnrollHandler = () => {
+const ItemSelector = ({State,board,Standard,main,Section_1}:EnrollhandlerProps) => {
   const [Item, setItem] = useState<any | null>({
     state: "",
     Class: "",
@@ -49,11 +48,10 @@ const EnrollHandler = () => {
   }
 
   return (
-    <div className="flex justify-center w-full sm:flex-col box-border border-1 rounded-2xl shadow-xl m-2">
-      <section className="flex flex-col h-fit items-center m-2 box-border p-4 gap-4 border-2 rounded-xl">
-      <div className="flex gap-4">
+    <div className={`${main} grid grid-rows-2 gap-4 place-content-center   w-full  box-border border-1 rounded-2xl shadow-xl `}>
+      <div className="flex justify-evenly gap-4 w-full">
         <span >
-          <select className=" box-border p-2 shadow-lg rounded-xl" onChange={handleState}>
+          <select className={`${State}box-border p-2 shadow-lg rounded-xl`} onChange={handleState}>
             <option>Select State</option>
             {itemData.map((item, index) => (
               <option key={index} value={item.StateName}>
@@ -62,8 +60,8 @@ const EnrollHandler = () => {
             ))}
           </select>
         </span>
-        <span>
-          <select className="box-border p-2 shadow-lg rounded-xl" onChange={handleBoard}>
+        <span className="w-full flex justify-center items-center">
+          <select className={`${board}box-border p-2 shadow-lg rounded-xl`} onChange={handleBoard}>
             <option value="">Board</option>
             {BoardLabel.map((item, index) => (
               <option key={index} value={item}>
@@ -73,8 +71,8 @@ const EnrollHandler = () => {
           </select>
         </span>
       </div>
-      <div>
-        <select className="box-border p-2 shadow-lg rounded-xl" onChange={handleClass}>
+      <div className="flex justify-center items-center w-full">
+        <select className={`${Standard} rounded-lg box-border p-2 flex flex-col items-center `} onChange={handleClass}>
           <option value="">Class</option>
           {Standards.map((item, index) => (
             <option key={index} value={item}>
@@ -83,11 +81,9 @@ const EnrollHandler = () => {
           ))}
         </select>
       </div>
-      </section>
-
       
     </div>
   );
 };
 
-export default EnrollHandler;
+export default ItemSelector;

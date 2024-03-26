@@ -4,6 +4,7 @@ import { gql, useMutation, useQuery} from '@apollo/client';
 import InputField from '@/Components/ui/InputField';
 import { CREATE_USER } from '@/graphql/user/mutation';
 import toast from 'react-hot-toast';
+import { ClipLoader } from 'react-spinners';
 
 
 
@@ -38,7 +39,11 @@ const SignupPage = (props:any) => {
   }
 
   return (
-    <div className='flex  w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
+    <>
+    {loading ? ( <ClipLoader color="#000000" loading={true} size={100} />
+):(<>
+      
+      <div className='flex  w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
      <div className=''>
       <form action="" className='flex flex-col items-center' onSubmit={LoginHandler}>
         <InputField
@@ -61,8 +66,8 @@ const SignupPage = (props:any) => {
         />
 
  
-        <button className='box-border px-4 py-1 rounded-lg  bg-blue-500 my-2' type='submit'>SignUp</button>
-       
+            <button className='box-border px-4 py-1 rounded-lg  bg-blue-500 my-2' type='submit'>SignUp</button>
+
       </form>
      </div>
      <div>
@@ -75,7 +80,18 @@ const SignupPage = (props:any) => {
       </button>
       
     </div>
+    
+    
+    </>)}
+    </>
   )
+  
+
+    
+
+
+   
+  
 }
 
 export default SignupPage

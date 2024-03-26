@@ -2,7 +2,7 @@ import { RootState } from "@repo/ui/index";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { subData } from "@repo/ui/index";
-import SubjectData from "./SubjectData";
+
 
 const SubjectHandler = () => {
   const [Item, setItem] = useState<any | null>({
@@ -41,42 +41,16 @@ const SubjectHandler = () => {
   }
 
   return (
-    <div className="flex sm:flex-col box-border border-1 rounded-2xl shadow-xl m-2">
-      <section className="flex flex-col h-fit items-center m-2 box-border p-4 gap-4 border-2 rounded-xl">
-      <div className="flex gap-4">
-        <span >
-          <select className=" box-border p-2 shadow-lg rounded-xl" onChange={handleState}>
-            <option>Select State</option>
-            {itemData.map((item, index) => (
-              <option key={index} value={item.StateName}>
-                {item.StateName}
-              </option>
-            ))}
-          </select>
-        </span>
-        <span>
-          <select className="box-border p-2 shadow-lg rounded-xl" onChange={handleBoard}>
-            <option value="">Board</option>
-            {BoardLabel.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </span>
+    <div className="flex sm:flex-col w-[100%] bg-purple-700 items-center justify-evenly box-border border-1 rounded-2xl shadow-xl m-2">
+      <div className="w-[40%] bg-red-700 box-border p-2">
+        
+     
+
       </div>
-      <div>
-        <select className="box-border p-2 shadow-lg rounded-xl" onChange={handleClass}>
-          <option value="">Class</option>
-          {Standards.map((item, index) => (
-            <option key={index} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
+      <div className="w-[60%] bg-orange-500 box-border p-2">
+        
+
       </div>
-      </section>
-      <SubjectData/>
 
       
     </div>

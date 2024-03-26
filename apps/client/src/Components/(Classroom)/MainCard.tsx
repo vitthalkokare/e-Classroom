@@ -1,3 +1,4 @@
+import userUtil from '@/app/util/userUtil';
 import { setCard, subData } from '@repo/ui/index';
 import {useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux'
@@ -18,13 +19,10 @@ const MainCard = ({btn,note,children,Cart}:MainCardProps) => {
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-
-  },[])
 
 
   return (
-    <div className='w-[70%] overflow-hidden  sm:w-[90%] md:w-[90%] sm:left-[5%] md:left-[5%] left-[15%] h-[500px] sm:min-h-[700px] sm:top-14  top-10 fixed z-50 rounded-xl p-2 sm:flex-col bg-white   box-border  text-black'>
+    <div className='w-[80%]  sm:w-[90%]  md:w-fit min-h-[500px]   fixed top-5 z-50 rounded-xl p-2 sm:flex-col bg-white   box-border  text-black'>
         <button onClick={()=>{dispatch(setCard(false))}} className='box-border  rounded-xl bg-black cursor-pointer text-white font-bold  py-0 px-2 top-0 absolute right-0 '>X</button>
               <h1 className={`text-2xl font-bold m-2 w-full`} >{note}</h1>
               <nav className='flex justify-evenly box-border p-1  bg-green-400'>
@@ -37,7 +35,7 @@ const MainCard = ({btn,note,children,Cart}:MainCardProps) => {
 
               </nav>
               
-              <section className='w-full  h-full'>
+              <section className='w-full h-full box-border p-2  relative '>
               {children}
               </section>
               

@@ -1,36 +1,47 @@
 "use client";
 import useAuth from "@/app/util/useAuth";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import ProfileCard from "./ProfileCard";
 import StudentProgress from "./StudentProgress";
 import EnrolledSubject from "./EnrolledSubject";
 import SubjectEnrollCard from "@/Components/(Classroom)/Subjects/SubjectEnrollCard";
 import userUtil from "../../../../util/userUtil";
+import { useQuery } from "@apollo/client";
+import { AUTH_USER } from "@/graphql/user/queries";
+import { setCard } from "@repo/ui/index";
+import { useDispatch } from "react-redux";
+import EnrollHandler from "@/Components/(Classroom)/Subjects/EnrollHandler";
 
 const page = () => {
-  const { StudentData,isAuthenticated,user,data,loading, userPCard,SubjectData ,} = userUtil();
   const [StudentItem, setStudentItem] = useState<ReactNode | null>(
     <StudentProgress />
   );
 
+    const {data,error,loading} = useQuery(AUTH_USER)
+    const {isAuthenticated,StudentInfo,SubjectData} = useAuth();
+    
+    const dispatch = useDispatch();
 
+ 
   return (
     <div>
+     
       {loading ? (
         <>loading....</>
       ) : (
         <>
-          {isAuthenticated && data?.authUser?.studentData ? (
+          {data && data.authUser ? (
+           
             <>
               <ProfileCard
-                name={StudentData?.name}
-                sirname={StudentData?.sirname}
+                name={data.authUser.studentData?.name}
+                sirname={data.authUser.studentData?.sirname}
                 profileUrl="/pictures/Landingpage//introimg3.jpg"
-                Class={StudentData?.standard}
-                city={StudentData?.city}
-                boardname={StudentData?.boardName}
+                Class={data.authUser.studentData?.standard}
+                city={data.authUser.studentData?.city}
+                boardname={data.authUser.studentData?.boardName}
                 children={StudentItem}
-                state={StudentData.state}
+                state={data.authUser.studentData?.state}
                 btn={[
                   {
                     btn: "Progress",
@@ -42,12 +53,14 @@ const page = () => {
                     btn: "Enrolled Subjects",
                     onclick() {
                       setStudentItem(<EnrolledSubject />);
+                      dispatch(setCard(true))
                     },
                   },
                 ]}
               />
 
-              {userPCard ? (<>{loading ? <>loading...</> : <SubjectEnrollCard />}</>) : <></>}
+          
+           
             </>
           ) : (
             <>Data is not avalable</>

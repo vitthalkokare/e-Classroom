@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+
 import {StoreProvider} from "@repo/ui/index";
 import { GqlProvider } from "@repo/ui/index";
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
      <GqlProvider>
      <StoreProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={`${inter.className}`}>{children}</body>
 
 
       </StoreProvider>

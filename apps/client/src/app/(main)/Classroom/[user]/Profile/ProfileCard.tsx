@@ -26,7 +26,7 @@ const ProfileCard = ({
 }: studentProps) => {
   const [Active,setActive] = useState(0)
   return (
-    <div className="relative w-full h-full min-h-[600px]">
+    <div className="relative w-full  min-h-screen">
       <section className="flex flex-col box-border  mb-2 sticky top-0 z-50 bg-slate-400 rounded-2xl shadow-lg ">
         <div className=" flex items-center">
         <span className="rounded-full overflow-hidden">
@@ -51,7 +51,7 @@ const ProfileCard = ({
         </div>
         <nav className=" mt-4 text-md font-bold box-border  rounded-xl my-1 inline-block ">
       {btn.map((item,inx)=>(
-            <button className={`${inx === Active && `bg-white rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{
+            <button key={inx} className={`${inx === Active && `bg-white rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{
                     item.onclick()
           setActive(inx)
 
@@ -65,7 +65,7 @@ const ProfileCard = ({
       
 
 
-      <section className="w-full flex  h-fit mb-20   p-4  box-border scr bg-white rounded-2xl shadow-lg ">
+      <section className="w-full flex  h-fit mb-20 min-h-[600px] overflow-y-scroll   p-2  box-border scr bg-slate-400 rounded-2xl  ">
         {children}
       </section>
     </div>

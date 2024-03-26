@@ -10,7 +10,7 @@ const page = () => {
   const [LiveDriver,setLiveDriver] = useState(300)
   const [User,setUser] = useState<Boolean>()
 
-  const {StudentData,SubjectData,loading,} = userUtil();
+  const {StudentInfo,loading} = useAuth();
 
   return (
     <div className='flex flex-col w-full relative  '>
@@ -29,7 +29,7 @@ const page = () => {
           </div>
           <div>right</div>
       </section>
-      {StudentData ? (<>{StudentData?.email}</>) : (<StudentinfoCard/>)}
+      {StudentInfo === null  ? (<StudentinfoCard/>) : (<>Hello world</>)}
 
     </div> 
   )

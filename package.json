@@ -1,8 +1,7 @@
 {
   "name": "e-classroom",
-  "private": true,   
-   "type": "module",
-
+  "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
@@ -14,6 +13,7 @@
     "@graphql-codegen/client-preset": "^4.2.2",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
     "autoprefixer": "^10.4.17",
@@ -33,6 +33,8 @@
   ],
   "dependencies": {
     "@types/cookie": "^0.6.0",
+    "react-icons": "^5.0.1",
+    "react-spinners": "^0.13.8",
     "zod": "^3.22.4"
   }
 }

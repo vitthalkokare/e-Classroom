@@ -26,3 +26,10 @@ mutation EnrollSubject($input: [Enrollinput!]!) {
   enrollSubject(input: $input)
 }
 `
+export const REMOVE_SUBJECT = gql `
+mutation Mutation($removeSubjectId: String) {
+  RemoveSubject(id: $removeSubjectId) {
+    title
+  }
+}
+`

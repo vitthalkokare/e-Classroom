@@ -1,6 +1,5 @@
 'use client'
 import { RootState } from '@repo/ui/index';
-import {useDispatch,useSelector} from 'react-redux'
 import {gql,useQuery,useLazyQuery} from '@apollo/client'
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { useState } from 'react';
@@ -13,7 +12,6 @@ export default function Home() {
   const [ss,setss] = useState()
 
 
-  const myitem = useSelector((state: RootState) => state.counterr.value);
   
 
   
@@ -49,7 +47,6 @@ export default function Home() {
   return (
 
    <div className="">
-    <h1>{myitem}</h1>
 
     
 

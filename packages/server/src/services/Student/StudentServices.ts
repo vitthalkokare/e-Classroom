@@ -1,19 +1,16 @@
-import { IStudentServices } from "./IStudentServices";
-import { Prisma, PrismaClient, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../context";
 import {
   IstudentInputSchema,
   studentInputSchema,
 } from "../../graphql/schemas/StudentSchemas";
 import UserService from "../User/UserService";
-import { promise } from "zod";
 
-export interface Istd {
-  phone: bigint;
-  email: string;
-}
+
 
 class StudentService {
+
+   
   static async findStudentById(userId: string) {
     if (!userId) throw new Error("user not authorized");
     
@@ -33,7 +30,7 @@ class StudentService {
           email
         },
       });
-      return Promise.resolve(student);
+      return student
 
     } catch (err) {
       return err;
@@ -61,21 +58,15 @@ class StudentService {
        }
       }catch(err){ return err}
 
-      const student = await prisma.student.findUnique({
-        where:{
-          email:uid.email,
-  
-        }
-      })
+      
+      const student = await this.findStudentByEmail(uid.email)
       if(student) return student;
 
         try{
 
           if(!student){
-            const date = new Date().toISOString();
 
             const newstudent = await prisma.student.create({
-              // @ts-ignore
              data:{
               email:uid.email,
               name,
@@ -104,51 +95,6 @@ class StudentService {
         }
 
 
-
-    }
-
-
-
-
-
-
-  static async createStudent(
-    studentInput: IstudentInputSchema,
-    uid:any,
-  ) {
-      studentInputSchema.parse(studentInput)
-    const {email, name, sirname, gender, phone, city, state,boardName } = studentInput;
-
-    const student = await prisma.student.findUnique({
-      where:{
-        email:uid.email,
-
-      }
-    })
-
-    if(student) return student;
-      
-    try{
-     const newstudent = await prisma.student.create({
-         data:{
-           name,
-           sirname,
-           email:uid.email,
-           userId:uid.id,
-           state,
-           city,
-           phone,
-           boardName,
-           gender,
-         }
-       })    
-
-     return newstudent;
-
-       
-     }catch(err){
-       return err;
-     }
 
     }
 

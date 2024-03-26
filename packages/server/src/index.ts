@@ -1,15 +1,15 @@
 import express from "express";
-import { createServer } from "http";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
+import http from "http";
 import dotenv from "dotenv";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import cookieParser from "cookie-parser";
 import UserService from "./services/User/UserService";
 import mergeResolver from "./graphql/Resolver";
 import mergeTypeDef from "./graphql/typeDefs/index";
-import bodyParser, { json } from "body-parser";
+import bodyParser from "body-parser";
 import { Clerk } from "@clerk/backend";
 import { PrismaClient } from "@prisma/client";
 
@@ -20,10 +20,15 @@ async function myServer() {
 
   const app = express();
   const PORT = Number(process.env.PORT) || 8000;
-  const httpServer = createServer(app);
+  const httpServer = http.createServer(app)
   const prisma = new PrismaClient();
 
   dotenv.config();
+
+  app.use(cors({
+    origin:['http://localhost:3000','http://192.168.43.139:3000'],
+    credentials:true,
+  }));
 
   app.use(express.json());
   app.use(cookieParser());
@@ -41,11 +46,6 @@ async function myServer() {
 
   app.use(
     "/api/graphql",
-    cors({
-      origin: "http://localhost:3000",
-      credentials: true,
-    }),
-    json(),
 
     expressMiddleware(gqlServer, {
       context: async ({ req, res }) => {
@@ -58,10 +58,9 @@ async function myServer() {
     })
   );
 
-  // await new Promise<void>((resolve) => httpServer.listen(PORT, resolve));
-  httpServer.listen(PORT, () => {
+ await new Promise<void>((resolve) => httpServer.listen(PORT, resolve));
     console.log(`listening on ${PORT}`);
-  });
+  
 }
 
 myServer();

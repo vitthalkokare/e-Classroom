@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-
-const sharedConfig = '@repo/tailwind-config/tailwind.config'
-
-export default {
-  ...sharedConfig,
-   content: [
+module.exports = {
+  darkMode: ["class"],
+  content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
@@ -12,10 +9,10 @@ export default {
 	],
   theme: {
     screens: {
-      'sm': {'min': '0px', 'max': '600px'},
+      'sm': {'min': '0px', 'max': '400px'},
       // => @media (min-width: 640px and max-width: 767px) { ... }
 
-      'md': {'min': '601px', 'max': '1023px'},
+      'md': {'min': '401px', 'max': '1023px'},
       // => @media (min-width: 768px and max-width: 1023px) { ... }
 
       'lg': {'min': '1024px', 'max': '1279px'},
@@ -91,7 +88,4 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate")],
-
-  
-  
 }

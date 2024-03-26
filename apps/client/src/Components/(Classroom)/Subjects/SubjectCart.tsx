@@ -15,8 +15,12 @@ const SubjectCart = () => {
   const CartItem = useSelector((state: RootState) => state.subslice.Cart);
   const Total = useSelector((state: RootState) => state.subslice.Total);
 
-  const [EnrollSubject, { loading: enrollloading }] =
-    useMutation(ENROLL_SUBJECT);
+  const [EnrollSubject, { loading: enrollloading }] = useMutation(
+    ENROLL_SUBJECT,
+    {
+      refetchQueries: ["authUser"],
+    }
+  );
 
   const dispatch = useDispatch();
 
@@ -31,85 +35,54 @@ const SubjectCart = () => {
       about: item.about,
     }));
 
-
     try {
       await EnrollSubject({ variables: { input: subjects } });
-
+      console.log(CartItem);
+      return (window.location.href = "/api/auth/payment");
     } catch (err) {
       return err;
     }
   };
 
   return (
-    <div className=" w-full">
-        
-      {enrollloading ? (
-        <>Loading...</>
-      ) : (
-        <>
-          {CartItem.length > 0 ? (
-           <main className="box-border  p-2 rounded-xl shadow-2xl bg-slate-400 flex sm:flex-col justify-evenly">
-            <div className="flex flex-col h-[360px] sm:h-[460px] overflow-y-scroll scr box-border  rounded-xl  w-[60%] sm:w-full">
-              {CartItem.map((item,index)=>(
-              <div className="flex justify-evenly w-full  items-center box-border p-2 rounded-xl shadow-md border-[2px] my-1">
-              <span className="w-[20%]">img</span>
-              <span className="flex flex-col w-[40%] box-border">
-                <span>{item.title}</span>
-                <span>{item.about}</span>
-                <span>{item.id}</span>
-              </span>
-              <span className="w-[20%]">{item.price}</span>
-              <button 
-      className="box-border px-2 bg-red-500 hover:scale-110 rounded-xl shadow-lg"
-      onClick={() => {
-        notEnrollhandler(item, index);
-      }}
-    >
-      X
-    </button>
+   <div className="relative h-full items-center flex sm:flex-col justify-between w-full">
 
-              </div>
-              ))}
+       {CartItem.length > 0 ? (
+       <div className="sm:w-full w-[70%] h-[400px] flex flex-col relative">
+        <section className="w-full h-full flex overflow-x-scroll scr relative">
+       {CartItem.map((item,index)=>(
+        <div className="w-[90%] shrink-0 mx-2 shadow-2xl rounded-xl   bg-red-500 box-border relative p-2 min-h-[350px]">
+        {item.title}
+        <span className="absolute right-0 top-0 box-border p-4 rounded-xl bg-orange-400">{item.price}</span>
+        </div>
+       ))}
 
-              </div>
+       </section>
 
+       <div className=" w-[100%] flex box-border p-2 justify-center items-center ">
+        <button>1</button>
+        <button>2</button>
+       </div>
 
-
-            <div className="flex w-[35%] h-fit flex-col box-border sm:w-full p-2 border-2 rounded-xl">
-              <span><strong>{Total} Rs</strong></span>
-              <button onClick={()=>{EnrollHandler()}}>Payment</button>
-            </div>
-
-
-           
-           
-           </main>
-
-
-
-          ) : (
-            <>
-              <h1>Enroll Subject to Continue</h1>
-            </>
-          )}
-        </>
-      )}
-    </div>
+       
+       
+       
+       
+       
+       
+       
+       </div>):(<h1>Enroll Subject To Continue</h1>)}
+       {CartItem.length > 0 && (
+       <div className="box-border flex justify-around p-2 h-fit w-[30%] sm:w-full">
+       <span className="flex box-border p-2 flex-col">
+        <strong>Total</strong>
+        <h1>{Total} <strong>Rs.</strong></h1>
+        </span>
+       <button onClick={()=>{EnrollHandler()}} className="">Checkout</button>
+       </div>
+        )}
+   </div>
   );
 };
 
 export default SubjectCart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

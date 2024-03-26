@@ -3,7 +3,7 @@
 
 type Query{
     authUser(email:String):User
-    currentUser(id:ID!):User
+    currentUser:Boolean
     
 
 }
@@ -11,11 +11,15 @@ type Query{
 type Mutation{
        
        createUser(email:String,password:String):String
-       userSignToken(email:String,password:String):String
-       userLogout:StatusMessage
+       userSignToken(email:String,password:String):Status
+       userLogout:Status
        auth0(email:String,sid:String,sub:String):User
 
 
+}
+
+type Status{
+    message:String
 }
 
 type User{
@@ -35,7 +39,7 @@ input userLoginInput{
     password:String
 }
 
-type StatusMessage{
+type Status{
     message:String
 }
 

@@ -5,7 +5,6 @@ import { FaCircleNodes, FaEnvelope, FaSackDollar } from "react-icons/fa6";
 import {setCard} from '@repo/ui/index'
 import {useDispatch} from 'react-redux'
 import useAuth from "@/app/util/useAuth";
-import { useUser } from "@clerk/nextjs";
 
 
 

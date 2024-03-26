@@ -8,8 +8,10 @@ mutation Mutation($email: String, $password: String) {
 
 `
 export const USER_SIGN_In = gql `
-mutation Mutation($email: String, $password: String) {
-  userSignToken(email: $email, password: $password)
+mutation UserSignToken($email: String, $password: String) {
+  userSignToken(email: $email, password: $password) {
+    message
+  }
 }
 
 `

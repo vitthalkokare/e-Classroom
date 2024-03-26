@@ -18,12 +18,10 @@ const userMutationResolver = {
       const varyfyEmail = await UserService.findUserByEmail(userSchema.email);
 
       if (varyfyEmail) {
-        console.log("Email already Exists");
         throw new Error("Email already Exists");
       } else {
         try {
           const user = await UserService.createUser(creaeUserInput);
-          console.log(user);
           return  "user created successfully"
         } catch (error) {
           return GraphQLError
@@ -82,7 +80,7 @@ const userMutationResolver = {
 
         await ctx.res.cookie('token',Token);
        
-        return Token;
+        return {message:"User Loged in successfully.!"}
 
       }catch(err:any){
         

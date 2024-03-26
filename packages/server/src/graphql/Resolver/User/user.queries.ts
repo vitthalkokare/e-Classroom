@@ -1,25 +1,24 @@
-import { Student, User } from "@prisma/client";
 import UserService from "../../../services/User/UserService";
-import StudentService from "../../../services/Student/StudentServices";
-import { object } from "zod";
-import { Result } from "../../../common/result";
 import JWT from "jsonwebtoken";
 
 
 const userQueryResolver = {
   Query: {
-    currentUser: async (_: any, { id }: { id: string }, ctx: any) => {
-      const uid = ctx.user.data.id
-     const user = UserService.FindUserById(uid)
-      return user
+    currentUser: async (_: any, args:string, ctx: any) => {
+      const uid = ctx.user
+      
+     if(!uid) throw new Error("User not authenticated")
+
+     return true;
+
 
     },
 
 
     authUser: async(_: any, args:any, ctx: any)=> {
 
-      const auth0user = ctx.user.email
-      console.log(ctx.user)
+      const auth0user = ctx.user.email 
+      console.log(ctx.user.role)  
       if(!auth0user){
         
                   const uuid = await UserService.findUserByEmail(args.email)
