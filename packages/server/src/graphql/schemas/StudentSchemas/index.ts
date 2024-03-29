@@ -11,6 +11,7 @@ export const studentInputSchema = zod.object({
   gender:zod.enum(["MALE", "FEMALE","OTHER"]),
   state:zod.string({required_error:"state not provided"}),
   city:zod.string({required_error:"city not provided"}),
+  classlabel:zod.string(),
  standard:zod.enum(["Class1", "Class2", "Class3", "Class4", "Class5", "Class6", "Class7", "Class8", "Class9", "Class10"]),
   
   

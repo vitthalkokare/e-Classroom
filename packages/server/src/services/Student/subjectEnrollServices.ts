@@ -18,16 +18,16 @@ class subjectEnrollServices extends StudentService {
     });
   }
 
-  static async getSubjectById(subid:string):Promise<Subject | null>{
+  static async getSubjectById(subid:string){
     
     if(!subid) return null;
     try{
       const subject = await prisma.subject.findUnique({
         where:{id:subid}
       })
-      return Promise.resolve(subject);
+      return subject;
     }catch(err){
-      return Promise.reject(err);
+      return err;
 
     }
 
@@ -49,6 +49,7 @@ class subjectEnrollServices extends StudentService {
           const newarr = value.filter((v) => !item.includes(v.title));
 
            newarr.map(async (obj)=>{
+           
               if (!obj.price) throw new Error("something went wrong"); 
                await prisma.subject.createMany({
                 data: [
@@ -68,7 +69,6 @@ class subjectEnrollServices extends StudentService {
 
               
               
-            enrolldata.push({title:obj.title,price:obj.price,name:student.name,boardName:student.boardName,standard:student.standard,sirname:student.sirname,email:student.email,phone:student.phone})
             
 
 
@@ -90,7 +90,6 @@ class subjectEnrollServices extends StudentService {
       return "An error occurred while enrolling in subjects";
     }
 
-    console.log( enrolldata)
 
   }
 

@@ -6,6 +6,9 @@ export const studetnQueryResolver = {
 
  Query:{
  
+    EnrolledSubject:()=>{
+        
+    }
  }
 
 

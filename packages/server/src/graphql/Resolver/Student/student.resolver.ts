@@ -7,17 +7,24 @@ export const studentMutationResolver = {
   Mutation: {
     RegisterStudent: async (
       _: any,
-      studentInput: IstudentInputSchema,
+      {input}:{input:IstudentInputSchema},
       ctx: any
     ) => {
-      // @ts-ignore
-      const input = studentInput.input;
+     
+      
 
-      const uid = ctx.user;
+     
+      try{
+        const uid = await ctx.auth;
 
-      const student = await StudentService.RegisterStudent(input, uid);
+        const student = await StudentService.RegisterStudent(input, uid);
+  
+        return student;
 
-      return student;
+      }catch(err){
+
+        return err;
+      }
     },
 
     

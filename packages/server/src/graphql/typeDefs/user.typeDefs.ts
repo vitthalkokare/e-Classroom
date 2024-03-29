@@ -4,6 +4,8 @@
 type Query{
     authUser(email:String):User
     currentUser:Boolean
+    subjectData:[subjectData]
+    
     
 
 }

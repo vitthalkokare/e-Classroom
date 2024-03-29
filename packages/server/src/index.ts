@@ -12,6 +12,7 @@ import mergeTypeDef from "./graphql/typeDefs/index";
 import bodyParser from "body-parser";
 import { Clerk } from "@clerk/backend";
 import { PrismaClient } from "@prisma/client";
+import Auth from "./services/Auth/auth";
 
 async function myServer() {
   const clerk = Clerk({
@@ -26,7 +27,7 @@ async function myServer() {
   dotenv.config();
 
   app.use(cors({
-    origin:['http://localhost:3000','http://192.168.43.139:3000'],
+    origin:['http://localhost:3000','http://localhost:3001'],
     credentials:true,
   }));
 
@@ -50,10 +51,13 @@ async function myServer() {
     expressMiddleware(gqlServer, {
       context: async ({ req, res }) => {
         const token = req.cookies.token;
+        
+        
+        const tok = req.headers.authorization
 
-        const user =  UserService.veryfyUserToken(token as string);
+        const auth = Auth.veryfyToken(token as string);
 
-        return { req, res, user , prisma };
+        return { req, res,token, auth , prisma };
       },  
     })
   );

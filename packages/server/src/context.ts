@@ -24,25 +24,19 @@ export interface GraphQlServerContext{
     prisma: PrismaClient
    
     auth?:{
-        sub: string
-        iss: string
-        aud: string[]
-        iat: number
-        exp: number
-        azp: string
-        scope: string
+       uid:string
+       sid:string
+       aid:string
 
 
     }
     authToken?:string
-    currentStudent?:User | null
-    currentFaculty?:Faculty | null
-
+    
 }
 
-function createContext(ctx:Pick<GraphQlServerContext,'auth' | 'currentStudent' | 'currentFaculty' | 'prisma'> & {req:Request}):GraphQlServerContext{
+function createContext(ctx:Pick<GraphQlServerContext,'auth'  | 'prisma'> & {req:Request}):GraphQlServerContext{
 
-    const {auth,currentFaculty,currentStudent,prisma,req} = ctx
+    const {auth,prisma,req} = ctx
     const authToken = req.headers.get('Authorization') ?? '';     
 
     const useCaseContext:UseCaseContext ={
@@ -55,8 +49,6 @@ function createContext(ctx:Pick<GraphQlServerContext,'auth' | 'currentStudent' |
 
     return{
         prisma,
-        currentFaculty,
-        currentStudent
     }
 
     

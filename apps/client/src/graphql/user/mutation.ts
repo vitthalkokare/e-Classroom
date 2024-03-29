@@ -25,31 +25,31 @@ mutation userLogout {
 
 `
 
-export const  CREATE_AUTH_USER = gql `
-query CurrentStudent($email: String) {
-  authUser(email: $email) {
-    authToken
-    email
-    id
-    studentData {
-      id
-      standard
-      name
-      sirname
-      gender
-      email
-      city
-      state
-      boardName
-      userId
-      phone
-      Subjects {
-        title
-        price
-        about
-        isEnroll
-      }
-    }
-  }
-}
-`
+// export const  CREATE_AUTH_USER = gql `
+// query CurrentStudent($email: String) {
+//   authUser(email: $email) {
+//     authToken
+//     email
+//     id
+//     studentData {
+//       id
+//       standard
+//       name
+//       sirname
+//       gender
+//       email
+//       city
+//       state
+//       boardName
+//       userId
+//       phone
+//       Subjects {
+//         title
+//         price
+//         about
+//         isEnroll
+//       }
+//     }
+//   }
+// }
+// `

@@ -46,6 +46,9 @@ model Student {
   subject   Subject[]
   user      User?      @relation(fields: [userId], references: [id])
 
+  class     Classroom @relation(fields:[classlabel],references:[label])
+  classlabel String 
+  
   userId    String   @unique
   Faculty   Faculty? @relation(fields: [facultyId], references: [id])
   facultyId String?
@@ -137,24 +140,27 @@ model Chats {
 }
 
 model Faculty {
-  id           String         @id @default(uuid())
-  email        String         @unique
-  name         String
-  sirname      String
-  password     String
-  secretKey    String
-  salt         String
-  vision       String
-  exp          String
-  role         Roll           @default(FACULTY)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  adminId      String?
-  chats        Chats[]
-  Admin        Admin?         @relation(fields: [adminId], references: [id])
-  lecture      Lectures[]
-  notification Notification[]
-  student      Student[]
+  id              String         @id @default(uuid())
+  email           String         @unique
+  name            String
+  sirname         String
+  password        String
+  secretKey       String
+  salt            String
+  role            Roll           @default(FACULTY)
+  exp String
+  vision String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  adminId         String?
+  chats           Chats[]
+  alocatedSubject SubjectData[]
+  Admin           Admin?         @relation(fields: [adminId], references: [id])
+  class           Classroom? @relation(fields: [classlabel], references:[label])
+  classlabel  String?
+  lecture         Lectures[]
+  notification    Notification[]
+  student         Student[]
 
   @@map("faculty")
 }
@@ -240,12 +246,23 @@ model SubjectData {
   title     String
   about     String
   info      String?
-  fname     String
-  exp       String
-  vision    String
 
+  facultyEmail String?
+  faculty   Faculty? @relation(fields: [facultyEmail], references: [email])
+  class      Classroom? @relation(fields: [classlabel], references:[label])
+  classlabel  String?
   adminId String?
   admin   Admin?  @relation(fields: [adminId], references: [id])
 
+  @@unique([title, facultyEmail, classlabel])
   @@map("subject_data")
+}
+
+model Classroom{
+  id Int @id  @default(autoincrement())
+  label String @unique
+  students Student[]
+  faculty Faculty[]
+  Subjectdata SubjectData[]
+  
 }

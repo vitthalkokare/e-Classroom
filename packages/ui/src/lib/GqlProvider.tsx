@@ -11,6 +11,7 @@ const GqlProvider = ({children}:{children:any}) => {
     })
   return (
     <ApolloProvider client={client}>
+      
         {children}
       
     </ApolloProvider>

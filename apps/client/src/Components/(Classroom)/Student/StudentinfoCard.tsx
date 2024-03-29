@@ -1,13 +1,12 @@
 import InputField from "@/Components/ui/InputField";
 import useAuth from "@/app/util/useAuth";
-import userUtil from "@/app/util/userUtil";
 import { REGISTER_STIDENT } from "@/graphql/students/mutation";
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 
 const StudentinfoCard = () => {
   const { data, user } = useAuth();
-  const {userroute} = userUtil();
+  const {userRoute} = useAuth();
 
   
 
@@ -61,7 +60,7 @@ const StudentinfoCard = () => {
       });
 
 
-      return (window.location.href = `/Classroom/${userroute}/Profile`);
+      return (window.location.href = `/Classroom/${userRoute}/Profile`);
     } catch (err) {
       console.log(err);
     }

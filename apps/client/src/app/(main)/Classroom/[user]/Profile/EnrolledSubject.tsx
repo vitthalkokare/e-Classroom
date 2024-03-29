@@ -8,7 +8,7 @@ import SubjectEnrollCard from '@/Components/(Classroom)/Subjects/SubjectEnrollCa
 const EnrolledSubject = () => {
 
   const dispatch = useDispatch();
-    const {StudentInfo,loading,SubjectData} = useAuth();
+    const {StudentInfo,loading,SubjectData,isAuthCard} = useAuth();
 
   return (
     <div className='relative w-full h-full  flex-col'>
@@ -46,7 +46,7 @@ const EnrolledSubject = () => {
       
 
              <button onClick={(()=>{dispatch(setCard(true))})}>Enroll</button>
-      
+                {isAuthCard && <SubjectEnrollCard/>}
     </div>
   )
 }

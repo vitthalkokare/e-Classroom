@@ -80,7 +80,7 @@ const userMutationResolver = {
 
         await ctx.res.cookie('token',Token);
        
-        return {message:"User Loged in successfully.!"}
+        return {message:Token}
 
       }catch(err:any){
         
@@ -108,10 +108,9 @@ const userMutationResolver = {
 
   User: {
     studentData: async (parent: any, args: any, ctx: any)=> {
-      const uemail = await ctx.user.email;
-      console.log(uemail);
+      const uemail = await ctx.auth;
       try {
-        const student = await StudentService.findStudentByEmail(uemail);
+        const student = await StudentService.findStudentByEmail(uemail.email);
         return student;
       } catch (err) {
         throw new Error("Error: User not found");

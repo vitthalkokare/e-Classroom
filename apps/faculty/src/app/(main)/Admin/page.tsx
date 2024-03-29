@@ -4,7 +4,7 @@ import Dashboard from './(Components)/Dashboard/Dashboard'
 const page = () => {
   return (
     <>
-        <Dashboard/>
+        <h1>This is Admin Home page</h1>
       
     </>
   )

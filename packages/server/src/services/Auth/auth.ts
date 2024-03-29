@@ -11,7 +11,7 @@ enum Roll{
 }
 interface Payload{
     id: string;
-    roll:string,
+    roll:string
     email: string;
 }
 
@@ -31,6 +31,21 @@ class Auth{
         return JWT.sign({ id:id, email:email,roll:roll }, "superman");
         
 
+    }
+
+
+    static async  veryfyToken(token: string) {
+      try{
+        if(!token){
+            throw new Error("User not authenticated");
+  
+        }
+        const verifiedToken = JWT.verify(token, 'superman');
+        return verifiedToken
+        
+      }catch(err){
+       return "token is not valid"
+      }
     }
 }
 

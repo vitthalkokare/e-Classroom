@@ -7,8 +7,7 @@ export const studentTypeDefs = `
     scalar Date
 
     type Query{
-        currentStudent(id:ID!):Student
-        curretnStudent(email:String):Student
+        
         EnrolledSubject:[Subject]
 
     }
@@ -67,6 +66,7 @@ export const studentTypeDefs = `
         phone:String
         subjects:[Subject]
         dob:Date
+        classlabel:String
 
 
 
@@ -84,6 +84,7 @@ export const studentTypeDefs = `
         phone:String
         sid:String
         standard:Class
+        clsslabel:String
   
 
 

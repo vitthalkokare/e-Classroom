@@ -7,8 +7,8 @@ import { studetnQueryResolver } from './Student/student.queries';
 import { SubjectMutation } from './Student/subject.resolver';
 import { adminMutationResolvers } from './Admin/admin.Mresolver';
 import { adminQueryResolvers } from './Admin/admin.Qresolver';
-adminQueryResolvers
-
-const mergeResolver = mergeResolvers([adminMutationResolvers,adminQueryResolvers,userQueryResolver,userMutationResolver,studentMutationResolver,studetnQueryResolver,SubjectMutation]);
+import { facultyQueryResolver } from './Faculty/faculty.queries';
+import { facultyMutationResolver } from './Faculty/faculty.mutation';
+const mergeResolver = mergeResolvers([adminMutationResolvers,adminQueryResolvers,userQueryResolver,userMutationResolver,studentMutationResolver,studetnQueryResolver,SubjectMutation,facultyQueryResolver,facultyMutationResolver]);
 
 export default mergeResolver;

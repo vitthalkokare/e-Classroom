@@ -19,6 +19,7 @@ class UserService{
       });
       return result;
     }catch(e){
+    
     }
   }
 
@@ -69,6 +70,7 @@ class UserService{
   static async SignUserToken(loginUserPayload: IloginUserSchema) {
     const { email, password } = loginUserPayload;
     const user = await UserService.findUserByEmail(email);
+
     if (!user) throw new Error("user not found,Create new Account.!");
 
     if(email === "" || password === "" ) throw new Error("all fields are required");
@@ -86,19 +88,7 @@ class UserService{
    
   }
 
-  static  veryfyUserToken(token: string) {
-    try{
-      if(!token){
-          throw new Error("User not authenticated");
-
-      }
-      const verifiedToken = JWT.verify(token, 'superman');
-      return verifiedToken
-      
-    }catch(err){
-     return "token is not valid"
-    }
-  }
+ 
 }
  
 export default UserService;

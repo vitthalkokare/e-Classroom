@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 
 const page = () => {
-  const [subdata,setsubdata] = useState<[]>([])
+  const [subdata,setsubdata] = useState<any[]>([])
 
   const router = useRouter();
   const {data,loading,error} = useQuery(ENROLLED_SUBJECT)
@@ -18,17 +18,18 @@ useEffect(()=>{
 
    const sub = async()=>{
     try {
-      const d = await data.EnrolledSubject
+      const d = await data?.EnrolledSubject
       
-     
+      if(data && d.length > 0){
+
+      }
       
     } catch (error) {
       console.error('Error checking data:', error);
     }
    }
 
-   console.log(CartItem)
-
+   sub();
 
 },[data])
 
@@ -38,7 +39,7 @@ useEffect(()=>{
     <div>
       {loading ? (<>loadinngn...</>):(<>
             <div>{Total}</div>
-            {CartItem.map((item,index)=>(
+            {data?.EnrolledSubject.map((item:any,index:number)=>(
               <div key={index}>
                 <span>{item?.title}</span>
                 <span>{item?.price}</span>
