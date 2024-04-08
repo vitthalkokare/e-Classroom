@@ -7,8 +7,10 @@ type Query{
 }
 
 type Mutation{
-    LoginFaculty(input:OrgLogininput):String
-    RegisterFaculty(input:OrgSignupinput):String
+    LoginFaculty(input:OrgLogininput):Status
+    RegisterFaculty(input:fRegisterInput):Status
+    getStudentByInfo(state:String!,boardName:String!,standard:String!):[Student]
+
 }
 
 
@@ -16,26 +18,34 @@ type authFaculty{
     id:ID
     name:String
     email:String
+    subjectData:[subjectData]
+    
 }
+
+
+
+
 
 type Faculty{
     email:String
     name:String
-    sires:String
+    sirname:String
     exp:String
     vision:String
     id:ID
+    secretKey:String
+    
+
 
 }
 
 
 
-input OrgSignupinput {
+input fRegisterInput {
     name:String
     sirname:String
     email:String
     password:String
-    secretKey:String
     exp:String
     vision:String
 

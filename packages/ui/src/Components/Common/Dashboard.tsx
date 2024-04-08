@@ -1,4 +1,8 @@
 import React, { ReactNode } from 'react'
+import MobileNav from '../(Componets)/Classroom/Navigation/MobileNav'
+
+
+
 
 export interface DashboardProps{
   children: React.ReactNode
@@ -12,16 +16,20 @@ export interface DashboardProps{
 
 const Dashboard = ({children,mainNav,mobNav,navClass,mobnavClass,mainClass}:DashboardProps) => {
   return (
-    <div className='w-full gap-2 overflow-y-scroll   relative box-border p-2  sm:justify-between  sm:flex-col flex h-screen min-h-screen bg-red-300'>
-        <nav className={`${navClass}   bg-yellow-500 rounded-xl w-[20%] sm:hidden`}>{mainNav}</nav>
+   <main className={`flex w-full h-screen  p-80 bg-blue-400`}>
+        <aside className={`min-w-[10%] box-border p-2 flex items-center mr-7`}>
+          {mainNav}
 
-        <main className={`${mainClass} w-[80%] h-full  sm:w-full sm:bg-purple-600  rounded-xl`}>
-            {children}
-        </main>
+        </aside>
+        <section>
+          {children}
 
-        <nav className={`${mobnavClass} hidden  w-full bg-white rounded-xl box-border p-4   sm:flex`} style={{}}>{mobNav}</nav>
-      
-    </div>
+        </section>
+        <aside className={`hidden bg-yellow-500 sm:flex`}>
+          {mobNav}
+
+        </aside>
+   </main>
   )
 }
 

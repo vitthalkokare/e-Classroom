@@ -49,6 +49,7 @@ const ProfileCard = ({
         </span>
         
       </section>
+      
       <nav className="flex text-md font-bold box-border  rounded-xl my-1 bg-slate-400 ">
       {btn.map((item,inx)=>(
             <button className={`${inx === Active && `bg-white rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{

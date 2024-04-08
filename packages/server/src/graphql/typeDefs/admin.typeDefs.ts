@@ -4,14 +4,17 @@ export const AdmintypeDefs = `
 type Query{
     authAdmin:currentAdmin
     Classroom:Classroom
+    AllFaculty:[Faculty]
 
 }
 
 type Mutation{
-    AddSubjectData(input:subjectDatainput):String
-    RegisterAdmin(input:AdminRegisterninput):String
-    AdminLogin(input:OrgLogininput):String
-    AddClass(label:String!):String
+    AddSubjectData(input:subjectDatainput):Status
+    RegisterAdmin(input:AdminRegisterninput):Status
+    AdminLogin(input:OrgLogininput):Status
+    AddClass(label:String!):Status
+
+    verifyFaculty(email:String,secretKey:String):Status
 }
 
 input OrgLogininput {
@@ -30,6 +33,7 @@ input AdminRegisterninput {
 type Classroom{
     students:[Student]
     faculty:[Faculty]
+    subjectData:[subjectData]
 }
 
 
@@ -57,26 +61,45 @@ input subjectDatainput{
     price: Int
     about: String   
     state: String
-    femail: String
     boardName: String
-    info: String
+    info: Info
     standard:Class
-    facultyId:ID
+    facultyEmail:String
+    classlabel:String
     
 
+}
+
+input Info{
+    syllabus:String
+    edition:String
+    exam:String
+    publication:String
+    language:String
+}
+
+
+type InfoData {
+    syllabus:String
+    edition:String
+    exam:String
+    publication:String
+    language:String
 }
 
 type subjectData {
     title: String
     price: Int
     about: String
-    fname: String
-    exp: String
-    vision: String
     state: String
     boardName: String
-    info: String
+    info: InfoData
     standard:Class
+    exp:String
+    vision:String
+    fname:String
+    id:ID
+    
 
 }
 

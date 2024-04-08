@@ -4,10 +4,12 @@ import Navigate from '@/Components/(Classroom)/Navigation/Navigate'
 import React, { useEffect, useState } from 'react'
 import useAuth from '@/app/util/useAuth'
 import LoginPage from '@/app/(auth)/login/page'
+import RightNav from '@/Components/(Classroom)/Navigation/RightNav'
 
 
-export default function Mainlayout({children,}:{children:React.ReactNode}){
+export default function Mainlayout({children}:{children:React.ReactNode},props:any){
 
+  const [Item,setItem] = useState<React.ReactNode>()
 
   const {isAuthenticated,loading,error} = useAuth();
  
@@ -16,21 +18,27 @@ export default function Mainlayout({children,}:{children:React.ReactNode}){
 
   return (
     <>
-    {isAuthenticated ? ( <div className=' sm:min-w-[400px] h-screen min-h-[600px]    w-[100%] box-border relative flex'>
+    {isAuthenticated ? (
+       <main className='sm:min-w-[500px] scr overflow-x-scroll sm:h-screen w-screen justify-around h-screen sm:justify-between  sm:flex-col     gap-2 box-border relative flex'>
      
-     <aside className='box-border justify-between h-full flex-col items-center flex bg-pink-400  p-2 rounded-3xl mx-2 md:tex-4xl  left-0   sm:hidden   '>
+     <aside className='box-border  h-full flex-col items-center flex  bg-blue-200  p-2 rounded-3xl   left-0   sm:hidden   '>
        <Navigate/>
        
      </aside>
-     <main className=' w-[85%] bg-yellow-300 rounded-2xl sm:w-full h-full scr overflow-auto  sm:text-2xl  md:w-full box-border p-2 '>
+     <main className=' w-[85%] bg-yellow-300 rounded-2xl h-full sm:w-full  scr overflow-auto   sm:text-2xl  md:w-full box-border p-2 '>
        {children}
      </main>
+
+    
+
+     <div className='h-[100px] relative hidden box-border p-2 sm:flex w-full  '>
+      <MobileNav/>
+     </div>
  
-       <MobileNav/>
  
  
        
-     </div>):(<>
+     </main>):(<>
         {loading ? <h1>loading....</h1> : <LoginPage/>}
         
      </>

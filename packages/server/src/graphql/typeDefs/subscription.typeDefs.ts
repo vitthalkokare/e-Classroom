@@ -23,10 +23,8 @@ export const SubscriptionTypeDefs = `
     }
 
     input Enrollinput {
-        title:String
-        price:Int
-        about:String
-        isInroll:Enrollstatus
+        
+        subjectDataId:String
         studentId:ID
     }
 

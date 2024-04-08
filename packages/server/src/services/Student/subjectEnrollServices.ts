@@ -58,7 +58,10 @@ class subjectEnrollServices extends StudentService {
                     price: obj.price,
                     about: obj.about,
                     studentId: student.id,
-                    isEnroll: "Pending",
+                    isEnroll: "Success",
+                    state:"",
+                    boardLebel:"",
+                    subjectDataId:""
                   },
                 ],
   
@@ -114,7 +117,74 @@ class subjectEnrollServices extends StudentService {
     }catch(err){console.log(err)}
 
   }
+
+
+
+  static async findStudentByEnrollStatus(){
+
+    
+
+
+    try{
+      const data = await prisma.student.findMany({
+        where:{
+          subject:{
+            some:{
+              isEnroll:'Success'
+            },
+          },
+          
+          
+          
+        },
+        include:{
+          subject:true
+        }
+        
+      });
+      return data;
+    } catch(err){
+
+        return err;
+    }
+  }
+
+
+
+  static async findStudentByClass(Class:any){
+
+    
+
+
+    try{
+      const data = await prisma.student.findMany({
+        where:{
+          standard:Class,
+          subject:{
+            some:{
+              isEnroll:'Success'
+            },
+          },
+          
+          
+          
+        },
+        include:{
+          subject:true
+        }
+        
+      });
+      return data;
+    } catch(err){
+
+        return err;
+    }
+  }
 }
+
+
+
+
 
 
 export default subjectEnrollServices;

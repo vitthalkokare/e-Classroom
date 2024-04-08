@@ -8,39 +8,83 @@ export const SubjectMutation = {
     enrollSubject: async (_: any, { input }: { input: any[] }, ctx: any) => {
       const uid = await ctx.auth;
 
-      if (!uid) throw new Error("Something went wrong");
-      
+      console.log(input)
+
+      if (!uid.email) throw new Error("Something went wrong");
+
       const stdid = await prisma.student.findUnique({where:{email:uid.email}})
-      console.log("sudid:" + stdid)
+      
+
       if(!stdid) throw new Error("Something went wrong");
+
+      const findsubdata =  input.flatMap(sdid => sdid.subjectDataId);
+
+      const sdid = await prisma.subjectData.findMany({
+        where:{
+          id:{
+            in: findsubdata
+          }
+        }
+      });
+
+      if(sdid.length <= 0){
+        throw new Error("Something went wrong..");
+      }
+
+
+
       try {
+
+
+
+      
+
+        console.log(sdid);
+
+
         const sub = await studentEnrollService.findSubjectById(stdid.id);
 
-        const subitem = sub.filter((s) => s.title);
+        const subitem = sub.flatMap((s) => s.title);
 
-        const newarr = input.filter((i) => !subitem.includes(i.title));
+        // @ts-ignore
+        const newarr = sdid.filter((i) => !subitem.includes(i.title));
 
+        if(newarr.length <= 0){
+
+          return "Subject Already Enrolled";
+        }
+
+          console.log(newarr.length);
         newarr.map(async (item) => {
+
           await prisma.subject.createMany({
             data: [
               {
+                subjectDataId:item.id,
                 title: item.title,
                 price: item.price,
                 about: item.about,
                 studentId: stdid.id,
-                isEnroll: "Pending",
+                isEnroll: "Success",
+                state:item.state,
+                boardLebel:item.boardName
+                
               },
             ],
 
-            skipDuplicates: true,
+            skipDuplicates: true, 
           });
+
         });
-      } catch (err: any) {
-        return err.message;
-      }
       return "Make Payment to Enroll Subject";
+
+      
+      } catch (err: any) { 
+        return err;
+      }
     },
 
+   
     RemoveSubject: async (parent: any, { id }: { id: string }, ctx: any) => {
       const uid = ctx.auth;
       if (!uid) throw new Error("not valid user");

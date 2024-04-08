@@ -1,6 +1,8 @@
+import { Class } from "@prisma/client";
+import { prisma } from "../../../context";
 import AdminService from "../../../services/Admin/Adminservice";
 import facultySerivces from "../../../services/Faculty/facultyServices";
-import { IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
+import {  Classs, IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
 
 export const facultyMutationResolver ={
 
@@ -9,12 +11,12 @@ export const facultyMutationResolver ={
 
 
         RegisterFaculty:async(_:any,{input}:{input:IOrgRegisterinput},ctx:any)=>{
-            console.log(input)
 
             try{
                  await facultySerivces.facultyRegister(input)
 
-                 return "Created Successfully"
+                 return {message:"Account Created successful..!"}
+
 
 
 
@@ -31,7 +33,6 @@ export const facultyMutationResolver ={
 
         LoginFaculty:async(_:any,{input}:{input:IOrginput},ctx:any)=>{
 
-            console.log(input)
             try{
                 const Token = await facultySerivces.signFacultyToken(input)
 
@@ -40,8 +41,12 @@ export const facultyMutationResolver ={
                   } 
           
                   await ctx.res.cookie('token',Token);
-                 
-                  return Token;
+
+                  
+                  return {message:"Login successful..!"}
+
+
+
           
                 }catch(err:any){
                   
@@ -50,7 +55,71 @@ export const facultyMutationResolver ={
                 }
 
 
+        },
+
+
+
+
+
+        getStudentByInfo:async(p:any,{state,boardName,standard}:{state:string,boardName:string,standard:Class},ctx:any)=>{
+
+          const authfaculty =  await ctx.auth 
+          console.log(authfaculty.email)
+
+
+          if(!authfaculty.email) throw new Error("Not Authorized");
+          try{
+             
+
+              const ss = await prisma.student.findMany({
+                where:{
+                  
+                  standard:standard,
+      
+                  subject:{
+                    some:{
+                      
+                      isEnroll:'Success'
+                    }
+                  }
+                }
+              })
+
+              return ss;
+
+          }catch(err){
+              return err;
+          }
+
+  }
+
+    },
+
+    authFaculty:{
+      subjectData:async(parent:any,args:any,ctx:any)=>{
+
+        const p = await ctx.auth
+        console.log(p.email)
+        try{
+
+          const fe = await prisma.subjectData.findMany({
+            where:{facultyEmail:p.email}
+          })
+
+          
+
+         return fe;
+
+          
+
+
+        }catch(err){
+          console.log(err);
+
         }
 
+      }
     }
+
+   
 }

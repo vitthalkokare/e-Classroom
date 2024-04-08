@@ -32,3 +32,28 @@ query AuthUser($email: String) {
   }
 }
 `
+
+export const SUBJECT_DATA = gql`
+query SubjectData {
+  subjectData {
+    title
+    price
+    about
+    state
+    id
+    boardName
+    info{
+      syllabus
+      edition
+      exam
+      publication
+      language
+    }
+    standard
+    exp
+    vision
+    fname
+  }
+}
+
+`

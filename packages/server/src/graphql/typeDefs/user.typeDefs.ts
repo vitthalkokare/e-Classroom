@@ -12,17 +12,14 @@ type Query{
 
 type Mutation{
        
-       createUser(email:String,password:String):String
+       createUser(email:String,password:String):Status
        userSignToken(email:String,password:String):Status
-       userLogout:Status
        auth0(email:String,sid:String,sub:String):User
 
 
 }
 
-type Status{
-    message:String
-}
+
 
 type User{
     id:ID!

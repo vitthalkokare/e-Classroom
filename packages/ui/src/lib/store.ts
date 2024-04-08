@@ -1,12 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit"
-import  subSlice  from "./features/Classroom/SubjectsHandler/SubStdSlice"
 import AuthCardSlice from "./features/Classroom/Auth/Slices/AuthCardSlice"
+import SubDataHandler from "./features/Classroom/SubjectsHandler/SubDataHandler"
 
 export const store = configureStore({
    
     reducer:{
         AuthCard:AuthCardSlice,
-        subslice:subSlice
+        querysubdata:SubDataHandler
 
     },
 })

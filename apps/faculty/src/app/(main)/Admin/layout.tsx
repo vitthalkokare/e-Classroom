@@ -1,46 +1,44 @@
-
 'use client'
-import { Dashboard} from '@repo/ui/index'
-import React, { ReactNode } from 'react'
-import Auth from './util/Auth';
-import LoginPage from '@/app/(auth)/login/page';
-import MainNav from './(Components)/Navigation/AdminNav';
+import { commonUi } from '@repo/ui/index'
+import React from 'react'
+import AdminNav from './(Components)/Navigation/AdminNav'
+import Auth from './util/Auth'
+import OrgLogin from '@/app/(auth)/login/a/page'
 
-
-const Layout = ({children}:{children:ReactNode}) => {
-
-
-  const {Admin,loading} = Auth();
-  
-  
+const layout = ({children}:{children:React.ReactNode}) => {
+  const {loading,Admin} = Auth()
   return (
-    <section className=' box-border p-2 justify-around h-screen  w-full min-h-[500px] gap-4  flex'>
-      
-       {loading ? (<>Loading....</>): (
+   <>
+   {loading ? (<commonUi.Loading/>):(
+    <>
 
-        <>
-        {Admin ? (
-       <>
-        <nav className=' h-full overflow-hidden sm:hidden min-w-[10%] w-fit bg-purple-600 box-border p-4 rounded-xl'>
-          <MainNav/>
-        </nav>
+        {Admin === true ? (
+           <main className={`flex w-full   sm:justify-between sm:min-w-[600px] h-screen sm:flex-col gap-2 p-1 box-border min-h-screen bg-blue-400`}>
+           <aside className={`min-w-[10%] sm:hidden box-border bg-yellow-400 p-2 flex items-center `}>
+            
+            <AdminNav/>
+       
+           </aside>
+           <section className='bg-orange-400 flex flex-col sm:min-h-[600px] sm:min-w-[600px] items-center overflow-y-scroll src w-full h-full'>
+             {children}
+            
+       
+           </section>
+           <aside className={`hidden bg-yellow-500 w-full  min-h-[100px] box-border p-2 sm:flex`}>
+               MobileNav
+       
+           </aside>
+       </main>
 
-        <main className='w-full flex '>
-        {children}
-        </main>
-      
-       
-       </>) : (
-       <>
-       <LoginPage/>
-       
-       
-       </>)}
-        
-        </>
-       )}
-    </section>
+        ):(
+          <OrgLogin/>
+        )}
+    
+    </>
+   )}
+   </>
+     
   )
 }
 
-export default Layout
+export default layout

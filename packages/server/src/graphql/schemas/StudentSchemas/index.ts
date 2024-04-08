@@ -3,6 +3,7 @@ import zod from 'zod'
 
 export const studentInputSchema = zod.object({
   sid:zod.string(),
+  dob:zod.string(),
   email:zod.string().email(),
   boardName:zod.string({required_error:"Please enter a board name"}),
   name:zod.string({required_error:"name not provided"}),
@@ -19,4 +20,6 @@ export const studentInputSchema = zod.object({
 
 })
 
+
+ 
 export type IstudentInputSchema = zod.infer<typeof studentInputSchema>

@@ -85,6 +85,7 @@ export const studentTypeDefs = `
         sid:String
         standard:Class
         clsslabel:String
+        dob:String
   
 
 

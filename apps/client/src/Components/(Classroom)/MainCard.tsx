@@ -1,5 +1,5 @@
 import userUtil from '@/app/util/userUtil';
-import { setCard, subData } from '@repo/ui/index';
+import { setCard } from '@repo/ui/index';
 import {useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 

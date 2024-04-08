@@ -8,6 +8,12 @@ const userQueryResolver = {
     subjectData: async (_: any, args: any, ctx: any) => {
       try {
         const data = await prisma.subjectData.findMany();
+        data.map((item,index)=>{
+          const femail = item.facultyEmail
+          
+
+        })
+        console.log(data);
         return data;
       } catch (err) {
         return err;

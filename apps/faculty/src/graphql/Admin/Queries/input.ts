@@ -28,9 +28,57 @@ query SubjectData {
     vision
     state
     boardName
-    info
+    info{
+      exam
+      syllabus
+      language
+      edition
+      publication
+    }
     standard
   }
 }
 
+`
+
+export const CLASSROOM = gql`
+
+
+query Classroom {
+  Classroom {
+    faculty {
+      email
+      name
+      sirname
+      exp
+      vision
+      id
+    secretKey
+
+    }
+    students {
+      id
+      standard
+      name
+      sirname
+      gender
+      email
+      city
+      state
+      boardName
+      userId
+      phone
+      subjects {
+        id
+        title
+        price
+        about
+        isEnroll
+        studentId
+      }
+      dob
+      classlabel
+    }
+  }
+}
 `

@@ -1,6 +1,6 @@
 import { ENROLL_SUBJECT } from "@/graphql/students/mutation";
 import { useMutation } from "@apollo/client";
-import { RootState, subData } from "@repo/ui/index";
+import { RootState, subdatahandler } from "@repo/ui/index";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,8 +12,8 @@ interface EnrollProps {
 const SubjectCart = () => {
   const [Enroll, setEnroll] = useState<EnrollProps[]>([]);
 
-  const CartItem = useSelector((state: RootState) => state.subslice.Cart);
-  const Total = useSelector((state: RootState) => state.subslice.Total);
+  const CartItem = useSelector((state: RootState) => state.querysubdata.Cart);
+  const Total = useSelector((state: RootState) => state.querysubdata.Total);
 
   const [EnrollSubject, { loading: enrollloading }] = useMutation(
     ENROLL_SUBJECT,
@@ -25,7 +25,7 @@ const SubjectCart = () => {
   const dispatch = useDispatch();
 
   function notEnrollhandler(item: any, index: number) {
-    dispatch(subData.decrement([item.id, item.price]));
+    dispatch(subdatahandler.decrement([item.id, item.price]));
   }
 
   const EnrollHandler = async () => {
@@ -33,13 +33,15 @@ const SubjectCart = () => {
       title: item.title,
       price: item.price,
       about: item.about,
+      subjectDataId : item.id
     }));
 
     try {
       await EnrollSubject({ variables: { input: subjects } });
       console.log(CartItem);
-      return (window.location.href = "/api/auth/payment");
+      return "Enrolled"
     } catch (err) {
+      console.error(err);
       return err;
     }
   };

@@ -37,6 +37,7 @@ model Student {
   boardName String
   city      String
   state     String
+  info      Json?
   sid       String?
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
@@ -46,9 +47,9 @@ model Student {
   subject   Subject[]
   user      User?      @relation(fields: [userId], references: [id])
 
-  class     Classroom @relation(fields:[classlabel],references:[label])
-  classlabel String 
-  
+  class      Classroom @relation(fields: [classlabel], references: [label])
+  classlabel String
+
   userId    String   @unique
   Faculty   Faculty? @relation(fields: [facultyId], references: [id])
   facultyId String?
@@ -83,7 +84,11 @@ model Subject {
   title    String
   price    Int
   about    String?
+  img       String?
+  state String
+  boardLebel String
   isEnroll Enrollstatus
+  subjectDataId String
 
   studentId String?
   student   Student? @relation(fields: [studentId], references: [id])
@@ -97,6 +102,8 @@ model Subject {
   @@unique([title, studentId])
   @@map("subject")
 }
+
+
 
 model Lectures {
   id         String   @id @default(uuid())
@@ -145,19 +152,19 @@ model Faculty {
   name            String
   sirname         String
   password        String
-  secretKey       String
+  secretKey       String?
   salt            String
   role            Roll           @default(FACULTY)
-  exp String
-  vision String
+  exp             String?
+  vision          String?
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   adminId         String?
   chats           Chats[]
   alocatedSubject SubjectData[]
   Admin           Admin?         @relation(fields: [adminId], references: [id])
-  class           Classroom? @relation(fields: [classlabel], references:[label])
-  classlabel  String?
+  class           Classroom?     @relation(fields: [classlabel], references: [label])
+  classlabel      String?
   lecture         Lectures[]
   notification    Notification[]
   student         Student[]
@@ -238,31 +245,37 @@ enum Enrollstatus {
 }
 
 model SubjectData {
-  id        String  @id @default(uuid())
+  id        String     @id @default(uuid())
   price     Int
   state     String
-  boardName String
+  boardName String 
   standard  Class
   title     String
   about     String
-  info      String?
+  info      Json?
+  img String?
+  vision String?
+  exp String?
+  fname String?
 
-  facultyEmail String?
-  faculty   Faculty? @relation(fields: [facultyEmail], references: [email])
-  class      Classroom? @relation(fields: [classlabel], references:[label])
-  classlabel  String?
-  adminId String?
-  admin   Admin?  @relation(fields: [adminId], references: [id])
 
-  @@unique([title, facultyEmail, classlabel])
+  
+
+  facultyEmail String
+  faculty      Faculty?   @relation(fields: [facultyEmail], references: [email])
+  class        Classroom? @relation(fields: [classlabel], references: [label])
+  classlabel   String
+  adminId      String?
+  admin        Admin?     @relation(fields: [adminId], references: [id])
+
+  @@unique([title, classlabel,boardName,state])
   @@map("subject_data")
 }
 
-model Classroom{
-  id Int @id  @default(autoincrement())
-  label String @unique
-  students Student[]
-  faculty Faculty[]
+model Classroom {
+  id          Int           @id @default(autoincrement())
+  label       String        @unique
+  students    Student[]
+  faculty     Faculty[]
   Subjectdata SubjectData[]
-  
 }

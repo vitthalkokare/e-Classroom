@@ -6,12 +6,26 @@ import { RootState, setCard } from '@repo/ui/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+export interface StudentInfoProps{
+  state:string;
+  standard:string
+  boardName:string
+  
+  
+}
+
+
 
 export default function useAuth() {
-  const [StudentInfo,setStudentInfo] = useState<any[] | null>(null);
+  const [StudentInfo,setStudentInfo] = useState<[] | null>();
     const [SubjectData,setSubjectData] = useState<any[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [userRoute,setRoute] = useState<string>('user')
+  const [sInfo,setSinfo] = useState<StudentInfoProps>({
+    state:"",
+    standard:"",
+    boardName:""
+  })
 
   const {user} = useUser()
 
@@ -35,10 +49,14 @@ export default function useAuth() {
         setIsAuthenticated(true)
         const sdata =  await  data?.authUser?.studentData
         setStudentInfo(sdata)
-        const name = sdata.name
+      const {state,standard,boardName,name} = sdata
+
         if(name){
           setRoute(name)
         }
+        setSinfo((pre)=>({
+          ...pre,state:state,standard:standard,boardName:boardName
+        }));
         
         const subdata = await sdata?.subjects
         setSubjectData(subdata)
@@ -67,5 +85,5 @@ export default function useAuth() {
 
 
 
-  return {isAuthenticated,loading,error,user,data,StudentInfo,SubjectData,userRoute,isAuthCard}
+  return {isAuthenticated,loading,error,user,data,StudentInfo,SubjectData,userRoute,isAuthCard,sInfo}
 }

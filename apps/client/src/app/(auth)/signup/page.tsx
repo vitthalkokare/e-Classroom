@@ -1,22 +1,38 @@
 'use client'
-import React, { useState } from 'react'
-import { gql, useMutation, useQuery} from '@apollo/client';
-import InputField from '@/Components/ui/InputField';
+import React, { useEffect, useState } from 'react'
+import { useMutation} from '@apollo/client';
 import { CREATE_USER } from '@/graphql/user/mutation';
 import toast from 'react-hot-toast';
-import { ClipLoader } from 'react-spinners';
+import { useRouter } from 'next/navigation';
+import useAuth from '@/app/util/useAuth';
+import { commonUi, setCard } from '@repo/ui/index';
+import LoginPage from '../login/page';
 
 
 
 
 const SignupPage = (props:any) => {
+  const [Lpage,setLpage] = useState(false)
   const [SignupData,setLoginData] = useState({
     email:'',
     password:''
   });
 
-  const [createUser,{loading,error}] = useMutation(CREATE_USER)
+  const {isAuthenticated,loading} = useAuth();
+  const router = useRouter()
 
+  useEffect(()=>{
+
+    if(isAuthenticated == true){
+      router.push('/Classroom')
+
+    }
+
+  },[isAuthenticated]);
+
+  const [createUser,{loading:cloading,error,data}] = useMutation(CREATE_USER)
+
+    
   function changeHandler(e:React.ChangeEvent<HTMLInputElement>) {
     const {name,value} = e.target;
       setLoginData((prev) => ({
@@ -30,60 +46,78 @@ const SignupPage = (props:any) => {
     e.preventDefault();
 		try{
        const user = await createUser({variables:{email:SignupData.email, password:SignupData.password}});
-        toast.success("user created successfully")
+
+        toast.success("User created successfully..!")
         return window.location.href = '/login';
+
   }catch(err:any){
-    return toast.error(err.message)
-
-  }
-  }
-
-  return (
-    <>
-    {loading ? ( <ClipLoader color="#000000" loading={true} size={100} />
-):(<>
+    try{
+      if(error){
       
-      <div className='flex  w-[80%] flex-col justify-evenly items-center box-border p-4 bg-white  m-auto rounded-xl'>
-     <div className=''>
-      <form action="" className='flex flex-col items-center' onSubmit={LoginHandler}>
-        <InputField
-          label='email'
-          id='email'
-          type='email'
-          name='email'
-          onChange={changeHandler}
-          value={SignupData.email}
-          
-        />
-        <InputField
-          label='password'
-          id='password'
-          type='password'
-          name='password'
-          value={SignupData.password}
-          onChange={changeHandler}
+        const d = JSON.parse(error.message)
+        for(let key of d){
+         return toast.error(key.message)
 
-        />
+        }
+
+           toast.error(err.message)
+
+        }
+    }catch(err){
+      
+
+    }
+    toast.error(err.message)
+ 
+
+  }
+  }
 
  
-            <button className='box-border px-4 py-1 rounded-lg  bg-blue-500 my-2' type='submit'>SignUp</button>
 
-      </form>
-     </div>
-     <div>
+  return (
+ <>
+ <commonUi.AuthCard 
+      title={'SignUp'}
 
-     </div>
-     <button className='box-border p-2' onClick={()=>{
-      props.onClick()
-      }}>
-        <h1>Already Have Account?</h1>
-      </button>
-      
-    </div>
+         children={(
+      <form action="" className='flex flex-col items-center' onSubmit={LoginHandler}>
+      <commonUi.InputField
+        label='email'
+        id='email'
+        type='email'
+        name='email'
+        onChange={changeHandler}
+        value={SignupData.email}
+        
+      />
+      <commonUi.InputField
+        label='password'
+        id='password'
+        type='password'
+        name='password'
+        value={SignupData.password}
+        onChange={changeHandler}
+
+      />
+
+
+<commonUi.Button type="submit" label="SignUp" />
+
+    </form>
+
+
     
     
-    </>)}
-    </>
+    )} 
+
+    refbtn={{lebel:"Already have Account..!",children:(<LoginPage/>), set:Lpage,onclick:()=>{
+      props.onClick
+      setLpage(true);
+    }}}
+ />
+
+ </>
   )
   
 

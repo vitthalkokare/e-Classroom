@@ -1,3 +1,4 @@
+import { prisma } from "../../../context";
 
 
 export const facultyQueryResolver = {
@@ -5,7 +6,7 @@ export const facultyQueryResolver = {
         authFaculty:async(_:any,args:any,ctx:any)=>{
 
             const faculty = await ctx.auth;
-            if(faculty.role !== 'FACULTY') throw new Error("not authrized");
+            if(faculty.roll !== 'FACULTY') throw new Error("not authrized");
 
             try{
                 
@@ -16,6 +17,13 @@ export const facultyQueryResolver = {
 
             }
 
-        }
+        },
+
+
+
+      
     }
+
+
+
 }

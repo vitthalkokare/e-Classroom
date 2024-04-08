@@ -46,6 +46,7 @@ CREATE TABLE "student" (
     "boardName" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
+    "info" JSONB,
     "sid" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -75,7 +76,11 @@ CREATE TABLE "subject" (
     "title" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "about" TEXT,
+    "img" TEXT,
+    "state" TEXT NOT NULL,
+    "boardLebel" TEXT NOT NULL,
     "isEnroll" "Enrollstatus" NOT NULL,
+    "subjectDataId" TEXT NOT NULL,
     "studentId" TEXT,
     "PaymentId" TEXT,
     "adminId" TEXT,
@@ -123,11 +128,11 @@ CREATE TABLE "faculty" (
     "name" TEXT NOT NULL,
     "sirname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "secretKey" TEXT NOT NULL,
+    "secretKey" TEXT,
     "salt" TEXT NOT NULL,
     "role" "Roll" NOT NULL DEFAULT 'FACULTY',
-    "exp" TEXT NOT NULL,
-    "vision" TEXT NOT NULL,
+    "exp" TEXT,
+    "vision" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "adminId" TEXT,
@@ -173,9 +178,13 @@ CREATE TABLE "subject_data" (
     "standard" "Class" NOT NULL,
     "title" TEXT NOT NULL,
     "about" TEXT NOT NULL,
-    "info" TEXT,
-    "facultyEmail" TEXT,
-    "classlabel" TEXT,
+    "info" JSONB,
+    "img" TEXT,
+    "vision" TEXT,
+    "exp" TEXT,
+    "fname" TEXT,
+    "facultyEmail" TEXT NOT NULL,
+    "classlabel" TEXT NOT NULL,
     "adminId" TEXT,
 
     CONSTRAINT "subject_data_pkey" PRIMARY KEY ("id")
@@ -232,7 +241,7 @@ CREATE UNIQUE INDEX "faculty_email_key" ON "faculty"("email");
 CREATE UNIQUE INDEX "admin_email_key" ON "admin"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "subject_data_title_facultyEmail_classlabel_key" ON "subject_data"("title", "facultyEmail", "classlabel");
+CREATE UNIQUE INDEX "subject_data_title_classlabel_boardName_state_key" ON "subject_data"("title", "classlabel", "boardName", "state");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Classroom_label_key" ON "Classroom"("label");
@@ -289,10 +298,10 @@ ALTER TABLE "notification" ADD CONSTRAINT "notification_adminId_fkey" FOREIGN KE
 ALTER TABLE "notification" ADD CONSTRAINT "notification_facultyId_fkey" FOREIGN KEY ("facultyId") REFERENCES "faculty"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subject_data" ADD CONSTRAINT "subject_data_facultyEmail_fkey" FOREIGN KEY ("facultyEmail") REFERENCES "faculty"("email") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "subject_data" ADD CONSTRAINT "subject_data_facultyEmail_fkey" FOREIGN KEY ("facultyEmail") REFERENCES "faculty"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subject_data" ADD CONSTRAINT "subject_data_classlabel_fkey" FOREIGN KEY ("classlabel") REFERENCES "Classroom"("label") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "subject_data" ADD CONSTRAINT "subject_data_classlabel_fkey" FOREIGN KEY ("classlabel") REFERENCES "Classroom"("label") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "subject_data" ADD CONSTRAINT "subject_data_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;

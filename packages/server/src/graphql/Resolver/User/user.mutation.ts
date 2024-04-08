@@ -22,9 +22,9 @@ const userMutationResolver = {
       } else {
         try {
           const user = await UserService.createUser(creaeUserInput);
-          return  "user created successfully"
-        } catch (error) {
-          return GraphQLError
+          return {message:"Account Created successful..!"}
+        } catch (error:any) {
+          return error.message;
         }
       }
     },
@@ -36,7 +36,7 @@ const userMutationResolver = {
       
       if(!user){
         try{
-          return await prisma.user.create({
+           await prisma.user.create({
             data:{
               email:email,
               sid:sid,
@@ -46,6 +46,7 @@ const userMutationResolver = {
             }
           });
 
+          return "User created successfully..!"
          
         
 
@@ -80,7 +81,7 @@ const userMutationResolver = {
 
         await ctx.res.cookie('token',Token);
        
-        return {message:Token}
+        return {message:"Login successful..!"}
 
       }catch(err:any){
         

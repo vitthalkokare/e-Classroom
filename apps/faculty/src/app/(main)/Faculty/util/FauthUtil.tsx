@@ -1,17 +1,17 @@
 'use client'
-import { AUTH_ADMIN } from '@/graphql/Admin/Queries/input'
 import {useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { AUTH_FACULTY } from '@/graphql/Faculty/Queris'
 
-const Auth = () => {
+const FauthUtil = () => {
     const [Faculty,setFaculty] = useState<boolean | null>(null)
-    const {data,loading,error} = useQuery(AUTH_ADMIN)
+    const {data,loading,error} = useQuery(AUTH_FACULTY)
         const router = useRouter()
 
 
     useEffect(()=>{
-        if(data && data.authAdmin !== null){
+        if(data && data.authFaculty !== null){
             
             setFaculty(true)
             router.push('/Faculty')
@@ -26,4 +26,4 @@ const Auth = () => {
   return {Faculty,loading,router}
 }
 
-export default Auth
+export default FauthUtil;

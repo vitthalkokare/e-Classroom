@@ -1,99 +1,52 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { commonUi } from '@repo/ui/index'
-import { useMutation } from '@apollo/client'
-import { ADMIN_LOGIN } from '@/graphql/Admin/Mutations/input'
+import React, { useState } from 'react'
+import FauthUtil from '@/app/(main)/Faculty/util/FauthUtil'
 import Auth from '@/app/(main)/Admin/util/Auth'
+import Facultylogin from './f/page'
+import OrgLogin from './a/page'
 
-interface LoginProps{
-    email: string
-    password: string
-    secretKey: string
+
+export interface LoginProps{
+  item:React.ReactNode
+  active?:number
+
+}
+export interface LoginP{
+  title:string
+  onclick:(inx:number) => void
 }
 
-const LoginPage = () => {
-    const [AdminLoginData,setAdminLoginData] = useState<LoginProps>({email:"",password:"",secretKey:""})
+const page = () => {
+  const [Login,setLogin] = useState<LoginProps>({item:<OrgLogin/>,active:0})
+ 
+  const {Admin} = Auth()
+  const {Faculty,router} = FauthUtil();
+  const [LoginHandler,setLoginHandler] = useState<React.ReactNode>(<></>)
 
-    const [AdminLogin] = useMutation(ADMIN_LOGIN,{
-        refetchQueries:['authAdmin']
-    })
-    const {Admin,router} = Auth();
-
-    useEffect(()=>{
-        if(Admin === true){
-            router.push('/Admin')
-
-        }
-
-    },[Admin]) 
-   
-    function changeHandler(event: React.ChangeEvent<HTMLInputElement>): void {
-        
-        const {name,value} = event.target
-
-        setAdminLoginData((prev)=> ({
-            ...prev,
-            [name]: value
-        }))
-
-
-    }
-    async function LoginHandler(event: React.FormEvent<HTMLFormElement>){
-        event.preventDefault();
-        try{
-            await AdminLogin({variables:{input:AdminLoginData}})
-
-            return window.location.href='/Admin';
-
-        }catch(e){}
-    }
-
+  const navbtn:LoginP[] = [{title:"Admin",onclick:(inx)=>{setLogin({item:<OrgLogin/>,active:inx})}},{title:"Faculty",onclick:(inx)=>{setLogin({item:<Facultylogin/>,active:inx})}}]
+ 
 
   return (
-    <main>
-       <div>
-        <form  onSubmit={LoginHandler}>
-        
-          <commonUi.Common.InputField
-            label="email"
-            id="email"
-            type="email"
-            name="email"
-            required={true}
-            autocomplete="off"
-            onChange={changeHandler}
-            value={AdminLoginData.email}
-          />
-          <commonUi.Common.InputField
-            label="password"
-            id="password"
-            type="password"
-            name="password"
-            required={true}
-            autocomplete="off"
-            value={AdminLoginData.password}
-            onChange={changeHandler}
-          />
-          <span>
-          <commonUi.Common.InputField
-            label="SecretKey"
-            id="secretkey"
-            type="text"
-            name="secretKey"
-            required={true}
-            autocomplete="off"
-            value={AdminLoginData.secretKey}
-            onChange={changeHandler}
-          />
-          </span>
 
+    <main className='w-full sm:min-w-[600px] flex flex-col h-screen min-h-screen items-center box-border p-4'>
 
-          <button className="text-2xl bg-blue-500 box-border p-2 m-2 rounded-xl" type="submit">Login</button>
-        </form>
-      </div>
-      
+        <nav className='w-[50%] justify-evenly bg-white px-2 rounded-t-xl h-fit box-border flex'>
+         {navbtn.map((val,inx)=>(<button className={`${inx === Login.active && `bg-black text-white font-bold transition-all duration-200`} w-full h-full box-border p-2 rounded-xl`} onClick={()=>{val.onclick(inx)}}>{val.title}</button>))}
+        </nav>
+        <section className='w-full'>
+
+          {Login.item}
+          
+        </section>
+
     </main>
+
+
+
+    
+
+
   )
 }
 
-export default LoginPage
+export default page

@@ -4,11 +4,9 @@ import { gql } from "@apollo/client";
 export const ADMIN_LOGIN= gql`
 
 
-mutation AdminLogin($input: OrgLogininput) {
+mutation Mutation($input: OrgLogininput) {
   AdminLogin(input: $input) {
-    email
-    id
-    name
+    message
   }
 }
 
@@ -17,7 +15,9 @@ mutation AdminLogin($input: OrgLogininput) {
 export const REGISTER_ADMIN_INPUT= gql`
 
 mutation RegisterAdmin($input: Admininput) {
-    RegisterAdmin(input: $input)
+    RegisterAdmin(input: $input){
+      message
+    }
   }
 `
 
@@ -25,6 +25,26 @@ mutation RegisterAdmin($input: Admininput) {
 export const ADD_NEW_SUBJECT_DATA = gql`
 
 mutation AddSubjectData($input: subjectDatainput) {
-  AddSubjectData(input: $input)
+  AddSubjectData(input: $input){
+    message
+  }
 }
+`
+
+export const VERYFY_FACULTY = gql`
+
+mutation VerifyFaculty($email: String, $secretKey: String) {
+  verifyFaculty(email: $email, secretKey: $secretKey){
+    message
+  }
+}
+`
+
+export const USER_LOG_out = gql `
+mutation userLogout {
+  userLogout {
+    message
+  }
+}
+
 `

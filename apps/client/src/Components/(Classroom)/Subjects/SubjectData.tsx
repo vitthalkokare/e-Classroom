@@ -1,5 +1,5 @@
-import { RootState, subData } from "@repo/ui/index";
-import React, { useState } from "react";
+import { RootState, subdatahandler } from "@repo/ui/index";
+import React, { useEffect, useState } from "react";
 import { FaRegSquareCheck, FaRegSquarePlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,44 +13,43 @@ const SubjectData = () => {
   const [isEnroll, setisEnroll] = useState<boolean>();
   const [Active, setActive] = useState<number[]>([]);
   const [Enroll, setEnroll] = useState<EnrollProps | null>();
-  const SubItem = useSelector((state: RootState) => state.subslice.Subjects);
+  const newSubData = useSelector((state: RootState) => state.querysubdata.Subjects);
+
   const dispatch = useDispatch();
-    const CartData = useSelector((state: RootState) => state.subslice.Cart);
+    const CartData = useSelector((state: RootState) => state.querysubdata.Cart);
 
   async function Enrollhandler(item: any, index: number) {
 
     setActive((prev) => [...prev, index]);
     
-    dispatch(subData.AddItem([item,item.price]));
+    dispatch(subdatahandler.AddItem([item,item.price]));
   }
 
   function notEnrollhandler(item: any, index: number) {
-    dispatch(subData.decrement([item.id,item.price]))
+    dispatch(subdatahandler.decrement([item.title,item.price]))
 
   }
-
-  
 
   return (
     <>
       <section className="sm:w-full relative w-full md:w-full  h-[400px] overflow-y-scroll scr">
-        {SubItem ? (
+        {newSubData ? (
           <div className="w-full">
-            {SubItem.map((item, index) => (
+            {newSubData.map((item, index) => (
               <div
                 key={index}
-                className={`flex font-medium ${CartData.find((i) => i.id === item.id) ? `bg-green-300  transition-width duration-300 transition-all`:`bg-slate-50`} relative justify-between  items-center   px-4 py-2 w-full shadow-xl box-border rounded-xl    my-2`}
+                className={`flex font-medium ${CartData.find((i) => i.title === item.title) ? `bg-green-300  transition-width duration-300 transition-all`:`bg-slate-50`} relative justify-between  items-center   px-4 py-2 w-full shadow-xl box-border rounded-xl    my-2 `}
               
               > 
                 <span>img</span>
                 <span className=" flex flex-col sm:flex-col">
                     <span>{item.title}</span>
                     <span>{item.about}</span>
-                    <span>{item.id}</span>
+                    <span className="hidden">{item.id}</span>
                 </span>
                 <span>{item.price}</span>
                 <div className="flex justify-center items-center   box-border p-4">
-                {CartData.find((i) => i.id === item.id) ? ( 
+                {CartData.find((i) => i.title === item.title) ? ( 
                   <button
                     onClick={() => {
                       notEnrollhandler(item, index);

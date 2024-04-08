@@ -10,6 +10,9 @@ import Footer from "@/Components/ui/Footer";
 import Servicses from "@/Components/LandingPage/services/Servicses";
 import SideNavMenu from "@/Components/LandingPage/SideNavMenu";
 import { FaUser } from "react-icons/fa";
+import EnrollHandler from "@/Components/(Classroom)/Subjects/EnrollHandler";
+import Link from "next/link";
+import useAuth from "./util/useAuth";
 
 const Home = () => {
   const [isNav, setisNav] = useState(0);
@@ -23,6 +26,7 @@ const Home = () => {
   const Services = useRef<HTMLDivElement>(null);
   const Contactus = useRef<HTMLDivElement>(null);
   
+  const {userRoute} = useAuth()
 
   useEffect(() => {
     function handleScroll() {
@@ -46,7 +50,7 @@ const Home = () => {
 
 
   return (
-    <div className=" w-[100%] sm:min-w-[200px]  sm:w-[400px] relative   flex flex-col">
+    <div className=" w-[100%] sm:min-w-[600px]   relative   flex flex-col">
 
      <div
         className={`sm:hidden  overflow-hidden  s-color  transition-all duration-300   z-10 h-[100%]  flex flex-col   justify-center box-borde  fixed right-0   `}
@@ -59,19 +63,20 @@ const Home = () => {
       </div> 
       <div className={`sticky top-0 transition-all duration-300 w-full  overflow-hidden  bg-yellow-200 text-2xl hidden sm:flex  justify-between    items-center box-border p-2  z-50  h-[50px]`} style={{height:`${topNav.height}px`}}>
         <strong className={``} style={{opacity:`${topNav.opacity}`}} >E-Classroom</strong>
-        <span className="box-border p-4">
-        <FaUser/>
+        <span className=" flex justify-center items-center flex-col min-h-[150px] h-fit  text-2xl ">
+          <Link href={`/Classroom/${userRoute}/Profile`} >
+            <FaUser />
+          </Link>
         </span>
 
       </div>
 
       <header
         ref={Home}
-        className="box-border justify-around h-screen sm:h-auto md:h-auto md:flex-col  flex sm:flex-col relative  w-[100%] bg-yellow-200   "
+        className="box-border justify-around h-screen sm:h-auto md:h-auto md:flex-col   flex sm:flex-col relative  w-[100%] bg-yellow-200   "
         style={{ borderRadius: "" }}
       >
-        <Intro/>
-        <Std/>
+        <EnrollHandler/>
 
       </header>
 

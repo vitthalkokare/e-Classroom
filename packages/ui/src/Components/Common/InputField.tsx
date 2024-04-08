@@ -9,22 +9,34 @@ export interface InputFieldProps {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     value: string;
     required?: boolean; 
-    autocomplete?: string; 
+    autocomplete?: string;
+    placeholder?: string; 
+    Class?:string
+    pattern?:string
+    min?:string
+    max?:string
+    maxLength?:number; 
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, id, name, type, onChange, value, required = false, autocomplete = 'off' }) => {
+const InputField: React.FC<InputFieldProps> = ({ label,Class,min,max ,pattern,maxLength, id, name, type, onChange,placeholder, value, required = false, autocomplete = 'off' }) => {
     return (
-        <div>
-            <label htmlFor={id} className='block text-sm font-medium text-gray-700'>
+        <div className='flex flex-col'>
+            <label htmlFor={id} className='block  font-medium text-gray-700'>
                 {label}
             </label>
             <input
-                className='mx-2 p-2 w-full border rounded-md text-black focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300'
+                className={` ${Class} p-2 w-full border-2 rounded-md text-black focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300`}
                 id={id}
-                type={type}
+                min={min}
+                max={max}
+                type={type} 
                 name={name}
+                placeholder={placeholder}
                 value={value}
-                onChange={onChange}
+                pattern={pattern}
+                maxLength={maxLength}
+                
+                onChange={onChange} 
                 required={required} 
                 autoComplete={autocomplete} 
             />

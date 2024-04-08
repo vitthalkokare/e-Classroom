@@ -3,22 +3,16 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import http from "http";
-import dotenv from "dotenv";
+import dotenv from "dotenv"; 
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import cookieParser from "cookie-parser";
-import UserService from "./services/User/UserService";
 import mergeResolver from "./graphql/Resolver";
 import mergeTypeDef from "./graphql/typeDefs/index";
-import bodyParser from "body-parser";
-import { Clerk } from "@clerk/backend";
 import { PrismaClient } from "@prisma/client";
 import Auth from "./services/Auth/auth";
-
+    
 async function myServer() {
-  const clerk = Clerk({
-    secretKey: "sk_test_RtH4Q4pHMaeJlnBimwyMFzwDC9ID9zPuO4d4SXd3C8",
-  });
-
+ 
   const app = express();
   const PORT = Number(process.env.PORT) || 8000;
   const httpServer = http.createServer(app)
@@ -28,12 +22,12 @@ async function myServer() {
 
   app.use(cors({
     origin:['http://localhost:3000','http://localhost:3001'],
+    methods:['GET', 'POST', 'DELETE', 'OPTIONS', 'HEAD','PATCH','CONNECT','TRACE'],
     credentials:true,
   }));
 
   app.use(express.json());
   app.use(cookieParser());
-  app.use(bodyParser.json());
   app.use(express.urlencoded({ extended: false }));
 
   const gqlServer = new ApolloServer({
@@ -57,10 +51,10 @@ async function myServer() {
 
         const auth = Auth.veryfyToken(token as string);
 
-        return { req, res,token, auth , prisma };
+        return { req, res,token, auth , prisma }; 
       },  
-    })
-  );
+    }) 
+  ); 
 
  await new Promise<void>((resolve) => httpServer.listen(PORT, resolve));
     console.log(`listening on ${PORT}`);

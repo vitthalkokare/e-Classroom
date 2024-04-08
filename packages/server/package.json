@@ -33,6 +33,7 @@
     "@types/express-session": "^1.18.0",
     "@types/jsonwebtoken": "^9.0.5",
     "@wiicamp/graphql-merge-resolvers": "^2.1.2",
+    "apollo-server-express": "^3.13.0",
     "body-parser": "^1.20.2",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",

@@ -53,7 +53,7 @@ class UserService{
     try {
       const result = await prisma.user.create({
         data: {
-          email,
+          email:email.toLowerCase(),
           password: hashedPassword,
           salt,
           role:"USER"

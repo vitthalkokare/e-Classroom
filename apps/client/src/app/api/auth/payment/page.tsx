@@ -12,8 +12,8 @@ const page = () => {
 
   const router = useRouter();
   const {data,loading,error} = useQuery(ENROLLED_SUBJECT)
-  const Total = useSelector((state:RootState)=>state.subslice.Total)
-  const CartItem = useSelector((state:RootState)=> state.subslice.Cart)
+  const Total = useSelector((state:RootState)=>state.querysubdata.Total)
+  const CartItem = useSelector((state:RootState)=> state.querysubdata.Cart)
 useEffect(()=>{
 
    const sub = async()=>{

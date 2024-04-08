@@ -15,6 +15,7 @@ const Auth = () => {
             
             setAdmin(true)
             router.push('/Admin')
+            
         }else{
             setAdmin(false)
             router.push('/login')

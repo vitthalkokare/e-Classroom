@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 import { prisma } from "../../context";
 import Auth from "../Auth/auth";
-import { OrgInput, IOrginput, IOrgRegisterinput } from "../../graphql/schemas/Admin";
+import { OrgInput, IOrginput, IOrgRegisterinput, OrgRegisterInput, IAdminRegisterinput, AdminRegisterInput } from "../../graphql/schemas/Admin";
 import { UseCase, UseCaseContext } from "../../common/useCase";
 import { Admin } from "@prisma/client";
 import { Result } from "../../common/result";
@@ -36,8 +36,11 @@ class AdminService extends UseCase{
 
     }
 
-    static async OrgSignUp(adminInput:IOrgRegisterinput){
-        const {email,password,secretKey,name,sirname} = adminInput;
+    static async AdminRegister(adminInput:IAdminRegisterinput){
+        AdminRegisterInput.parse(adminInput)
+        const {email,password,secretKey,name} = adminInput;
+    
+            if(email === '' || password === '' || secretKey ===  undefined || name === '') throw new Error("all fields are required");
         
         try{
             const salt = randomBytes(32).toString("hex")
@@ -51,6 +54,7 @@ class AdminService extends UseCase{
                     salt:salt,
                     secretKey:secretKey,
                     name:name,
+                    
                     
                 }
             })
@@ -67,7 +71,7 @@ class AdminService extends UseCase{
 
     static async veryfyAdmin(input:IOrginput){
 
-        OrgInput.parse(input)
+        OrgInput.parse(input);
 
         const {password,email,secretKey} = input
         if(password === '' || email === '' || secretKey === '') throw new Error("Something wrong wrong")
@@ -81,10 +85,11 @@ class AdminService extends UseCase{
         try{
             const salt =  admin.salt
             const varyfypass = await Auth.generateHash(password,salt)
-            if(varyfypass !== admin.password && secretKey !== admin.secretKey) throw new Error("Invalid Credentials");
+            if(varyfypass !== admin.password) throw new Error("Invalid Credentials");
+            if(secretKey !== admin.secretKey) throw new Error("Invalid Credentials");
 
-            const token = await Auth.signToken({email:admin.email,id:admin.id,roll:admin.roll})
-            return token;
+         return await Auth.signToken({email:admin.email,id:admin.id,roll:admin.roll})
+           
             
             
         }catch(err){return err}

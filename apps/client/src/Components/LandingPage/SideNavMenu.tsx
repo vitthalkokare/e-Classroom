@@ -51,8 +51,20 @@ const SideNavMenu: React.FC<ref> = ({
         behavior: "smooth",
       });
     }
+
+    
   };
   const {isAuthenticated,loading,error} = useAuth();
+
+  const profileHandler = (inx:number)=>{
+    if(inx === 0 && !isAuthenticated){
+      dispatch(setCard(true));
+    }
+    if(inx === 0 && isAuthenticated){
+      window.location.href="/Classroom" 
+    }
+
+  }
 
   return (
     <>
@@ -60,7 +72,7 @@ const SideNavMenu: React.FC<ref> = ({
         {mm.map((item, index) => (
           <button
             key={index}
-            onMouseDown={()=> {index === 0 && isAuthenticated ? window.location.href = '/Classroom' : dispatch(setCard(true)) }}
+            onMouseDown={()=> {profileHandler(index)}}
             onClick={() => handleButtonClick(item.reff)}
             className="flex box-border m-2 p-2"
           >

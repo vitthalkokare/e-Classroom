@@ -37,11 +37,10 @@ const Navigate: React.FC = () => {
   ];
 
   return (
-    <div className="flex box-border flex-col items-center justify-between  h-full ">
-      <span></span>
+    <div className="flex w-full box-border flex-col items-center justify-between  h-full ">
 
-      <nav className="flex flex-col md:p-2 box-border">
-        <span className=" flex justify-center items-center flex-col text-5xl md:mb-2 mb-4">
+      <nav className="flex flex-col  box-border">
+        <span className=" flex justify-center items-center flex-col min-h-[150px] h-fit bg-slate-400 text-5xl ">
           <Link href={`/Classroom/${userRoute}/Profile`} >
             <FaUser />
           </Link>
@@ -50,7 +49,7 @@ const Navigate: React.FC = () => {
           <Link
             key={index}
             href={item.path}
-            className="flex box-border  relative  items-center p-2"
+            className="flex box-border  relative w-fit  my-2  items-center p-2"
           >
             <span className="text-4xl  md:my-2 md:text-4xl md:p-2 box-border">
               {item.icon}

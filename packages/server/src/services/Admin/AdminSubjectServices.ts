@@ -1,6 +1,6 @@
-import { OrgInput, IAddNewSubjetData } from "../../graphql/schemas/Admin";
+import { OrgInput, IAddNewSubjetData, AddNewSubjetData } from "../../graphql/schemas/Admin";
 import { UseCase, UseCaseContext } from "../../common/useCase";
-import { Subject } from "@prisma/client";
+import { Prisma, Subject } from "@prisma/client";
 import { Result, err, ok } from "../../common/result";
 import AdminService from "./Adminservice";
 import { prisma } from "../../context";
@@ -14,36 +14,55 @@ class AdminSubjectServices extends UseCase{
    }
 
    static async AddNewSubject(input:IAddNewSubjetData){
+    AddNewSubjetData.parse(input);
+    const {title,about,price,facultyEmail,state,standard,boardName,info} = input
 
-    const {title,about,price,fname,state,standard,boardName,info,femail} = input
+    const faculty = await facultySerivces.getFacultyByEmail(facultyEmail)
 
-    const faculty = await facultySerivces.getFacultyByEmail(femail)
+    if(!faculty) throw new Error("Email is not valid..!");
 
-    if(!faculty) {
-        throw new Error("email should be provided")
-    }
-    try{
+    if(faculty.secretKey === null) throw new Error("Faculty not verified..!");
+
+
+    try{ 
+        
 
        await prisma.subjectData.create({
         data:{
-            title,
+            title:title.charAt(0).toUpperCase() + title.slice(1).toLocaleLowerCase().trim(),
             price,
-            about,
-            info,
-            boardName,
+            about:`[ ${about} Medeum ]`,
+            info:info,
+            boardName:boardName.toUpperCase().trim(),
             standard,
-            state,
-            faculty:faculty.id
+            state:state.charAt(0).toUpperCase() + state.slice(1).toLocaleLowerCase().trim(),
+            exp:faculty.exp || "",
+            fname:faculty.name,
+            vision:faculty.vision || "",
+            facultyEmail:facultyEmail,
+            classlabel:standard,
+            faculty:faculty.facultyEmail
+           
+
         }
     })
+    return {message:"New Subject Added successful..!"}
 
 
-    }catch(err){
-        return err;
+    }catch(err:any){
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === 'P2002') {
+              return {message:"A Subject with the same Faculty exists"};
+            }
+          }
+          console.error(err);
+          return err;
+        
+        }
     }
 
 
-   }
+   
 
    
 

@@ -26,7 +26,7 @@ const ProfileCard = ({
 }: studentProps) => {
   const [Active,setActive] = useState(0)
   return (
-    <div className="relative w-full  min-h-screen">
+    <div className="relative w-full h-full  min-h-screen">
       <section className="flex flex-col box-border  mb-2 sticky top-0 z-50 bg-slate-400 rounded-2xl shadow-lg ">
         <div className=" flex items-center">
         <span className="rounded-full overflow-hidden">
@@ -65,7 +65,7 @@ const ProfileCard = ({
       
 
 
-      <section className="w-full flex  h-fit mb-20 min-h-[600px] overflow-y-scroll   p-2  box-border scr bg-slate-400 rounded-2xl  ">
+      <section className="w-full flex h-full min-h-[600px] overflow-y-scroll   p-2  box-border scr rounded-2xl  ">
         {children}
       </section>
     </div>

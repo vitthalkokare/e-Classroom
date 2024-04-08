@@ -18,7 +18,8 @@ export const studentMutationResolver = {
         const uid = await ctx.auth;
 
         const student = await StudentService.RegisterStudent(input, uid);
-  
+
+       
         return student;
 
       }catch(err){

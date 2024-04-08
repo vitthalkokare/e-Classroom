@@ -1,16 +1,13 @@
 "use client";
 import useAuth from "@/app/util/useAuth";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import ProfileCard from "./ProfileCard";
 import StudentProgress from "./StudentProgress";
 import EnrolledSubject from "./EnrolledSubject";
-import SubjectEnrollCard from "@/Components/(Classroom)/Subjects/SubjectEnrollCard";
-import userUtil from "../../../../util/userUtil";
 import { useQuery } from "@apollo/client";
 import { AUTH_USER } from "@/graphql/user/queries";
 import { setCard } from "@repo/ui/index";
 import { useDispatch } from "react-redux";
-import EnrollHandler from "@/Components/(Classroom)/Subjects/EnrollHandler";
 
 const page = () => {
   const [StudentItem, setStudentItem] = useState<ReactNode | null>(
@@ -53,7 +50,9 @@ const page = () => {
                     btn: "Enrolled Subjects",
                     onclick() {
                       setStudentItem(<EnrolledSubject />);
-                      dispatch(setCard(true))
+                      if(SubjectData.length <= 0){
+                        dispatch(setCard(true))
+                      }
                     },
                   },
                 ]}

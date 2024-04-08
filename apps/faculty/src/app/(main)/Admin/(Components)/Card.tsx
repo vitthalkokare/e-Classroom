@@ -13,7 +13,7 @@ export interface CardProps{
 const Card = ({children,title,btn}:CardProps) => {
     const dispatch = useDispatch()
   return (
-    <div className='flex left-[15%] sm:left-[5%] items-center box-border p-4 rounded-xl cursor-pointer z-50 w-[60%]  flex-col  sm:w-[90%] bg-slate-50 shadow-2xl min-h-fit h-[300px] absolute top-5'>
+    <div className='flex  min-w-[400px]  items-center box-border p-4 rounded-xl cursor-pointer z-50 w-full  flex-col  bg-slate-50 shadow-2xl min-h-fit h-[300px] relative '>
         <button onClick={btn} className='absolute right-0 top-0 box-border p-1 px-2 bg-black rounded-xl text-white'>X</button>
         <h1>{title}</h1>
         <main>{children}</main>

@@ -4,7 +4,6 @@ import AutoSlide from "@/Components/ui/compo/AutoSlide";
 import Tryitfreeauth from "@/app/util/Authbtn";
 
 const Intro: React.FC = () => {
-  const ScrollItem1 = useRef<HTMLDivElement>(null);
   const [allowManualScroll, setAllowManualScroll] = useState(true);
   const [signUp,setsignUp] = useState('hidden');
 
@@ -12,15 +11,9 @@ const Intro: React.FC = () => {
  
  
 
-  const handleScroll = () => {
-    setAllowManualScroll(false);
-    setTimeout(() => {
-      setAllowManualScroll(true);
-    }, 1000); // Allow manual scrolling after 1 second
-  };
 
   return (
-    <div className="flex  w-full  text-white justify-evenly items-center     rounded-xl box-border p-4 " >
+    <div className="flex  w-full  text-white justify-around sm:items-center  rounded-xl box-border p-4 " >
       <div className="flex box-border drop-shadow-xl text-black flex-col  relative z-10">
         <span className="sm:text-3xl text-[5vw] whitespace-nowrap">
           <strong>e-Classroom:</strong>
@@ -33,8 +26,8 @@ const Intro: React.FC = () => {
         {(<Tryitfreeauth btn={"try It Free"}/>)}
       </div>
 
-      <div className={` md:w-[200px] md:h-[200px]  scr  sm:w-[200px] hidden sm:flex md:flex overflow-x-scroll  box-border items-center content-center   rounded-full   sm:h-[200px] bg-white-500`}>
-        <AutoSlide
+      <div className={`   scr  sm:w-[200px] hidden   sm:flex md:flex   box-border items-center    rounded-full   sm:h-[200px] bg-white-500`}>
+      <AutoSlide
           images={[
             { path: "/pictures/Landingpage/s2.png", caption: "" },
             { path: "/pictures/Landingpage/s3.png", caption: "" },

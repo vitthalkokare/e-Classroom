@@ -24,7 +24,7 @@ const AutoSlide: React.FC<AutoSlideProps> = ({images}) => {
   }, []);
 
   return (
-    <div className="slideshow-container   overflow-hidden relative m-auto">
+    <div className="slideshow-container -top-10 sm:hidden  w-full box-border p-4 overflow-hidden relative ">
         {
             images.map((item,index)=>(
         <div key={index} className={`mySlides fade ${slideIndex === index ? 'block' : 'hidden'}`}>

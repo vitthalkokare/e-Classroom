@@ -10,12 +10,12 @@ const PageDashboard = ({ children, navItem }: navProps) => {
   const [Active, setActive] = useState(0);
 
   return (
-    <div>
-      <nav className="flex w-full rounded-xl shadow-xl box-border  gap-2  border-2">
+    <div className=" box-border sm:flex-col flex gap-2 p-4">
+      <nav className="flex sm:flex-row  flex-col h-fit z-10 sticky top-4 bg-white w-fit rounded-xl shadow-xl box-border  gap-2  border-2">
         {navItem.map((item, index) => (
           <button
             key={index}
-            className={`${index === Active && `bg-black text-white rounded-xl`} flex  box-border p-2  gap-2 `}
+            className={`${index === Active && `bg-black  text-white rounded-xl`} flex justify-center items-center box-border p-2  gap-2 `}
             onClick={() => {
                 item.onclick()
               setActive(index);
@@ -26,7 +26,7 @@ const PageDashboard = ({ children, navItem }: navProps) => {
           </button>
         ))}
       </nav>
-      <main>{children}</main>
+      <main className="w-full">{children}</main>
     </div>
   );
 };

@@ -42,7 +42,7 @@ const Faculty:React.FC = () => {
 
               <div className="relative justify-between flex flex-col">
                 <span className="">
-                  <h1>name:{item.name}</h1>
+                  <h1>name:{item.title}</h1>
                   <h3>Education: {item.exp}</h3>
                 </span>
                 <span className="">

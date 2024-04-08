@@ -1,5 +1,6 @@
-import Dashboard from "./Dashboard";
 import InputField from "./InputField";
-
-
-export const Common = {Dashboard, InputField}
+import AuthCard from "./AuthCard";
+import Button from "./Button";
+import Loading from "./Loading";
+import SelectOption from "./SelectOption";
+export {AuthCard,InputField,Button,Loading,SelectOption}

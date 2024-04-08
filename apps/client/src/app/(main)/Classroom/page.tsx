@@ -13,7 +13,7 @@ const page = () => {
   const {StudentInfo,loading} = useAuth();
 
   return (
-    <div className='flex flex-col w-full relative  '>
+    <div className='flex flex-col w-full relative h-full '>
 
       <section className='w-full bg-red-400 h-full p-2 flex-col flex box-border  rounded-3xl'>
           <div className='w-full rounded-xl bg-white relative transition-all duration-300' style={{height:`${LiveDriver}px`}}>

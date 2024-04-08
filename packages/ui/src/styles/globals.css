@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.p-color{
+  background: rgb(53,4,87);
+background: linear-gradient(90deg, rgba(53,4,87,1) 0%, rgba(9,9,121,1) 48%, rgba(4,119,193,1) 89%, rgba(0,212,255,1) 100%, rgba(74,1,71,1) 100%);
+}
+
+
+
+body{
+  background-color: rgb(1, 77, 77);
+}
+
+
+
+
+
+/* Scroll Bar */
+
+
+.scr::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scr {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* Scroll Bar End */
+
+
+
+

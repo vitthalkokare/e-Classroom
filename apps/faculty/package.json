@@ -9,19 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@repo/tailwind-config": "*",
+    "@repo/ui": "*",
+    "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.0",
-    "@repo/tailwind-config":"*",
-    "@repo/ui":"*"
+    "tailwindcss": "^3.4.3"
   },
   "devDependencies": {
-    "@repo/ui":"*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "typescript": "^5",
+    "@repo/ui": "*",
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "typescript": "^5"
   }
 }

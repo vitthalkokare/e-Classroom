@@ -43,7 +43,7 @@ class StudentService {
   }
 
     static async RegisterStudent(studentInput:IstudentInputSchema,uid:any){
-      const {name,email,sirname,gender,standard,state,city,boardName,sid,phone,classlabel} = studentInput
+      const {name,email,sirname,gender,standard,state,city,boardName,sid,phone,classlabel,dob} = studentInput
 
       const user = await UserService.findUserByEmail(uid.email);
 
@@ -52,7 +52,7 @@ class StudentService {
   try{
     return await prisma.user.create({
       data:{
-        email,
+        email:email.toLowerCase(),
         sid,
         salt:"",
         role:"AUTH0"
@@ -72,9 +72,11 @@ class StudentService {
       
         if(!student){
           try{
+            const date = new Date(dob)
+            const newdob = date.toISOString();
             const newstudent = await prisma.student.create({
               data:{
-               email:uid.email,
+               email:uid.email.toLowerCase(),
                name,
                sirname,
                gender,
@@ -82,7 +84,8 @@ class StudentService {
                state,
                phone,
                city,
-               boardName,
+               dob:newdob,
+               boardName:boardName.toUpperCase(),
                classlabel:standard,
                userId:uid.id,
               }
