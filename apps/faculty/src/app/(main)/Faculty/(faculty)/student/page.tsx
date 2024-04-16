@@ -1,11 +1,15 @@
 'use client'
-import { GET_STUDETNS_BY_CLASS } from '@/graphql/Faculty/Mutation'
+import Selector from '@/app/Components/common/Selector'
+import { GET_STUDETNS_BY_INFO } from '@/graphql/Faculty/Queris'
 import { AUTH_FACULTY } from '@/graphql/Faculty/Queris'
 import { useMutation, useQuery } from '@apollo/client'
+import { RootState ,fcaultySlice, studentSlice} from '@repo/ui/index'
 import React, { useEffect, useState } from 'react'
+import {useDispatch,useSelector} from 'react-redux'
 
 
 interface getDataPros{
+  title:string
   state:string
   boardName:string
   standard:string
@@ -13,113 +17,122 @@ interface getDataPros{
 
 
 const page = () => {
-  const [Board,setBoard] = useState<any[]>([]);
-  const [State,setState] = useState<any[]>([]);
-  const [Class,setClass] = useState<any[]>([]);
-
-  const [getStudents,setStudents] = useState<getDataPros>({
-    standard:"",
-    state:"",
-    boardName:""
-
-  })
+  const [Board,setBoard] = useState<string>('');
+  const [State,setState] = useState<string>('');
+  const [Class,setClass] = useState<string>('');
+  const [Sub,setSub] = useState<string>('');
+  const [getData,setData] = useState(false)
+  const [getStudents,setStudents] = useState<any[]>([])
 
   const {data,error,loading} = useQuery(AUTH_FACULTY)
-  const [getStudentByInfo,{data:studentData,error:studentError,loading:studentLoading}] = useMutation(GET_STUDETNS_BY_CLASS)
 
-  useEffect(() => {
+ 
+  const facultydatastate = useSelector((state:RootState)=>state.facultydata.state);
 
-    const subdata = async()=>{
-      const dd = await data.authFaculty.subjectData
-     if(data && dd){
-      try{
-       
-       const ss = new Set(dd.flatMap((i:{state:string})=>i.state))
-       setState(()=>[...ss])
+  const facultyboardlebel = useSelector((state:RootState)=>state.facultydata.boardLebel);
 
-       const board = new Set(dd.flatMap((i:{boardName:string})=>i.boardName))
-       setBoard(()=>[...board])
+  const facultydsubject = useSelector((state:RootState)=>state.facultydata.subjects);
 
-       const std = new Set(dd.flatMap((i:{standard:string})=>i.standard))
-       setClass(()=>[...std])
-       console.log(ss)
-        
-      }catch(err){
-        console.log(err)
-      }
+  const facultyclasslebel = useSelector((state:RootState)=>state.facultydata.classlebel);
 
-     }
-      
-    }
+  const dispatch = useDispatch()
 
-    subdata();
+  const {data:ddd,refetch} = useQuery(GET_STUDETNS_BY_INFO,{
+       variables:{standard:Class,boardName:Board,state:State,title:Sub},
+       skip:!getData
+    
+  })
 
-  },[data])
 
   const getStudentsHandler = async()=>{
+   
+    setData(true);
     
-
-      console.log(data)
+      
       try{
-        await getStudentByInfo({variables:{standard:getStudents.standard,boardName:getStudents.boardName,state:getStudents.state}})
+        const d = await ddd
+        if (d && d.getStudentByInfo) {
+          dispatch(studentSlice.allStudent(d.getStudentByInfo))
+        }
+
+        return refetch();
+
+
 
       }catch(err){
-
         console.log(err);
       }
   }
 
 
-  function changeQuery(event: any) {
+  function fStatehandler(event: any) {
+    let val = event.target.value
+    setState(val)
+    dispatch(fcaultySlice.statedHandler(val))
+    
+
+  }
+  function fBoardhandler(event: any) {
+    let val = event.target.value
+    setBoard(val);
+    dispatch(fcaultySlice.boardHandler([State,val]));
+    
+
+
+  }
+  function fClasshandler(event: any) {
+    let val = event.target.value
+    setClass(val);
+    console.log(val)
+    dispatch(fcaultySlice.classHandler([State,Board,val]))
+    
+
+  }
+  function fsubhandler(event: any) {
+    let val = event.target.value
+    setSub(val);
    
-    const {name,value} = event.target 
-    setStudents((pre)=>({
-      ...pre,[name]:value
-    }))
+    
+
   }
 
   return (
     <main className='w-full box-border h-full bg-purple-500 p-2 flex flex-col'>
       <section className='sticky flex justify-evenly items-center top-0 min-h-[100px] w-full bg-white'>
+        <Selector Item={[
+          {arrItem:facultydatastate,label:"State",onchange:(fStatehandler),name:State},
+          {arrItem:facultyboardlebel,label:"Board",onchange:(fBoardhandler),name:Board},
+          {arrItem:facultyclasslebel,label:"Class",onchange:(fClasshandler),name:Class},
+          {arrItem:facultydsubject,label:"Subject",onchange:(fsubhandler),name:Sub}
 
-       <form action="" onChange={changeQuery}>
 
-       <span  className='box-border border-2 border-green-500'>
-          <select name='state' value={getStudents.state} className='w-full box-border p-4 h-full'>
-            <option  className='read-only:true'>State</option>
-            {State.map((val:any)=>(
-              <option >{val}</option>
-            ))}
-          </select>
-        </span>
 
-        <span className='box-border border-2 border-green-500'>
-          <select name='boardName' value={getStudents.boardName} className='w-full box-border p-4 h-full'>
-            <option  className='read-only:true'>Board</option>
-            {Board.map((val:any)=>(
-              <option >{val}</option>
-            ))}
-          </select>
-        </span>
-
-        <span className='box-border border-2 border-green-500'>
-          <select name='standard' value={getStudents.standard}  className='w-full box-border p-4 h-full'>
-            <option  className='read-only:true'>Class</option>
-            {Class.map((val:any)=>(
-              <option value={val} >{val}</option>
-            ))}
-          </select>
-        </span>
+        ]}          
         
-       </form>
+        />
+
+      
         
        <span>
           <button onClick={()=>{getStudentsHandler()}}>Get Data</button>
         </span>
         
       </section>
+
+
+      <section>
+        {getStudents.map((item,index)=>(
+          <section key={index}>
+          <h1>{item.name}</h1>
+          </section>
+        ))}
+
+        <h1>studnet info</h1>
+       <></>
+      </section>
     </main>
   )
 }
+
 
 export default page

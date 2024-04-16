@@ -21,31 +21,31 @@ mutation LoginFaculty($input: OrgLogininput) {
 `
 
 
-export const GET_STUDETNS_BY_CLASS = gql `
-mutation GetStudentByInfo($state: String!, $boardName: String!, $standard: String!) {
-  getStudentByInfo(state: $state, boardName: $boardName, standard: $standard) {
-    id
-    standard
-    name
-    sirname
-    gender
-    email
-    city
-    state
-    boardName
-    userId
-    phone
-    dob
-    classlabel
-    subjects {
-      id
-      title
-      price
-      about
-      isEnroll
-      studentId
-    }
-  }
-}
+// export const GET_STUDETNS_BY_CLASS = gql `
+// mutation GetStudentByInfo($state: String!, $boardName: String!,$title:String, $standard: String!) {
+//   getStudentByInfo(state: $state, boardName: $boardName,title:$title, standard: $standard) {
+//     id
+//     standard
+//     name
+//     sirname
+//     gender
+//     email
+//     city
+//     state
+//     boardName
+//     userId
+//     phone
+//     dob
+//     classlabel
+//     subjects {
+//       id
+//       title
+//       price
+//       about
+//       isEnroll
+//       studentId
+//     }
+//   }
+// }
 
-`
+// `

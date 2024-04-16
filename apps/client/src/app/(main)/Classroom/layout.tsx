@@ -25,7 +25,7 @@ export default function Mainlayout({children}:{children:React.ReactNode},props:a
        <Navigate/>
        
      </aside>
-     <main className=' w-[85%] bg-yellow-300 rounded-2xl h-full sm:w-full  scr overflow-auto   sm:text-2xl  md:w-full box-border p-2 '>
+     <main className=' w-[85%] bg-yellow-300 rounded-2xl h-full sm:w-full  scr overflow-y-scroll overflow-x-hidden     md:w-full box-border  '>
        {children}
      </main>
 

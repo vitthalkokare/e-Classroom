@@ -14,11 +14,10 @@ const layout = ({children}:{children:React.ReactNode}) => {
 
         {Admin === true ? (
            <main className={`flex w-full   sm:justify-between sm:min-w-[600px] h-screen sm:flex-col gap-2 p-1 box-border min-h-screen bg-blue-400`}>
-           <aside className={`min-w-[10%] sm:hidden box-border bg-yellow-400 p-2 flex items-center `}>
             
             <AdminNav/>
        
-           </aside>
+           
            <section className='bg-orange-400 flex flex-col sm:min-h-[600px] sm:min-w-[600px] items-center overflow-y-scroll src w-full h-full'>
              {children}
             

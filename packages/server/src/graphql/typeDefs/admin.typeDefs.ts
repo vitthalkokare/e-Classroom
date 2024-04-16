@@ -9,7 +9,7 @@ type Query{
 }
 
 type Mutation{
-    AddSubjectData(input:subjectDatainput):Status
+    AddSubjectData(input:subjectDatainput):String
     RegisterAdmin(input:AdminRegisterninput):Status
     AdminLogin(input:OrgLogininput):Status
     AddClass(label:String!):Status
@@ -63,6 +63,7 @@ input subjectDatainput{
     state: String
     boardName: String
     info: Info
+    lectureTime: String
     standard:Class
     facultyEmail:String
     classlabel:String
@@ -98,7 +99,9 @@ type subjectData {
     exp:String
     vision:String
     fname:String
+    facultyEmail:String
     id:ID
+    lectureTime:String
     
 
 }

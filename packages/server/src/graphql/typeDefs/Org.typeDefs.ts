@@ -19,7 +19,7 @@ type Mutation{
 
 
 type Status{
-    message:String
+   message:String
 }
 
 

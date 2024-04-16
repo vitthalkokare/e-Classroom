@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 
 import { toast } from "react-hot-toast";
 import { LOGIN_FACULTY } from "@/graphql/Faculty/Mutation";
-import FauthUtil from "@/app/(main)/Faculty/util/FauthUtil";
+import FauthUtil from "@/app/(main)/Faculty/util/useFaculty";
 import { LoginProps } from "../a/page";
 import Link from "next/link";
 
@@ -39,20 +39,19 @@ const Facultylogin = () => {
     try {
       await LoginFaculty({ variables: { input: FacultyLoginData } });
 
+      if (error) {
+        const d = JSON.parse(error.message);
+        for (let key of d) {
+          return toast.error(key.message);
+        }
+      }
       toast.success("Login Successfully..!");
 
       return (window.location.href = "/Faculty");
     } catch (e: any) {
       setFacultyLoginData({ email: "", password: "", secretKey: "" });
 
-      if (error) {
-        const d = JSON.parse(error.message);
-        for (let key of d) {
-          return toast.error(key.message);
-        }
-
-        toast.error(e.message);
-      }
+      
 
       return toast.error(e.message);
     }

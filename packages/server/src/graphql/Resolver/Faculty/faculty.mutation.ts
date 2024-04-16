@@ -13,10 +13,9 @@ export const facultyMutationResolver ={
         RegisterFaculty:async(_:any,{input}:{input:IOrgRegisterinput},ctx:any)=>{
 
             try{
-                 await facultySerivces.facultyRegister(input)
+              const result =   await facultySerivces.facultyRegister(input)
 
-                 return {message:"Account Created successful..!"}
-
+              return result;
 
 
 
@@ -43,7 +42,7 @@ export const facultyMutationResolver ={
                   await ctx.res.cookie('token',Token);
 
                   
-                  return {message:"Login successful..!"}
+                  return {message:Token}
 
 
 
@@ -61,37 +60,6 @@ export const facultyMutationResolver ={
 
 
 
-        getStudentByInfo:async(p:any,{state,boardName,standard}:{state:string,boardName:string,standard:Class},ctx:any)=>{
-
-          const authfaculty =  await ctx.auth 
-          console.log(authfaculty.email)
-
-
-          if(!authfaculty.email) throw new Error("Not Authorized");
-          try{
-             
-
-              const ss = await prisma.student.findMany({
-                where:{
-                  
-                  standard:standard,
-      
-                  subject:{
-                    some:{
-                      
-                      isEnroll:'Success'
-                    }
-                  }
-                }
-              })
-
-              return ss;
-
-          }catch(err){
-              return err;
-          }
-
-  }
 
     },
 
@@ -99,7 +67,6 @@ export const facultyMutationResolver ={
       subjectData:async(parent:any,args:any,ctx:any)=>{
 
         const p = await ctx.auth
-        console.log(p.email)
         try{
 
           const fe = await prisma.subjectData.findMany({

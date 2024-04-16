@@ -29,7 +29,7 @@ export default function useAuth() {
 
   const {user} = useUser()
 
-  const { data, loading, error } = useQuery(AUTH_USER,{
+  const { data, loading, error,refetch } = useQuery(AUTH_USER,{
     variables:{email:user?.email}
   });
 
@@ -85,5 +85,5 @@ export default function useAuth() {
 
 
 
-  return {isAuthenticated,loading,error,user,data,StudentInfo,SubjectData,userRoute,isAuthCard,sInfo}
+  return {isAuthenticated,loading,error,user,data,StudentInfo,SubjectData,userRoute,isAuthCard,sInfo,refetch}
 }

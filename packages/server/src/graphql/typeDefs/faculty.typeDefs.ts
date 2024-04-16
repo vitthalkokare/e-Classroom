@@ -4,12 +4,13 @@ export const facultyTypeDefs = `
 
 type Query{
     authFaculty:authFaculty
+    getStudentByInfo(state:String!,boardName:String!,standard:String!,title:String):[Student]
+
 }
 
 type Mutation{
     LoginFaculty(input:OrgLogininput):Status
     RegisterFaculty(input:fRegisterInput):Status
-    getStudentByInfo(state:String!,boardName:String!,standard:String!):[Student]
 
 }
 

@@ -13,3 +13,17 @@ query EnrolledSubject {
   }
 
 `
+
+export const CLASSES_DATA = gql`
+query Classes {
+  Classes {
+    fname
+    title
+    state
+    standard
+    lectureTime
+    boardName
+  }
+}
+
+`

@@ -2,7 +2,7 @@ import { prisma } from "../../../context";
 import AdminSubjectServices from "../../../services/Admin/AdminSubjectServices";
 import AdminService from "../../../services/Admin/Adminservice";
 import facultySerivces from "../../../services/Faculty/facultyServices";
-import { IAddNewSubjetData, IAdminRegisterinput, IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
+import { AddNewSubjetData, IAddNewSubjetData, IAdminRegisterinput, IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
 
 
 export const adminMutationResolvers = {
@@ -12,6 +12,11 @@ export const adminMutationResolvers = {
       AddClass:async(_:any,{label}:{label:string},ctx:any)=>{
 
           const aid = await ctx.auth
+          const admin = await prisma.admin.findFirst({
+            where:{email:aid.email}
+          });
+          if(!admin) throw new Error("not authorized");
+          
           if(aid.roll !== 'ADMIN') throw new Error("Not authorized..")
           try{
             await prisma.classroom.create({
@@ -28,6 +33,7 @@ export const adminMutationResolvers = {
       
         AddSubjectData:async(_:any,{input}:{input:IAddNewSubjetData},ctx:any)=>{
 
+          AddNewSubjetData.parse(input)
           const admin = await  ctx.auth
           
 
@@ -37,13 +43,14 @@ export const adminMutationResolvers = {
           
 
           try{
-            await AdminSubjectServices.AddNewSubject(input);
-            
-            return {message:"Subject added successfully.."}
+            const newsub = await AdminSubjectServices.AddNewSubject(input);
+
+            return "New Subject Added successful..!"
+
             
           }catch(err:any){
 
-              return err.message;
+              return err;
           }
 
 

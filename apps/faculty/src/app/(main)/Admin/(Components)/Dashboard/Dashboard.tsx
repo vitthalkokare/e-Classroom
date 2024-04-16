@@ -8,8 +8,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_NEW_SUBJECT_DATA } from "@/graphql/Admin/Mutations/input";
 import { SUBJECT_DATA } from "@/graphql/Admin/Queries/input";
 import toast from "react-hot-toast";
-import { object } from "zod";
-import { reverse } from "dns";
 
 
 export type infoPops = {
@@ -27,6 +25,7 @@ export interface subjectProps {
   standard: string;
   facultyEmail: string;
   info?:infoPops
+  lectureTime:string
 }
 
 interface InputPros {
@@ -63,6 +62,7 @@ const Dashboard = () => {
     price: "",
     boardName: "",
     state: "",
+    lectureTime:""
     
   });
 
@@ -77,6 +77,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const serverData = async () => {
+      
       const ss = await data?.subjectData;
         if (data && ss) {
           try {
@@ -107,6 +108,18 @@ const Dashboard = () => {
     { key: "Class8", val: "8th Class" },
     { key: "Class9", val: "9th Class" },
     { key: "Class10", val: "10th Class" },
+  ];
+
+  const lecturetime = [
+  { val: "6:00 to 8:00"},
+  { val: "8:00 to 10:00"},
+  { val: "10:00 to 12:00"},
+  { val: "12:00 to 14:00"},
+  { val: "14:00 to 16:00"},
+  { val: "16:00 to 18:00"},
+  { val: "18:00 to 20:00"},
+  { val: "20:00 to 22:00"},
+    
   ];
 
   
@@ -167,14 +180,19 @@ const Dashboard = () => {
     try {
       await addNewsubject({ variables: { input: Subdata } });
       
-      if(error){
-        console.log(error)
-      }
+      
+     
 
-     return toast.success("subject Added successfully..!");
+        return toast.success("New Subject added successfully..!");
+     
+      
+       
+      
 
-    } catch (err: any) {
-      return toast.error(err.message);
+    } catch (err: any) {   
+       console.log(err);
+        return toast.error(err.message);
+
     }
   }
 
@@ -187,7 +205,7 @@ const Dashboard = () => {
   
 
   return (
-    <main className="relative bg-gray-300 rounded-2xl  p-4   box-border flex flex-col items-center  ">
+    <main className="relative bg-gray-300 rounded-2xl w-full scr p-4    box-border flex flex-col   ">
       <div className="absolute z-40 top-0 w-[70%] sm:w-[90%]">
         {NewState.c && (
           <Card
@@ -214,8 +232,8 @@ const Dashboard = () => {
           />
         )}
       </div>
-      <section className="flex justify-evenly bg-pink-500 items-center w-full">
-        <span className="flex gap-2 bg-red-400 w-full  box-border p-2 ">
+      <section className="flex box-border p-4 justify-around   w-full">
+        <span className="flex gap-2 w-full  box-border p-2 ">
           <select
             name="state"
             onChange={changeHandler}
@@ -285,10 +303,10 @@ const Dashboard = () => {
         <button onClick={()=>{setOpen(true)}} className="box-border p-2 flex items-center justify-center text-2xl gap-2">
           <strong>Info</strong>
           <FaCirclePlus />
-        </button>
+        </button> 
         
         {
-        Close && 
+        Close &&    
         <div className="absolute z-40 top-0 w-[70%] sm:w-[90%]">
           <Card
           btn={()=>{setOpen(false)}}
@@ -332,7 +350,7 @@ const Dashboard = () => {
         }
       </section>
       <section>
-        <section className="flex gap-2">
+        <section className="flex items-center p-2 box-border gap-2">
           <commonUi.InputField
             label="Title"
             id="title"
@@ -357,6 +375,34 @@ const Dashboard = () => {
             value={Subdata.price}
             onChange={changeHandler}
           />
+          <span className="flex flex-col gap-1 box-border p-2 ">
+          <label htmlFor="lectureTime">LectureTime</label>
+          <span className="flex  gap-2 box-border p-2">
+          <select
+            name="lectureTime"
+            onChange={changeHandler}
+            id="lectureTime"
+            value={Subdata.lectureTime}
+          >
+            <option disabled className="read-only:">LectureTime</option>
+
+            {lecturetime.map((item, index) => (
+             
+              <option value={item.val} key={index}>
+                {item.val}
+              </option>
+            ))}
+          </select>
+          <button
+            className="text-2xl"
+            onClick={() => {
+              setNewState({ c: true, name: "lectureTime" });
+            }}
+          >
+            <FaCirclePlus />
+          </button>
+          </span>
+        </span>
         </section>
         <commonUi.InputField
           label="facultyEmail"

@@ -25,9 +25,7 @@ mutation RegisterAdmin($input: Admininput) {
 export const ADD_NEW_SUBJECT_DATA = gql`
 
 mutation AddSubjectData($input: subjectDatainput) {
-  AddSubjectData(input: $input){
-    message
-  }
+  AddSubjectData(input: $input)
 }
 `
 

@@ -9,6 +9,7 @@ const page = () => {
   const [Board,setBoard] = useState<any[]>([]);
   const [State,setState] = useState<any[]>([]);
   const [Class,setClass] = useState<any[]>([]);
+  const [sub,setSub] = useState<any[]>([]);
 
   const {data,error,loading} = useQuery(AUTH_FACULTY)
 
@@ -29,6 +30,9 @@ const page = () => {
        const std = new Set(dd.flatMap((i:{standard:string})=>i.standard))
        setClass(()=>[...std])
        console.log(ss)
+
+       const sub = new Set(dd.flatMap((i:{title:string})=>i.title));
+        setSub(()=>[...sub]);
         
       }catch(err){
         console.log(err)

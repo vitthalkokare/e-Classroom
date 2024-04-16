@@ -85,6 +85,7 @@ const StudentinfoCard = () => {
               onChange={studentInput}
               id=""
             >
+              <option aria-readonly="true" className="read-only" >Class</option>
               {standard.map((std, index) => (
                 <option value={std.key} key={index}>{std.val}</option>
               ))}

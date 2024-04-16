@@ -1,15 +1,11 @@
-'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const page = () => {
-
-  useEffect(() => {
-
-  },[])
   return (
     <div>
+
+        this is Faculty Profile
       
-      studnet page
     </div>
   )
 }

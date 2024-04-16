@@ -9,6 +9,7 @@ export const studentTypeDefs = `
     type Query{
         
         EnrolledSubject:[Subject]
+        Classes:[subjectData]
 
     }
 
@@ -63,6 +64,7 @@ export const studentTypeDefs = `
         state:String
         boardName:String
         userId:ID
+        imageUrl:String
         phone:String
         subjects:[Subject]
         dob:Date

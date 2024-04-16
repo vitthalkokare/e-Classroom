@@ -17,11 +17,12 @@ const AllFaculty = () => {
   const [Active, setActive] = useState(0);
 
   const [FacultyData, setFacultyData] = useState<any[]>([]);
-  const { data, loading, error } = useQuery(CLASSROOM);
+  const { data, loading, error,refetch } = useQuery(CLASSROOM);
 
   const [verifyFaculty, { data: verifydata }] = useMutation(VERYFY_FACULTY);
 
   useEffect(() => {
+    refetch();
     const facultyData = async () => {
       const Fdata = await data?.Classroom?.faculty;
 
@@ -33,7 +34,8 @@ const AllFaculty = () => {
     };
 
     facultyData();
-  }, [data]);
+
+  }, []);
 
   function cardHadnler(inx: number) {
     if (inx === Active) {

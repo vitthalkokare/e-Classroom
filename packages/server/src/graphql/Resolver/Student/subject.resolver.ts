@@ -39,10 +39,9 @@ export const SubjectMutation = {
 
       
 
-        console.log(sdid);
 
 
-        const sub = await studentEnrollService.findSubjectById(stdid.id);
+        const sub = await prisma.subject.findMany({where:{studentId:stdid.id}})
 
         const subitem = sub.flatMap((s) => s.title);
 
@@ -51,7 +50,7 @@ export const SubjectMutation = {
 
         if(newarr.length <= 0){
 
-          return "Subject Already Enrolled";
+          throw new Error("Subject Already Enrolled");
         }
 
           console.log(newarr.length);
@@ -67,7 +66,9 @@ export const SubjectMutation = {
                 studentId: stdid.id,
                 isEnroll: "Success",
                 state:item.state,
-                boardLebel:item.boardName
+                classlebel:item.classlabel,
+                boardLebel:item.boardName,
+              
                 
               },
             ],
@@ -93,7 +94,7 @@ export const SubjectMutation = {
       if (!student) throw new Error("Student not found");
 
       try {
-        const ss = await studentEnrollService.findSubjectById(student.id);
+        const ss = await prisma.subject.findMany({where:{studentId:student.id}})
 
         let uniqueSubjectIndex = -1;
         ss.some((sub, index) => {
@@ -131,9 +132,7 @@ export const SubjectMutation = {
       if (!sid) throw new Error("Student not Found");
 
       try {
-        const enrolledsubject = await subjectEnrollServices.findSubjectById(
-          sid.id
-        );
+        const enrolledsubject = await prisma.subject.findMany({where:{studentId:sid.id}})
         if (!enrolledsubject) return null;
 
         return enrolledsubject;

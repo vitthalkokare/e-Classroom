@@ -49,7 +49,7 @@ export const indiaStates: StateData[] = [
                             {id:1,name:"Akash Sharma",exp:"5 year",vision:"To inspire and cultivate a passion for academic excellence, fostering an environment where students are motivated to achieve their highest potential.",
                         },
                         {   id:2,
-                            name: "Adarsh varma",
+                           name: "Adarsh varma",
                             exp: "5 year of exp.",
                             vision:
                               "To nurture critical thinking skills, encouraging students to analyze, question, and evaluate information independently.",

@@ -13,7 +13,7 @@ const userQueryResolver = {
           
 
         })
-        console.log(data);
+        
         return data;
       } catch (err) {
         return err;

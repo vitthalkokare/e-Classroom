@@ -2,6 +2,7 @@ import { randomBytes } from "crypto";
 import { prisma } from "../../context";
 import { IOrgRegisterinput, IOrginput, OrgInput, OrgRegisterInput } from "../../graphql/schemas/Admin";
 import Auth from "../Auth/auth";
+import { title } from "process";
 
 class facultySerivces{
     static async getFacultyByEmail(email:string){
@@ -27,19 +28,19 @@ class facultySerivces{
         if(email === "" || password ==="") throw new Error("all fields are required");
 
         const fid = await prisma.faculty.findUnique({where:{email:email}})
-        if(fid) return "Account Already exists.!"
+        if(fid) return {message:"Account Already exists.!"}
 
         try{
             const salt = randomBytes(32).toString("hex")
 
             const hp = await Auth.generateHash(password,salt);
     
-            return  await prisma.faculty.create({
+              await prisma.faculty.create({
                 data:{
-                    email:email.toLowerCase().trim(),
+                    email:email,
                     password:hp,
                     salt:salt,
-                    name:name,                    
+                    name:name,       
                     sirname:sirname,
                     vision:vision,
                     exp:exp + " Year of Experience"
@@ -48,7 +49,10 @@ class facultySerivces{
                     
                     
                 }
-            })
+            });
+
+
+            return {message:"Account Created successful..!"}
 
 
            
@@ -72,15 +76,15 @@ class facultySerivces{
         })
 
         if(!faculty) throw new Error("Not a Valid Credentials");
-        console.log(faculty);
+
         try{
             const salt =  faculty.salt 
             const varyfypass = await Auth.generateHash(password,salt)
             if(varyfypass !== faculty.password) throw new Error("Invalid Credentials");
             if(secretKey !== faculty.secretKey) throw new Error("Invalid Credentials");
 
-            const token = await Auth.signToken({email:faculty.email,id:faculty.id,roll:faculty.role})
-            return token;
+          return await Auth.signToken({email:faculty.email,id:faculty.id,roll:faculty.role})
+            
             
             
             

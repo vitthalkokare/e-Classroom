@@ -33,7 +33,6 @@ export const adminQueryResolvers = {
             const org = await ctx.auth;
              if( org.roll !== 'ADMIN') throw new Error("Something went wrong");
             
-             console.log(org)
             try{
                 const student = await prisma.student.findMany();
                 const faculty = await prisma.faculty.findMany();

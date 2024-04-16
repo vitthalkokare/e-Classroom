@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import userUtil from '../../../../util/userUtil'
 import { useDispatch } from 'react-redux';
 import { setCard } from '@repo/ui/index';
@@ -8,7 +8,12 @@ import SubjectEnrollCard from '@/Components/(Classroom)/Subjects/SubjectEnrollCa
 const EnrolledSubject = () => {
 
   const dispatch = useDispatch();
-    const {StudentInfo,loading,SubjectData,isAuthCard} = useAuth();
+    const {StudentInfo,loading,SubjectData,isAuthCard,refetch} = useAuth();
+
+    useEffect(()=>{
+      refetch();
+
+    },[])
 
   return (
     <div className='relative w-full h-full  flex-col'>

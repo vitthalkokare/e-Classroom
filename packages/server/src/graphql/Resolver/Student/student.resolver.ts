@@ -2,6 +2,7 @@ import { IstudentInputSchema, studentInputSchema } from "../../schemas/StudentSc
 import StudentService from "../../../services/Student/StudentServices";
 import studentEnrollService from "../../../services/Student/subjectEnrollServices";
 import subjectEnrollServices from "../../../services/Student/subjectEnrollServices";
+import { prisma } from "../../../context";
 
 export const studentMutationResolver = {
   Mutation: {
@@ -37,12 +38,14 @@ export const studentMutationResolver = {
     subjects: async (parent: any, args: any, ctx: any) => {
       const studentId = await parent.id;
 
+     if(studentId){
       try {
-        const sub = await subjectEnrollServices.findSubjectById(studentId);
+        const sub = await prisma.subject.findMany({where:{studentId: studentId}})
         return sub;
       } catch (err) {
         return err;
       }
+     }
     },
 
 

@@ -8,15 +8,6 @@ class subjectEnrollServices extends StudentService {
 
  
 
-  static async findSubjectById(uid: string) {
-    if (!uid) throw new Error("Something went wrong");
-
-    return await prisma.subject.findMany({
-      where: {
-        studentId: uid,
-      }, 
-    });
-  }
 
   static async getSubjectById(subid:string){
     
@@ -39,7 +30,7 @@ class subjectEnrollServices extends StudentService {
     if (!student) throw new Error("Student not Registered");
     let enrolldata:any[]= [];
 
-    const sub = await this.findSubjectById(student.id);
+    const sub = await prisma.subject.findMany({where:{studentId:uid}});
     try {
 
       for (const [key, value] of Object.entries(Enrollinput)) {
@@ -61,7 +52,8 @@ class subjectEnrollServices extends StudentService {
                     isEnroll: "Success",
                     state:"",
                     boardLebel:"",
-                    subjectDataId:""
+                    classlebel:"",
+                    subjectDataId:"",
                   },
                 ],
   
@@ -111,7 +103,7 @@ class subjectEnrollServices extends StudentService {
                 
           }
       })
-      const allsub = await this.findSubjectById(stdId)
+      const allsub = await prisma.subject.findMany();
       return allsub;
 
     }catch(err){console.log(err)}

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import FauthUtil from '@/app/(main)/Faculty/util/FauthUtil'
+import FauthUtil from '@/app/(main)/Faculty/util/useFaculty'
 import Auth from '@/app/(main)/Admin/util/Auth'
 import Facultylogin from './f/page'
 import OrgLogin from './a/page'

@@ -31,7 +31,7 @@ const QuerySubSelector = ({
 
 
   const [Subject, setSubject] = useState<any | null>(null);
-  const { sInfo } = useAuth();
+  const { sInfo ,isAuthenticated } = useAuth();
 
   const states = useSelector((state: RootState) => state.querysubdata.states);
   const BoardLabel = useSelector(
@@ -47,6 +47,9 @@ const QuerySubSelector = ({
   useEffect(() => {
     const subdata = async () => {
       const dd = await data?.subjectData;
+      if(localStorage.getItem('subdata')){
+        localStorage.setItem('subdata',JSON.stringify([]))
+      }
       if (dd) {
         localStorage.setItem("subdata", JSON.stringify(dd));
       }
@@ -112,7 +115,7 @@ const QuerySubSelector = ({
             className={`${State}box-border w-full p-4 shadow-lg rounded-xl`}
             onChange={handleState}
           >
-            <option>{sInfo ? `${sInfo?.state}`:"State"}</option>
+            <option>{isAuthenticated ? `${sInfo?.state}`:"State"}</option>
 
             {states.map((item, index) => (
               <option key={index} value={item}>
@@ -126,7 +129,7 @@ const QuerySubSelector = ({
             className={`${board}box-border flex flex-col w-full  p-4 shadow-lg rounded-xl`}
             onChange={handleBoard}
           >
-            <option>{sInfo ? `${sInfo?.boardName}`:"Board"}</option>
+            <option>{isAuthenticated ? `${sInfo?.boardName}`:"Board"}</option>
 
             {BoardLabel.map((item, index) => (
               <option className="flex flex-col" key={index} value={item}>
@@ -141,7 +144,7 @@ const QuerySubSelector = ({
           className={`${Standard} rounded-lg box-border relative p-4 flex flex-col justify-center   items-center `}
           onChange={handleClass}
         >
-            <option>{sInfo ? `${sInfo?.standard}`:"Class"}</option>
+            <option>{isAuthenticated ? `${sInfo?.standard}`:"Class"}</option>
           {Standards.map((item, index) => (
             <option key={index} value={item}>
               {item}

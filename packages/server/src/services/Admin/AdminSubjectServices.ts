@@ -14,15 +14,33 @@ class AdminSubjectServices extends UseCase{
    }
 
    static async AddNewSubject(input:IAddNewSubjetData){
-    AddNewSubjetData.parse(input);
-    const {title,about,price,facultyEmail,state,standard,boardName,info} = input
+    
+    const {title,about,price,facultyEmail,state,standard,boardName,info,lectureTime} = input
 
+        if(title === '' || price === null){
+            throw new Error("Invalid Input Type")
+        }
     const faculty = await facultySerivces.getFacultyByEmail(facultyEmail)
 
-    if(!faculty) throw new Error("Email is not valid..!");
+    if(!faculty){
+     throw new Error("Invalid email address")
+         
+     
+    }
+    if(faculty.secretKey === null) throw new Error("Email Not Verified");
 
-    if(faculty.secretKey === null) throw new Error("Faculty not verified..!");
+    
 
+   
+    const f = await prisma.subjectData.findMany({
+        where:{facultyEmail:facultyEmail}
+    })
+    const g = f.find((e)=>e.lectureTime === lectureTime);
+
+
+    if(g){
+        throw new Error("Lecture Time Already Allocated");
+    }
 
     try{ 
         
@@ -32,7 +50,12 @@ class AdminSubjectServices extends UseCase{
             title:title.charAt(0).toUpperCase() + title.slice(1).toLocaleLowerCase().trim(),
             price,
             about:`[ ${about} Medeum ]`,
-            info:info,
+            lectureTime:lectureTime,
+            info:{
+                publication:boardName,
+                edition:info.edition || "Latest",
+                exam:boardName
+            },
             boardName:boardName.toUpperCase().trim(),
             standard,
             state:state.charAt(0).toUpperCase() + state.slice(1).toLocaleLowerCase().trim(),
@@ -44,15 +67,17 @@ class AdminSubjectServices extends UseCase{
             faculty:faculty.facultyEmail
            
 
-        }
-    })
-    return {message:"New Subject Added successful..!"}
+        },
+        
+        
+    });
 
+    
 
     }catch(err:any){
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             if (err.code === 'P2002') {
-              return {message:"A Subject with the same Faculty exists"};
+              throw new Error("A Subject with the same Faculty exists");
             }
           }
           console.error(err);

@@ -56,10 +56,11 @@ export const info = {
 
 
 export const AddNewSubjetData = z.object({
-  title:z.string(),
+  title:z.string({required_error:"Please enter a title"}),
   about:z.string(),
-  price:z.number(),
-  facultyEmail:z.string().toLowerCase(),
+  lectureTime:z.string(),
+  price:z.number({required_error:"Price not be null" }),
+  facultyEmail:z.string({required_error:"Provide Faculty Email.."}).toLowerCase(),
   info:z.object({
     syllabus:z.string(),
     exam:z.string(),
