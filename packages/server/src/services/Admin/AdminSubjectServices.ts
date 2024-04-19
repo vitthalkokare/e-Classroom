@@ -60,7 +60,7 @@ class AdminSubjectServices extends UseCase{
             standard,
             state:state.charAt(0).toUpperCase() + state.slice(1).toLocaleLowerCase().trim(),
             exp:faculty.exp || "",
-            fname:faculty.name,
+            fname:`${faculty.name} + " " + ${faculty.sirname}`,
             vision:faculty.vision || "",
             facultyEmail:facultyEmail,
             classlabel:standard,

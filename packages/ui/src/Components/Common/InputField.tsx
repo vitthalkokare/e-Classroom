@@ -16,14 +16,16 @@ export interface InputFieldProps {
     min?:string
     max?:string
     maxLength?:number; 
+    btnNode?:React.ReactNode
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label,Class,min,max ,pattern,maxLength, id, name, type, onChange,placeholder, value, required = false, autocomplete = 'off' }) => {
+const InputField: React.FC<InputFieldProps> = ({btnNode, label,Class,min,max ,pattern,maxLength, id, name, type, onChange,placeholder, value, required = false, autocomplete = 'off' }) => {
     return (
-        <div className='flex flex-col'>
+        <div className='flex relative flex-col'>
             <label htmlFor={id} className='block  font-medium text-gray-700'>
                 {label}
             </label>
+            <span className='flex relative items-center'>
             <input
                 className={` ${Class} p-2 w-full border-2 rounded-md text-black focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300`}
                 id={id}
@@ -40,6 +42,8 @@ const InputField: React.FC<InputFieldProps> = ({ label,Class,min,max ,pattern,ma
                 required={required} 
                 autoComplete={autocomplete} 
             />
+            {value.length > 0 &&  <span className='absolute right-0 text-xl mx-2  '>{btnNode}</span>}
+            </span>
         </div>
     );
 };

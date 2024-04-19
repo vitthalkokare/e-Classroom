@@ -73,7 +73,7 @@ const StudentinfoCard = () => {
   }
 
   return (
-    <div className="w-[70%] shadow-gray-700 shadow-2xl  sm:w-[90%] min-h[500px] max-h-fit bg-yellow-200 absolute  mx-auto top-10 sm:left-[5%] left-[15%]  box-border p-4 rounded-xl">
+    <div className="w-[70%] shadow-gray-700 shadow-2xl z-50  sm:w-[90%] min-h[500px] max-h-fit bg-yellow-200 absolute  mx-auto top-10 sm:left-[5%] left-[15%]  box-border p-4 rounded-xl">
       <h1>Student Registration</h1>
       <form action="" onSubmit={studentRegister}>
         <div className="flex flex-col  items-center gap-2">

@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import useFaculty from './util/useFaculty';
-import Classes, { QueryProps } from './Components/Navigation/Homepage/Classes';
+import Classes, { QueryProps } from './(faculty)/Home/Classes';
 import SocketioIntegration from './socketio/SocketioIntegration';
+import Navigator from './(faculty)/Home/Navigator';
 
 
 interface CountdownState {
@@ -27,10 +28,6 @@ const page = () => {
   let s = date.getSeconds();
   
 
- const timer = setInterval(()=>{
-  
-
- },1000)
 
  const ss = Selected?.lectureTime;
  const n = Number(ss?.substring(0,2).replace(/:/g,''));
@@ -49,8 +46,7 @@ const page = () => {
  console.log(lecTime);
 
   return ()=>{
-    clearInterval(timer);
-
+    
     
   }
 
@@ -101,6 +97,9 @@ const page = () => {
           <SocketioIntegration/>
           </span>
          </div>
+         <Navigator/>
+
+
  <div className='  absolute h-full top-0 right-0  bg-blue-700   box-border  rounded-xl shadow-3xl  transition-all duration-300 ease-in' style={{width:`${Live.width}%`}}>
  <button onClick={()=>{setLive((pre)=> pre.width === 0 ? {width:30} : {width:0})}} className='absolute right-0 z-50 top-0 box-border p-2 bg-black text-white'>Live</button>
 

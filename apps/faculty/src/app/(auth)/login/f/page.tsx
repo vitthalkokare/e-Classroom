@@ -10,6 +10,8 @@ import { LoginProps } from "../a/page";
 import Link from "next/link";
 
 const Facultylogin = () => {
+  const [Hidepass,setPass] = useState('password')
+
   const [FacultyLoginData, setFacultyLoginData] = useState<LoginProps>({
     email: "",
     password: "",
@@ -77,12 +79,14 @@ const Facultylogin = () => {
               <commonUi.InputField
                 label="password"
                 id="password"
-                type="password"
+                type={Hidepass}
                 name="password"
                 required={true}
                 autocomplete="off"
                 value={FacultyLoginData.password}
                 onChange={changeHandler}
+                btnNode={<commonUi.PassShowHide hideShow={setPass}/>}
+
               />
             </span>
             <span>

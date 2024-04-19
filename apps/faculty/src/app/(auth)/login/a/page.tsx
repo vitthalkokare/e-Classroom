@@ -15,6 +15,8 @@ export interface LoginProps{
 }
 
 const OrgLogin = (props:any) => {
+  const [Hidepass,setPass] = useState('password')
+
     const [AdminLoginData,setAdminLoginData] = useState<LoginProps>({email:"",password:"",secretKey:""})
 
     const [AdminLogin,{data,loading,error}] = useMutation(ADMIN_LOGIN,{
@@ -101,12 +103,14 @@ const OrgLogin = (props:any) => {
         <commonUi.InputField
           label="password"
           id="password"
-          type="password"
+          type={Hidepass}
           name="password"
           required={true}
           autocomplete="off"
           value={AdminLoginData.password}
           onChange={changeHandler}
+          btnNode={<commonUi.PassShowHide hideShow={setPass}/>}
+
         />
      </span>
         <span>

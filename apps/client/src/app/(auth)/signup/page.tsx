@@ -12,6 +12,8 @@ import LoginPage from '../login/page';
 
 
 const SignupPage = (props:any) => {
+  const [Hidepass,setPass] = useState('password')
+
   const [Lpage,setLpage] = useState(false)
   const [SignupData,setLoginData] = useState({
     email:'',
@@ -94,10 +96,12 @@ const SignupPage = (props:any) => {
       <commonUi.InputField
         label='password'
         id='password'
-        type='password'
+        type={Hidepass}
         name='password'
         value={SignupData.password}
         onChange={changeHandler}
+        btnNode={<commonUi.PassShowHide hideShow={setPass}/>}
+
 
       />
 

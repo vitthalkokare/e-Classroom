@@ -21,11 +21,9 @@ export default function Mainlayout({children}:{children:React.ReactNode},props:a
     {isAuthenticated ? (
        <main className='sm:min-w-[500px] scr overflow-x-scroll sm:h-screen w-screen justify-around h-screen sm:justify-between  sm:flex-col     gap-2 box-border relative flex'>
      
-     <aside className='box-border  h-full flex-col items-center flex  bg-blue-200  p-2 rounded-3xl   left-0   sm:hidden   '>
        <Navigate/>
        
-     </aside>
-     <main className=' w-[85%] bg-yellow-300 rounded-2xl h-full sm:w-full  scr overflow-y-scroll overflow-x-hidden     md:w-full box-border  '>
+     <main className=' w-full  rounded-2xl h-full sm:w-full  scr overflow-y-scroll overflow-x-hidden     md:w-full box-border  '>
        {children}
      </main>
 

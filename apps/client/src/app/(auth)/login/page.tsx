@@ -12,6 +12,8 @@ import SignupPage from "../signup/page";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const LoginPage = (props:any) => {
+  const [Hidepass,setPass] = useState('password')
+
   const [Signup, setSignup] = useState(false);
 
   const [LoginData, setLoginData] = useState({
@@ -80,12 +82,14 @@ const LoginPage = (props:any) => {
               <commonUi.InputField
                 label="password"
                 id="password"
-                type="password"
+                type={Hidepass}
                 name="password"
                 required={true}
                 autocomplete="off"
                 value={LoginData.password}
                 onChange={changeHandler}
+                btnNode={<commonUi.PassShowHide hideShow={setPass}/>}
+
               />
               <commonUi.Button type="submit" label="Login" />
 

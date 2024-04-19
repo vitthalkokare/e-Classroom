@@ -111,8 +111,8 @@ const Dashboard = () => {
   ];
 
   const lecturetime = [
-  { val: "6:00 to 8:00"},
-  { val: "8:00 to 10:00"},
+  { val: "06:00 to 08:00"},
+  { val: "08:00 to 10:00"},
   { val: "10:00 to 12:00"},
   { val: "12:00 to 14:00"},
   { val: "14:00 to 16:00"},
@@ -233,8 +233,9 @@ const Dashboard = () => {
         )}
       </div>
       <section className="flex box-border p-4 justify-around   w-full">
-        <span className="flex gap-2 w-full  box-border p-2 ">
+        <span className="flex gap-2 w-full  box-border">
           <select
+          className="p-2"
             name="state"
             onChange={changeHandler}
             id=""
@@ -259,8 +260,9 @@ const Dashboard = () => {
           </button>
         </span>
 
-        <span className="flex gap-2 w-full box-border p-2 ">
+        <span className="flex gap-2 w-full box-border  ">
           <select
+          className="p-2"
             name="boardName"
             id=""
             onChange={changeHandler}
@@ -284,8 +286,9 @@ const Dashboard = () => {
           </button>
         </span>
 
-        <span className="flex w-full box-border p-2 ">
+        <span className="flex w-full box-border ">
           <select
+          className="p-2"
             name="standard"
             onChange={changeHandler}
             value={Subdata.standard}
@@ -359,14 +362,7 @@ const Dashboard = () => {
             type="text"
             onChange={changeHandler}
           />
-          <commonUi.InputField
-            label="about"
-            id="about"
-            name="about"
-            value={Subdata.about}
-            type="text"
-            onChange={changeHandler}
-          />
+          
           <commonUi.InputField
             label="Price"
             id="price"
@@ -375,10 +371,20 @@ const Dashboard = () => {
             value={Subdata.price}
             onChange={changeHandler}
           />
+          <span className="flex box-border flex-col gap-1">
+          
+          <label htmlFor="Medium">Medium</label>
+          <select className="p-2" onChange={changeHandler} value={Subdata.about} name="about" id="Medium">
+          <option disabled className="read-only:">Medium</option>
+            <option value="English">English</option>
+            <option value={"Semi-English"}>Semi-English</option>
+          </select>
+          </span>
           <span className="flex flex-col gap-1 box-border p-2 ">
           <label htmlFor="lectureTime">LectureTime</label>
-          <span className="flex  gap-2 box-border p-2">
+          <span className="flex  gap-2 box-border">
           <select
+          className="p-2"
             name="lectureTime"
             onChange={changeHandler}
             id="lectureTime"

@@ -15,6 +15,7 @@ interface FacultyResterProps{
   email: string;
 }
 const page = () => {
+  const [Hidepass,setPass] = useState('password')
   const [FacultyRegisterData,setFacultyRegisterData] = useState<FacultyResterProps>({
     name:"",
     sirname:"",
@@ -137,12 +138,13 @@ const page = () => {
           <commonUi.InputField
             label="password"
             id="password"
-            type="password"
+            type={Hidepass}
             name="password"
             required={true}
             autocomplete="off"
             value={FacultyRegisterData.password}
             onChange={changeHandler}
+            btnNode={<commonUi.PassShowHide hideShow={setPass}/>}
           />
           </span>
 
