@@ -5,7 +5,7 @@ import SubjectData from './SubjectData'
 const EnrollSubjectHandler = () => {
   return (
     <div className='w-full  min-h-[400px] overflow-y-scroll scr gap-2  sm:flex-col box-border p-2 flex justify-around'>
-            <div className='w-[40%] sm:w-full'>
+            <div className='w-[40%] sticky top-0 left-0 sm:w-full'>
             <QuerySubSelector/>
 
             </div>

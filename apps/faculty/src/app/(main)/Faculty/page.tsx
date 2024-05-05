@@ -1,122 +1,99 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import useFaculty from './util/useFaculty';
-import Classes, { QueryProps } from './(faculty)/Home/Classes';
-import SocketioIntegration from './socketio/SocketioIntegration';
-import Navigator from './(faculty)/Home/Navigator';
+import {useEffect, useState} from 'react'
+import NavigatorHandler from './(faculty)/Home/NavigatorHandler'
+import { useFacultyContext } from './contexts/useFaculty'
+import SocketioRoom from './(faculty)/classroom/SocketioRoom'
 
 
-interface CountdownState {
+export interface ClassesProps{
+  lectureTime:string
+  title:string
+  standard:string
+  boardName:string
+  fname:string
+}
+
+export interface CountdownState {
   hours: number;
   minutes: number;
   seconds: number;
 }
 
+
 const page = () => {
-  const [Classbtn,setClassbtn] = useState({width:0});
-  const [Selected,setSelected] = useState<any>()
-  const [Live,setLive] = useState({width:0});
-  const [lecTime,setLecTime] = useState<CountdownState | null>(null);
+  const [Joinbtn,setJoinbtn] = useState(false)
 
 
- const {data}= useFaculty();
+  const [LiveDriver,setLiveDriver] = useState(250);
 
- let date = new Date();
- useEffect(()=>{
-  let h = date.getHours();
-  let m = date.getMinutes();
-  let s = date.getSeconds();
+
+  const {allotSubject} = useFacultyContext()
+
   
 
-
- const ss = Selected?.lectureTime;
- const n = Number(ss?.substring(0,2).replace(/:/g,''));
-
- const ct = new Date();
-  ct.setHours(n,0,0,0);
-  const cd = new Date();
-  const sm = Math.max(ct.getTime() - cd.getTime());
-  const hours = Math.floor(sm/3600000)
-  const minutes = Math.floor((sm % 3600000)/60000);
-  const seconds = Math.floor((sm % 3600000) % 600000 / 1000);
+useEffect(()=>{},[allotSubject]);
 
 
-  setLecTime({hours,minutes,seconds})
+  
+  const liveDrawerHandler =()=>{
+    if(LiveDriver === 250 || LiveDriver === 160){
+      setJoinbtn(true);
+      setLiveDriver(600);
 
- console.log(lecTime);
-
-  return ()=>{
-    
-    
+    }
+    else{
+      setJoinbtn(false);
+      setLiveDriver(250);
+    }
   }
 
 
- },[Selected]);
- 
 
-
-
- 
   return (
-    <div className='relative flex flex-col h-full overflow-y-scroll box-border p-2 scr w-full bg-yellow-600'>
-      <div className='w-full box-border sticky top-0 left-0 items-center bg-gray-50 rounded-xl p-1 h-fit flex justify-between'>
-        <span className='box-border p-2'>
-          <button onClick={()=>{setClassbtn((pre)=> pre.width === 0 ? {width:70} : {width:0})}}>Classes</button>
-        </span>
+    <div className='flex flex-col box-border overflow-y-scroll overflow-x-hidden p-2 items-center scr  w-full relative h-full '>
 
-        <span className='flex gap-2 bg-black p-1 text-white font-bold  box-border rounded-xl items-center'>
-         <span>{Selected?.state}</span>
-          <span>{Selected?.boardlebel}</span>
-          <span>{Selected?.standard}</span>
-          <span>{Selected?.title}</span>
-
-        </span>
-        
-        <span></span>
-      </div>
-     
-     <section className='flex relative justify-evenly w-full'>
-     
-    <div className='absolute left-0 top-3 overflow-hidden   box-border  rounded-xl bg-white shadow-3xl  transition-all duration-300 ease-in' style={{width:`${Classbtn.width}%`}}>
-    <button onClick={()=>{setClassbtn((pre)=> pre.width === 0 ? {width:70} : {width:0})}} className='absolute right-0 z-50 top-0 box-border px-1 rounded-full bg-black text-white'>X</button>
-    <Classes setSelected={setSelected}/>
-    </div>
-
-     <section className='w-full overflow-y-scroll scr h-full box-border my-2'>
-      <div className='w-full box-border flex justify-center items-center p-4 min-h-[400px] rounded-xl bg-yellow-100'>
-   
-
-
-         <div>
-          <span>
-          <span>{Selected?.standard}</span>
-          <span>{Selected?.title}</span>
-          </span>
-          <span>
-          <h1>new Data</h1>
-          <SocketioIntegration/>
-          </span>
-         </div>
-         <Navigator/>
-
-
- <div className='  absolute h-full top-0 right-0  bg-blue-700   box-border  rounded-xl shadow-3xl  transition-all duration-300 ease-in' style={{width:`${Live.width}%`}}>
- <button onClick={()=>{setLive((pre)=> pre.width === 0 ? {width:30} : {width:0})}} className='absolute right-0 z-50 top-0 box-border p-2 bg-black text-white'>Live</button>
-
-    </div>
-      </div>
-
-        
-    </section>
-    
-     </section>
-    
-   
-    
-     
+    <section className='w-full box-border  rounded-xl z-20 sticky top-0 left-0'>
       
-    </div>
+     <div className='w-full z-20 flex overflow-y-scroll  scr dark:bg-darkmodes1   flex-col items-center  justify-center box-border p-2  sticky top-0 rounded-xl bg-white   transition-all duration-300' style={{height:`${LiveDriver}px`}}>
+     <div className=' absolute top-0 w-[100%] z-50  min-h-fit '>
+      {Joinbtn  && <SocketioRoom/>}
+
+      </div>
+
+              
+              
+     
+
+          <div className='box-border z-20 absolute top-0 items-center sm:w-full  w-[60%] p-2 h-fit overflow-y-hidden flex overflow-x-scroll  scr'>
+          
+            {/* <Countdown livedrawer={liveDrawerHandler}/> */}
+
+          </div>
+
+            {/* <button onClick={()=>LiveDriver === 250 ? setLiveDriver(160) : setLiveDriver(250)} className='absolute right-0 bottom-0 box-border p-2 bg-blue-400 '><FaArrowsAltV /> </button> */}
+
+
+          
+          <NavigatorHandler livedrawer={liveDrawerHandler}/> 
+
+          </div>
+
+
+    
+
+      </section>
+
+         
+          <section className='w-full relative my-2 rounded-xl  dark:bg-darkmodes1 bg-white min-h-[400px] overflow-y-scroll box-border p-4 scr'>
+
+
+          </section>
+
+          
+
+
+    </div> 
   )
 }
 
-export default page
+export default page;

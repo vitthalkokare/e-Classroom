@@ -1,9 +1,9 @@
 import { Student } from "@prisma/client";
-import StudentService from "../../../services/Student/StudentServices";
-import UserService from "../../../services/User/UserService";
 import { IloginUserSchema, IuserCreateSchema, authSchema, creaeUserSchema, loginUserSchrma } from "../../schemas/UserSchemas";
 import { prisma } from "../../../context";
 import { GraphQLError } from "graphql";
+import UserService from "../../../module/User/userService";
+import StudentService from "../../../module/Student/StudentServices";
 
 
 const userMutationResolver = {

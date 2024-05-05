@@ -3,6 +3,7 @@ import AuthCardSlice from "./features/Classroom/Auth/Slices/AuthCardSlice"
 import SubDataHandler from "./features/Classroom/SubjectsHandler/SubDataHandler"
 import facultyDataHandler from "./features/Faculty/facultyDataHandler"
 import studentSliceHandler from "./features/Classroom/Student/StudentSlice"
+import commonUtil from  "./features/common/commonSlice"
 
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
         AuthCard:AuthCardSlice,
         querysubdata:SubDataHandler,
         facultydata:facultyDataHandler,
-        studentslice:studentSliceHandler
+        studentslice:studentSliceHandler,
+        commonUtil:commonUtil
 
 
     },

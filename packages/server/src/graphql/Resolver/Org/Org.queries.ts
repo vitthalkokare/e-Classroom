@@ -1,5 +1,5 @@
 import { prisma } from "../../../context";
-import subjectEnrollServices from "../../../services/Student/subjectEnrollServices";
+import subjectEnrollServices from "../../../module/Student/subjectEnrollServices";
 
 
 export const OrgQueries = {

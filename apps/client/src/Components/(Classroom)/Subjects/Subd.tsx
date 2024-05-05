@@ -85,19 +85,23 @@ const QuerySubSelector = ({
 
 
 
- 
+  function handleBoard(event: React.ChangeEvent<HTMLSelectElement>) {
+    const val = event.target.value;
+    setClass('');
+    setBoard(val);
+    
+    dispatch(subdatahandler.boardHandler(val));
+  }
 
   function handleState(event: React.ChangeEvent<HTMLSelectElement>) {
     const val = event.target.value;
     setState(val);
+
+   
     dispatch(subdatahandler.stateHandler(val));
   }
 
-  function handleBoard(event: React.ChangeEvent<HTMLSelectElement>) {
-    const val = event.target.value;
-    setBoard(val);
-    dispatch(subdatahandler.boardHandler(val));
-  }
+  
 
   function handleClass(event: React.ChangeEvent<HTMLSelectElement>) {
     const val = event.target.value;
@@ -105,17 +109,18 @@ const QuerySubSelector = ({
     dispatch(subdatahandler.classHandler([val, Board, bstate]));
   }
 
+
   return (
     <div
-      className={`${main}  flex flex-col justify-center items-center gap-2 relative min-h-[100px]   w-full  box-border border-1 rounded-2xl shadow-xl `}
+      className={`${main}   flex flex-col justify-center items-center gap-2 relative min-h-[100px] sm:text-2xl text-xl   w-full  box-border border-1 rounded-2xl `}
     >
       <div className="  flex justify-around items-center box-border w-full">
-        <span className="w-[50%] box-border p-2">
+        <span className="w-[50%] border-[2px] border-blue-600 border-r-0 rounded-2xl box-border p-1">
           <select
-            className={`${State}box-border w-full p-4 shadow-lg rounded-xl`}
+            className={`${State}box-border w-full  p-4 shadow-lg rounded-xl`}
             onChange={handleState}
           >
-            <option>{isAuthenticated ? `${sInfo?.state}`:"State"}</option>
+            <option value={sInfo?.state}>{isAuthenticated ? `${sInfo?.state}`:"State"}</option>
 
             {states.map((item, index) => (
               <option key={index} value={item}>
@@ -124,12 +129,12 @@ const QuerySubSelector = ({
             ))}
           </select>
         </span>
-        <span className="w-[50%] box-border p-2  justify-center items-center">
+        <span className="w-[50%] border-[2px] border-blue-600 border-l-0 rounded-2xl box-border p-1 justify-center items-center">
           <select
             className={`${board}box-border flex flex-col w-full  p-4 shadow-lg rounded-xl`}
             onChange={handleBoard}
           >
-            <option>{isAuthenticated ? `${sInfo?.boardName}`:"Board"}</option>
+            <option value={sInfo?.boardName} >{isAuthenticated ? `${sInfo?.boardName}`:"Board"}</option>
 
             {BoardLabel.map((item, index) => (
               <option className="flex flex-col" key={index} value={item}>
@@ -139,19 +144,19 @@ const QuerySubSelector = ({
           </select>
         </span>
       </div>
-      <div className="flex justify-center items-center w-full">
+      <span className="flex border-[2px] relative -top-2 border-t-0 border-blue-600 rounded-2xl justify-center items-center p-1">
         <select
           className={`${Standard} rounded-lg box-border relative p-4 flex flex-col justify-center   items-center `}
           onChange={handleClass}
         >
-            <option>{isAuthenticated ? `${sInfo?.standard}`:"Class"}</option>
+            <option value={sInfo?.standard}>{isAuthenticated ? `${sInfo?.standard}`:"Class"}</option>
           {Standards.map((item, index) => (
             <option key={index} value={item}>
               {item}
             </option>
           ))}
         </select>
-      </div>
+      </span>
     </div>
   );
 };

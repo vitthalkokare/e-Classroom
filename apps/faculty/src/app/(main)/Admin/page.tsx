@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import Dashboard from './(Components)/Dashboard/Dashboard'
+import Dashboard from './(Components)/Dashboard/AddSubject'
 
 const page = () => {
   return (

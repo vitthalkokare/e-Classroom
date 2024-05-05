@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 
+.body{
+background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.dmode {
+  background-color: rgb(40 40 40);
+  color: white;
+}
+
 
 .p-color{
   background: rgb(53,4,87);
@@ -17,9 +28,7 @@ input::-webkit-inner-spin-button {
 
 
 
-body{
-  background-color: rgb(1, 77, 77);
-}
+
 
 
 .wrap {

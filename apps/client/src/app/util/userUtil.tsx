@@ -1,8 +1,4 @@
-import useAuth from '@/app/util/useAuth'
-import { AUTH_USER } from '@/graphql/user/queries';
-import { useQuery } from '@apollo/client';
-import { RootState, setCard } from '@repo/ui/index';
-import { useEffect, useState } from 'react'
+import { RootState } from '@repo/ui/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 const userUtil = () => {

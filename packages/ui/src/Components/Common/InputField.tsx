@@ -27,7 +27,7 @@ const InputField: React.FC<InputFieldProps> = ({btnNode, label,Class,min,max ,pa
             </label>
             <span className='flex relative items-center'>
             <input
-                className={` ${Class} p-2 w-full border-2 rounded-md text-black focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300`}
+                className={` ${Class} border-black   p-2 w-full border-[1px] rounded-md text-black focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300`}
                 id={id}
                 min={min}
                 max={max}

@@ -63,7 +63,7 @@ const AllFaculty = () => {
   }
 
   return (
-    <div className="w-[90%] flex items-center  relative   flex-col">
+    <div className="w-[90%] flex items-center bg-slate-100 dark:text-gray-300 rounded-xl font-semibold dark:bg-[#2e2e2e] shadow-xl  relative   flex-col">
       {loading ? (
         <>loading...</>
       ) : (

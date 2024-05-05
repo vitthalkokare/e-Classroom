@@ -1,7 +1,5 @@
 import { prisma } from "../../../context";
-import StudentService from "../../../services/Student/StudentServices";
-import subjectEnrollServices from "../../../services/Student/subjectEnrollServices";
-import studentEnrollService from "../../../services/Student/subjectEnrollServices";
+import StudentService from "../../../module/Student/StudentServices";
 
 export const SubjectMutation = {
   Mutation: {

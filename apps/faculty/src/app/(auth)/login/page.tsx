@@ -31,7 +31,7 @@ const page = () => {
     <main className='w-full sm:min-w-[600px] flex flex-col h-screen min-h-screen items-center box-border p-4'>
 
         <nav className='w-[50%] justify-evenly bg-white px-2 rounded-t-xl h-fit box-border flex'>
-         {navbtn.map((val,inx)=>(<button className={`${inx === Login.active && `bg-black text-white font-bold transition-all duration-200`} w-full h-full box-border p-2 rounded-xl`} onClick={()=>{val.onclick(inx)}}>{val.title}</button>))}
+         {navbtn.map((val,inx)=>(<button key={inx} className={`${inx === Login.active && `bg-black text-white font-bold transition-all duration-200`} w-full h-full box-border p-2 rounded-xl`} onClick={()=>{val.onclick(inx)}}>{val.title}</button>))}
         </nav>
         <section className='w-full'>
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
-import AutoSlide from "@/Components/ui/compo/AutoSlide";
 import Tryitfreeauth from "@/app/util/Authbtn";
+import AutoSlide from "../custom/AutoSlide";
 
 const Intro: React.FC = () => {
   const [allowManualScroll, setAllowManualScroll] = useState(true);
@@ -13,20 +13,23 @@ const Intro: React.FC = () => {
 
 
   return (
-    <div className="flex  w-full  text-white justify-around sm:items-center  rounded-xl box-border p-4 " >
-      <div className="flex box-border drop-shadow-xl text-black flex-col  relative z-10">
-        <span className="sm:text-3xl text-[5vw] whitespace-nowrap">
+    <div className="flex relative  w-full  text-white justify-evenly    rounded-xl box-border " >
+      <div className="flex text-center  flex-col h-full items-center justify-center   w-[50%]  box-border drop-shadow-xl text-black  z-10">
+        <span className="sm:text-4xl text-[5vw] whitespace-nowrap">
           <strong>e-Classroom:</strong>
         </span>
-        <span className="sm:text-lg text-[3vw]">
-          Your Path to <br />
+        <span className="sm:text-2xl flex flex-col text-[3vw]">
+          <span className="text-xl font-semibold">Your Path to</span>
           <strong className="whitespace-nowrap">Academic Excellence.</strong>
         </span>
+        <span className="">
+          {(<Tryitfreeauth btn={"try It Free"}/>)}
 
-        {(<Tryitfreeauth btn={"try It Free"}/>)}
+        </span>
+
       </div>
 
-      <div className={`   scr  sm:w-[200px] hidden   sm:flex md:flex   box-border items-center    rounded-full   sm:h-[200px] bg-white-500`}>
+      <div className={` sm:flex items-center justify-center hidden w-[50%]`}>
       <AutoSlide
           images={[
             { path: "/pictures/Landingpage/s2.png", caption: "" },
@@ -37,9 +40,7 @@ const Intro: React.FC = () => {
         />
         
       </div>
-      <div className={`fixed top-10 left-[20%] sm:left-5  w-[60%] sm:w-[90%] z-50 p-2 box-border  rounded-[30px] bg-white ${signUp}`}  >
-        
-      </div>
+      
     </div>
   );
 };

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Home from "./Home";
+import ValidateCard from "./util/ValidateCard";
 import UserValidate from "./util/UserValidate";
-import ValidateCard from "./util/UserValidate";
 
 
 
@@ -13,7 +13,7 @@ const page = () => {
   return (
     <>
     <Home/>
-    <ValidateCard/>
+    <UserValidate/>
 
       
     </>

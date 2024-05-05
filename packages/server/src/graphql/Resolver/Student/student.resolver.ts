@@ -1,8 +1,6 @@
-import { IstudentInputSchema, studentInputSchema } from "../../schemas/StudentSchemas";
-import StudentService from "../../../services/Student/StudentServices";
-import studentEnrollService from "../../../services/Student/subjectEnrollServices";
-import subjectEnrollServices from "../../../services/Student/subjectEnrollServices";
+import { IstudentInputSchema } from "../../schemas/StudentSchemas";
 import { prisma } from "../../../context";
+import StudentService from "../../../module/Student/StudentServices";
 
 export const studentMutationResolver = {
   Mutation: {
@@ -33,6 +31,8 @@ export const studentMutationResolver = {
 
   
   },
+
+  
 
   Student: {
     subjects: async (parent: any, args: any, ctx: any) => {

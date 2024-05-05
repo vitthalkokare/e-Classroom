@@ -8,6 +8,8 @@ import { useQuery } from "@apollo/client";
 import { AUTH_USER } from "@/graphql/user/queries";
 import { setCard } from "@repo/ui/index";
 import { useDispatch } from "react-redux";
+import SubjectEnrollCard from "@/Components/(Classroom)/Subjects/SubjectEnrollCard";
+import StudentinfoCard from "@/Components/(Classroom)/Student/StudentinfoCard";
 
 const page = () => {
   const [StudentItem, setStudentItem] = useState<ReactNode | null>(
@@ -15,18 +17,21 @@ const page = () => {
   );
 
     const {data,error,loading} = useQuery(AUTH_USER)
-    const {isAuthenticated,StudentInfo,SubjectData} = useAuth();
+    const {isAuthenticated,isAuthCard,StudentInfo,SubjectData} = useAuth();
     
     const dispatch = useDispatch();
 
  
   return (
-    <div>
+    <div className="relative">
+
      
       {loading ? (
         <>loading....</>
       ) : (
         <>
+    {isAuthCard && (<div className='w-[80%] sm:w-[90%]  absolute top-5 z-50 mx-[5%] sm:mx-[5%] '><SubjectEnrollCard/></div>)}
+
           {data && data.authUser ? (
            
             <>

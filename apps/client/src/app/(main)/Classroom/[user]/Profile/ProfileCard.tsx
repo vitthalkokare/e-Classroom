@@ -1,5 +1,4 @@
 import React, { Children, useState } from "react";
-import Image from "next/image";
 
 interface studentProps {
   name: string;
@@ -26,8 +25,9 @@ const ProfileCard = ({
 }: studentProps) => {
   const [Active,setActive] = useState(0)
   return (
-    <div className="relative w-full h-full  min-h-screen">
-      <section className="flex flex-col box-border  mb-2 sticky top-0 z-50 bg-slate-400 rounded-2xl shadow-lg ">
+    <div className="relative w-full h-full box-border  min-h-screen">
+      
+      <section className="flex flex-col box-border p-2  mb-2 sticky top-0 z-40 bg-slate-500 dark:bg-neutral-600 dark:text-darktext rounded-2xl shadow-lg ">
         <div className=" flex items-center">
         <span className="rounded-full overflow-hidden">
           <img src={profileUrl} alt={"img"} width={150} height={150} />
@@ -51,7 +51,7 @@ const ProfileCard = ({
         </div>
         <nav className=" mt-4 text-md font-bold box-border  rounded-xl my-1 inline-block ">
       {btn.map((item,inx)=>(
-            <button key={inx} className={`${inx === Active && `bg-white rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{
+            <button key={inx} className={`${inx === Active && `bg-white dark:bg-darkmodes1 rounded-xl font-medium transition-all duration-200`} box-border py-1 px-2 `} onClick={()=>{
                     item.onclick()
           setActive(inx)
 

@@ -59,20 +59,11 @@ const OrgLogin = (props:any) => {
 
         }catch(e:any){
          
-            try{
-              if(error){
-              
-                const d = JSON.parse(error.message)
-                for(let key of d){
-                 return toast.error(key.message)
-    
-                }
-                }
-            }catch(err){
+
               
             toast.error(e.message)
 
-            }
+            
          
             
           

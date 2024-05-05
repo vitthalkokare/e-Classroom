@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoginPage from '../(auth)/login/page';
 
 
-const ValidateCard = () => {
+const UserValidate = () => {
   const [valEmail,setvalEmail]  = useState(false)
   const dispatch = useDispatch();
   const isuser = useSelector((state: RootState) => state.AuthCard.isUser);
 
+  
   return (
-    <div className=' fixed top-0 w-[100%] z-50'>
+    <div className=' fixed top-5 w-[100%] z-50'>
      {isuser ? ( 
      <commonUi.AuthCard
       title=''
@@ -38,7 +39,7 @@ const ValidateCard = () => {
         </main>
       )}
 
-      refbtn={{lebel:"",set:valEmail,children:(<LoginPage/>),onclick:()=>{}}}
+      refbtn={{lebel:"",set:valEmail,children:(<LoginPage valemail={valEmail} setVal={setvalEmail}/>),onclick:()=>{}}}
       
       />
       ):(<></>)}
@@ -47,4 +48,4 @@ const ValidateCard = () => {
   )
 }
 
-export default ValidateCard
+export default UserValidate

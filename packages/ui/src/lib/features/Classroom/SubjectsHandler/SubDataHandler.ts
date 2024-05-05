@@ -5,7 +5,7 @@ export interface SubjectData {
     boardName: string[];
     states:string[]
     item: any[];
-    Subjects: { title: string; about: string; id: number; img: string, price:number }[];
+    Subjects: { title: string; about: string; id: number; img: string, price:number,standard:string,boardName:string,state:string }[];
     Standards: string[];
     Facultys: { title: string; exp: string; id: number; vision: string }[];
     Cart:any[];

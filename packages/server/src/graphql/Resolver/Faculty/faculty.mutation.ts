@@ -1,8 +1,6 @@
-import { Class } from "@prisma/client";
 import { prisma } from "../../../context";
-import AdminService from "../../../services/Admin/Adminservice";
-import facultySerivces from "../../../services/Faculty/facultyServices";
-import {  Classs, IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
+import {  IOrgRegisterinput, IOrginput } from "../../schemas/Admin";
+import facultySerivces from "../../../module/Faculty/facultyServices";
 
 export const facultyMutationResolver ={
 

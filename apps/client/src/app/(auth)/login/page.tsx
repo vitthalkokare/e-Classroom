@@ -60,6 +60,25 @@ const LoginPage = (props:any) => {
     }
   };
 
+  function propbtn(){
+    if(props.valemail === false){
+      props.setVal(true);
+
+    }
+    else if(props.valemail === true){
+      props.setVal(false);
+
+     
+
+    }
+    else{
+      router.push('/');
+    }
+    
+    
+   
+  }
+
   return (
     <>
       <commonUi.AuthCard
@@ -97,7 +116,7 @@ const LoginPage = (props:any) => {
 
             </form>
 
-            <button onClick={props.onClick}  className='absolute left-0 top-0   box-border p-2 text-2xl  font-bold  '><FaArrowLeftLong />
+            <button onClick={()=>{propbtn()}}  className='absolute left-0 top-0   box-border p-2 text-2xl  font-bold  '><FaArrowLeftLong />
 </button>
             </>
 
@@ -105,7 +124,6 @@ const LoginPage = (props:any) => {
         }
         refbtn={{lebel:"Create a new account..!",children:(<SignupPage  onClick={()=>{setSignup(()=> Signup === false ? true : false)}}/>),set:Signup,onclick:()=>{
           setSignup(true);
-          console.log(props)
         }}}
       />
     </>

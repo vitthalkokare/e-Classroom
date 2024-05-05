@@ -41,12 +41,8 @@ const Facultylogin = () => {
     try {
       await LoginFaculty({ variables: { input: FacultyLoginData } });
 
-      if (error) {
-        const d = JSON.parse(error.message);
-        for (let key of d) {
-          return toast.error(key.message);
-        }
-      }
+     
+      
       toast.success("Login Successfully..!");
 
       return (window.location.href = "/Faculty");
@@ -54,8 +50,9 @@ const Facultylogin = () => {
       setFacultyLoginData({ email: "", password: "", secretKey: "" });
 
       
-
-      return toast.error(e.message);
+      console.log(e);
+       toast.error(e.message);
+       return;
     }
   }
 

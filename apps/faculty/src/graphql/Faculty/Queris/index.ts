@@ -11,6 +11,9 @@ query AuthFaculty {
     name
     email
     subjectData {
+      id
+      fname
+      facultyEmail
       title
       price
       about

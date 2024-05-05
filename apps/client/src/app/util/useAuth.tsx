@@ -81,6 +81,7 @@ export default function useAuth() {
 
   studetnDatahadnler();
 
+
   }, [data,user,StudentInfo,SubjectData]);
 
 

@@ -6,6 +6,8 @@ export interface IItem {
     standard: string;
     title: string;
     lectureTime:string;
+    fname:string
+
 }
 
 export interface IInitialState {

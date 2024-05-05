@@ -21,33 +21,34 @@ model User {
 }
 
 model Student {
-  id         String     @id @default(uuid()) @map("id")
-  roll       Roll       @default(STUDENT) @map("roll")
-  email      String     @unique @map("email")
-  standard   Class      @map("standard")
-  phone      String     @unique @map("phone")
-  name       String     @map("name")
-  gender     Gender     @map("gender")
-  sirname    String     @map("sirname")
-  imageUrl   String?    @map("image_url")
-  dob        DateTime?  @map("dob")
-  boardName  String     @map("board_name")
-  city       String     @map("city")
-  state      String     @map("state")
-  info       Json?      @map("info")
-  sid        String?    @map("sid")
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime?  @updatedAt @map("updated_at")
-  classlabel String     @map("class_label")
-  userId     String     @unique @map("user_id")
-  facultyId  String?    @map("faculty_id")
-  chats      Chats[]
-  lecture    Lectures[]
-  payment    Payment[]
-  classroom  Classroom  @relation(fields: [classlabel], references: [label])
-  Faculty    Faculty?   @relation(fields: [facultyId], references: [id])
-  user       User       @relation(fields: [userId], references: [id])
-  subject    Subject[]
+  id          String     @id @default(uuid()) @map("id")
+  roll        Roll       @default(STUDENT) @map("roll")
+  email       String     @unique @map("email")
+  standard    Class      @map("standard")
+  phone       String     @unique @map("phone")
+  name        String     @map("name")
+  gender      Gender     @map("gender")
+  sirname     String     @map("sirname")
+  imageUrl    String?    @map("image_url")
+  dob         DateTime?  @map("dob")
+  boardName   String     @map("board_name")
+  city        String     @map("city")
+  state       String     @map("state")
+  info        Json?      @map("info")
+  sid         String?    @map("sid")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime?  @updatedAt @map("updated_at")
+  classlabel  String     @map("class_label")
+  userId      String     @unique @map("user_id")
+  facultyId   String?    @map("faculty_id")
+  chats       Chats[]
+  alllectures Lectures[]
+
+  payment   Payment[]
+  classroom Classroom @relation(fields: [classlabel], references: [label])
+  Faculty   Faculty?  @relation(fields: [facultyId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  subject   Subject[]
 }
 
 model Payment {
@@ -85,36 +86,40 @@ model Subject {
 }
 
 model Lectures {
-  id         String   @id @default(uuid())
-  studentID  String?  @map("student_id")
-  title      String   @map("title")
-  lectureUrl String   @map("lecture_url")
-  notes      String?
-  contents   String
-  createdAt  DateTime @default(now()) @map("created_at")
-  facultyId  String?  @map("faculty_id")
-  adminId    String?  @map("admin_id")
-  admin      Admin?   @relation(fields: [adminId], references: [id])
-  Faculty    Faculty? @relation(fields: [facultyId], references: [id])
-  student    Student? @relation(fields: [studentID], references: [id])
+  id            String    @id @default(uuid())
+  roomName      String    @unique @map("room_name")
+  title         String    @map("title")
+  lectureUrl    String?   @map("lecture_url")
+  notes         String?
+  contents      String?
+  conversations Chats[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  facultyId     String?   @map("faculty_id")
+  Faculty       Faculty?  @relation(fields: [facultyId], references: [id])
+  students      Student[]
+  Admin         Admin?    @relation(fields: [adminId], references: [id])
+  adminId       String?
+  studentId     String[]  @map("student_id")
 }
 
 model Chats {
-  id             String   @id @default(uuid())
-  studentMessage String?  @map("student_message")
-  facultyMessage String?  @map("faculty_message")
-  text           String?  @map("text")
-  imageUrl       String?  @map("image_url")
-  videoUrl       String?  @map("video_url")
-  audioUrl       String?  @map("audio_url")
-  fileUrl        String?  @map("file_url")
-  read           Boolean  @default(false)
-  isSend         Boolean  @default(false) @map("is_send")
-  createdAt      DateTime @default(now()) @map("created_at")
-  adminId        String?  @map("admin_id")
-  Admin          Admin?   @relation(fields: [adminId], references: [id])
-  faculty        Faculty? @relation(fields: [facultyMessage], references: [id])
-  student        Student? @relation(fields: [studentMessage], references: [id])
+  id             String    @id @default(uuid())
+  studentMessage String?   @map("student_message")
+  facultyMessage String?   @map("faculty_message")
+  text           String?   @map("text")
+  imageUrl       String?   @map("image_url")
+  videoUrl       String?   @map("video_url")
+  audioUrl       String?   @map("audio_url")
+  fileUrl        String?   @map("file_url")
+  read           Boolean   @default(false)
+  isSend         Boolean   @default(false) @map("is_send")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  adminId        String?   @map("admin_id")
+  Admin          Admin?    @relation(fields: [adminId], references: [id])
+  faculty        Faculty?  @relation(fields: [facultyMessage], references: [id])
+  student        Student?  @relation(fields: [studentMessage], references: [id])
+  lecture        Lectures? @relation(fields: [lectureChats], references: [id])
+  lectureChats   String?   @map("lecture_chats")
 }
 
 model Faculty {

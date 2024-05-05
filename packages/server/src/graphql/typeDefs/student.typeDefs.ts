@@ -10,6 +10,7 @@ export const studentTypeDefs = `
         
         EnrolledSubject:[Subject]
         Classes:[subjectData]
+        studentData:Student
 
     }
 

@@ -1,45 +1,38 @@
 'use client'
 import {useQuery } from '@apollo/client'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AUTH_FACULTY } from '@/graphql/Faculty/Queris'
-import { fcaultySlice } from '@repo/ui/index'
-import {useDispatch} from 'react-redux'
 
 const useFaculty = () => {
-    const [Faculty,setFaculty] = useState<boolean | null>(null)
-    const {data,loading,error,refetch} = useQuery(AUTH_FACULTY)
+    const [Faculty,setFaculty] = useState<boolean | null>(null);
+    const [facultyInfo,setFacultyInfo] = useState({email:''});
+    const {data,loading,error,refetch} = useQuery(AUTH_FACULTY);
+
         const router = useRouter()
-        const dispatch = useDispatch();
 
     useEffect(()=>{
+
+       async function fetchFaculty(){
         if(data && data.authFaculty !== null){
             
-            setFaculty(true)
-            router.push('/Faculty')
-            const dd = data.authFaculty?.subjectData
-            try{
-           
-           
-                dispatch(fcaultySlice.facultyData(dd))
-        
-        
-              
-                
-              }catch(err){
-                console.log(err)
-              }
-        }else{
-            setFaculty(false)
-            router.push('/login')
+          setFaculty(true)
+          setFacultyInfo({email:data.authFaculty.email});
+          router.push('/Faculty');        
+      }else{
+          setFaculty(false)
+          router.push('/login')
+      }
+
         }
+
+        fetchFaculty();
 
 
     },[data,loading])
 
 
-
-  return {Faculty,loading,router,data}
+  return {Faculty,loading,router,facultyInfo}
 }
 
 export default useFaculty;

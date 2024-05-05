@@ -1,7 +1,7 @@
 import { SubjectData } from "@prisma/client";
 import { prisma } from "../../../context";
-import UserService from "../../../services/User/UserService";
 import JWT from "jsonwebtoken";
+import UserService from "../../../module/User/userService";
 
 const userQueryResolver = {
   Query: {

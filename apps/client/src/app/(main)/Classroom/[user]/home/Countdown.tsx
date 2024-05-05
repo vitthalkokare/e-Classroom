@@ -1,108 +1,343 @@
-import React, { useState, useEffect } from 'react';
-import { ClassesProps } from '../../page';
-import useMountedState from '@/Components/custom/UseMounted';
+import React, { useState, useEffect, useMemo } from "react";
+import { ClassesProps, useUserContext } from "@/app/contexts/UserContext";
+import useMountedState from "@/Components/custom/UseMounted";
 
-
-export interface countdownProps{
-  lectData?:ClassesProps
-  countData?:{hour:number, minute:number, second:number}
+export interface countdownProps {
+  lectData?: ClassesProps;
+  countData?: { hour: number; minute: number; second: number };
 }
 
 
-const Countdown = (props:any) => {
-    const [lectureTime, setLectureTime] = useState<number[]>([]);
-    const [remainingTime, setRemainingTime] = useState<number[]>([]);
-    const [LecData,setLecData] = useState<countdownProps[]>([]);
-    const [endTime, setEndTime] = useState<number[]>([]);
 
 
 
-    useEffect(()=>{
-        
-       
-        props.ccdata.map((val:ClassesProps)=>{
-            const ss = val.lectureTime.substring(8,11).replace(/:/g, '');
-            const s = val.lectureTime
 
-            console.log(ss);
+const Countdown = () => {
+  const [Mount,setMout] = useState(false);
 
-        })
-        
-    },[props.ccdata])
+  const [lectureTime, setLectureTime] = useState<number[]>([]);
+  const [remainingTime, setRemainingTime] = useState<number[]>([]);
+  const [countEndTime, setCountEndTime] = useState<number[]>([]);
+  const [endTime, setEndTime] = useState<number[]>([]);
+
+  
+  const [FsTime,setFsTime] = useState<number[]>([]);
+  const [FeTime,setFeTime] = useState<number[]>([]);
+  const [Fcurrent,setFcurrent] = useState<number[]>([]);
+  const [Frem,setFrem] = useState<number[]>([]);
+
+  const [SinStime,setSinStime] = useState<number[]>([]);
+  const [SinEtime,setSinEtime] = useState<number[]>([]);
+  const [Sincurrent,setSincurrent] = useState<number[]>([]);
+  const [Sinrem,setSinrem] = useState<number[]>([]);
 
 
 
-    useEffect(()=>{
-      setLectureTime(props.cdata)
-    })
 
-    useEffect(() => {
-        
 
-        if (lectureTime.length > 0) {
-            setRemainingTime(lectureTime.map((time) => {
-                const now = new Date();
-                const scheduledTime = new Date();
-                scheduledTime.setHours(time, 0, 0, 0);
-                const diff = scheduledTime.getTime() - now.getTime();
-                return Math.max(Math.floor(diff / 1000), 0); 
-            }));
+  const {classData} = useUserContext();
+  const {isMounted} = useMountedState(Mount);
 
-            const timer = setInterval(() => {
-                setRemainingTime(prevTime =>
-                    prevTime.map((time, index) => {
-                        if (time > 0) {
-                            return time - 1;
-                        } else {
-                            const now = new Date();
-                            const scheduledTime = new Date();
-                            if (lectureTime[index]) {
-                              // @ts-ignore
-                                scheduledTime.setHours(lectureTime[index], 0, 0, 0);
-                            }
-                            const diff = scheduledTime.getTime() - now.getTime();
-                            return Math.max(Math.floor(diff / 1000), 0);
-                        }
-                    })
-                );
-            }, 1000);
 
-            return () => clearInterval(timer);
-        }
-    }, [lectureTime]);
+  useEffect(() => {
+    setMout(true);
+    const timeIntervals = classData?.map((v: ClassesProps) => {
+      return v.lectureTime.substring(9, 11).charAt(0) === "0"
+        ? Number(v.lectureTime.substring(10, 11))
+        : Number(v.lectureTime.substring(9, 11));
+    });
+
+
+    setEndTime(timeIntervals);
+
+    const lecTime = classData?.map((v: ClassesProps) => {
+      return v.lectureTime.substring(0, 2).charAt(0) === "0"
+        ? Number(v.lectureTime.substring(1, 2))
+        : Number(v.lectureTime.substring(0, 2));
+    });
+
+
+    setLectureTime(lecTime);
 
 
     
 
-    const formatTime = (seconds: number) => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const remainingSeconds = seconds % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-    };
+  }, [isMounted]);
 
-    return (
-        <div className='flex w-full  items-center'>
-            {remainingTime.map((time, index) => (
-                <div key={index} className='w-full shrink-0 flex flex-col justify-center items-center'>
-                    <div className='flex gap-2 box-border p-2'>
-                        <span>{props.ccdata[index].standard}</span>
-                        <span>{props.ccdata[index].title}</span>
-                        <span>{props.ccdata[index].lectureTime}</span>
+ 
 
-                    </div>
-                    <div className='flex box-border p-1'>
-                        <span>{Math.floor(time/3600)}:</span>
-                        <span>{Math.floor((time % 3600) / 60)}:</span>
-                        <span>{time %60}</span>
 
-                    </div>
-                   
-                   
-                </div>
-            ))}
-        </div>
+ 
+  useEffect(() => {
+    if (lectureTime?.length > 0) {
+
+      setCountEndTime(
+        endTime.map((time) => {
+          const now = new Date();
+          const scheduledTime = new Date();
+          scheduledTime.setHours(time, 0, 0, 0);
+          const diff = scheduledTime.getTime() - now.getTime();
+          return Math.max(Math.floor(diff / 1000), 0);
+        })
+      );
+
+      setRemainingTime(
+        lectureTime.map((time) => {
+          const now = new Date();
+          const scheduledTime = new Date();
+          scheduledTime.setHours(time, 0, 0, 0);
+          const diff = scheduledTime.getTime() - now.getTime();
+          return Math.max(Math.floor(diff / 1000), 0);
+        })
+      );
+
+
+
+      const timer = setInterval(() => {
+        setCountEndTime((prevTime) =>
+        prevTime.map((time, index) => {
+          if (time > 0) {
+            return time - 1;
+          } else {
+            const now = new Date();
+            const scheduledTime = new Date();
+            if (endTime[index]) {
+              
+              scheduledTime.setHours(endTime[index] as number, 0, 0, 0);
+            }
+            const diff = scheduledTime.getTime() - now.getTime();
+            return Math.max(Math.floor(diff / 1000), 0);
+          }
+        })
+      );
+
+        setRemainingTime((prevTime) =>
+          prevTime.map((time, index) => {
+            if (time > 0) {
+              return time - 1;
+            } else {
+              const now = new Date();
+              const scheduledTime = new Date();
+              if (lectureTime[index]) {
+                
+                scheduledTime.setHours((lectureTime[index] as number), 0, 0, 0);
+              }
+              const diff = scheduledTime.getTime() - now.getTime();
+              return Math.max(Math.floor(diff / 1000), 0);
+            }
+          })
+        );
+
+
+         
+      
+      }, 1000);
+      
+
+      return () => clearInterval(timer);
+    }
+  }, [lectureTime]);
+
+
+
+  const filteredArray = classData?.filter((item, index) => {
+    if(Math.floor((remainingTime[index] as number)/3600) === 0 && (Math.floor((remainingTime[index] as number) % 3600) / 60) === 0 && (remainingTime[index] as number) % 60 === 0 ){
+          return countEndTime[index] !== 0
+
+    }
+});
+
+const startIN = classData?.filter((item,index)=>(countEndTime[index] !== 0));
+
+
+
+
+useEffect(() => {
+  setMout(true);
+  const fstemp:number[] = [];
+  const fetemp:number[] = [];
+
+  const farrTime = filteredArray?.map((v: ClassesProps) => {
+    const fstime = v.lectureTime.substring(0, 2).charAt(0) === "0"
+    ? Number(v.lectureTime.substring(1, 2))
+    : Number(v.lectureTime.substring(0, 2));
+
+    const fetime = v.lectureTime.substring(9, 11).charAt(0) === "0"
+      ? Number(v.lectureTime.substring(10, 11))
+      : Number(v.lectureTime.substring(9, 11));
+
+      fstemp.push(fstime);
+      fetemp.push(fetime);
+
+  });
+
+
+  setFsTime(fstemp);
+  setFeTime(fetemp);
+
+
+  const ssinTime:number[] = [];
+  const seinTime:number[] = [];
+
+  const FstartTime = startIN?.map((v: ClassesProps) => {
+
+    
+
+    const fstime = v.lectureTime.substring(0, 2).charAt(0) === "0"
+    ? Number(v.lectureTime.substring(1, 2))
+    : Number(v.lectureTime.substring(0, 2));
+
+    const fetime = v.lectureTime.substring(9, 11).charAt(0) === "0"
+      ? Number(v.lectureTime.substring(10, 11))
+      : Number(v.lectureTime.substring(9, 11));
+
+      ssinTime.push(fstime);
+      seinTime.push(fetime);
+
+  });
+  
+  setSinStime(ssinTime);
+  setSinEtime(seinTime);
+
+
+  
+
+}, [isMounted]);
+
+
+useEffect(() => {
+
+    setFrem(
+      FeTime.map((time) => {
+        const now = new Date();
+        const scheduledTime = new Date();
+        scheduledTime.setHours(time, 0, 0, 0);
+        const diff = scheduledTime.getTime() - now.getTime();
+        return Math.max(Math.floor(diff / 1000), 0);
+      })
     );
+
+    setFcurrent(
+      FsTime.map((time) => {
+        const now = new Date();
+        const scheduledTime = new Date();
+        scheduledTime.setHours(time, 0, 0, 0);
+        const diff = scheduledTime.getTime() - now.getTime();
+        return Math.max(Math.floor(diff / 1000), 0);
+      })
+    );
+
+
+    // Start In Aray
+    setSincurrent(
+      SinStime.map((time) => {
+        const now = new Date();
+        const scheduledTime = new Date();
+        scheduledTime.setHours(time, 0, 0, 0);
+        const diff = scheduledTime.getTime() - now.getTime();
+        return Math.max(Math.floor(diff / 1000), 0);
+      })
+    );
+
+    setSinrem(
+      SinEtime.map((time) => {
+        const now = new Date();
+        const scheduledTime = new Date();
+        scheduledTime.setHours(time, 0, 0, 0);
+        const diff = scheduledTime.getTime() - now.getTime();
+        return Math.max(Math.floor(diff / 1000), 0);
+      })
+    );
+
+
+
+
+    const timer = setInterval(() => {
+      setFrem((prevTime) =>
+      prevTime.map((time, index) => {
+        if (time > 0) {
+          return time - 1;
+        } else {
+          const now = new Date();
+          const scheduledTime = new Date();
+          if (FeTime[index]) {
+            
+            scheduledTime.setHours(FeTime[index] as number, 0, 0, 0);
+          }
+          const diff = scheduledTime.getTime() - now.getTime();
+          return Math.max(Math.floor(diff / 1000), 0);
+        }
+      })
+    );
+
+      setFcurrent((prevTime) =>
+        prevTime.map((time, index) => {
+          if (time > 0) {
+            return time - 1;
+          } else {
+            const now = new Date();
+            const scheduledTime = new Date();
+            if (FsTime[index]) {
+              
+              scheduledTime.setHours((FsTime[index] as number), 0, 0, 0);
+            }
+            const diff = scheduledTime.getTime() - now.getTime();
+            return Math.max(Math.floor(diff / 1000), 0);
+          }
+        })
+      );
+
+      setSincurrent((prevTime) =>
+      prevTime.map((time, index) => {
+        if (time > 0) {
+          return time - 1;
+        } else {
+          const now = new Date();
+          const scheduledTime = new Date();
+          if (SinStime[index]) {
+            
+            scheduledTime.setHours(SinStime[index] as number, 0, 0, 0);
+          }
+          const diff = scheduledTime.getTime() - now.getTime();
+          return Math.max(Math.floor(diff / 1000), 0);
+        }
+      })
+    );
+
+    setSinrem((prevTime) =>
+    prevTime.map((time, index) => {
+      if (time > 0) {
+        return time - 1;
+      } else {
+        const now = new Date();
+        const scheduledTime = new Date();
+        if (SinEtime[index]) {
+          
+          scheduledTime.setHours(SinEtime[index] as number, 0, 0, 0);
+        }
+        const diff = scheduledTime.getTime() - now.getTime();
+        return Math.max(Math.floor(diff / 1000), 0);
+      }
+    })
+  );
+
+
+       
+    
+    }, 1000);
+    
+
+    return () => clearInterval(timer);
+  
+}, [lectureTime]);
+
+
+
+   
+  return (
+
+    {remainingTime,countEndTime , filteredArray,startIN,Fcurrent,Frem,Sincurrent,Sinrem}
+  );
 };
 
 export default Countdown;

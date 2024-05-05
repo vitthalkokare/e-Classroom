@@ -16,7 +16,7 @@ const SubjectEnrollCard = () => {
   const {ToggleCard} = userUtil()
 
   return (
-    <div className=''>
+    <>
         {ToggleCard && (
           <MainCard
                 
@@ -27,7 +27,7 @@ const SubjectEnrollCard = () => {
     />
         )}
       
-    </div>
+    </>
   )
 }
 

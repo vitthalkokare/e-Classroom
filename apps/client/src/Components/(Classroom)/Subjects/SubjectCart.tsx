@@ -1,5 +1,8 @@
+import { useUserContext } from "@/app/contexts/UserContext";
+import useAuth from "@/app/util/useAuth";
 import { ENROLL_SUBJECT } from "@/graphql/students/mutation";
-import { useMutation } from "@apollo/client";
+import { CLASSES_DATA } from "@/graphql/students/queries";
+import { useMutation, useQuery } from "@apollo/client";
 import { RootState, subdatahandler } from "@repo/ui/index";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -16,12 +19,9 @@ const SubjectCart = () => {
   const CartItem = useSelector((state: RootState) => state.querysubdata.Cart);
   const Total = useSelector((state: RootState) => state.querysubdata.Total);
 
-  const [EnrollSubject, { data,error, loading: enrollloading }] = useMutation(
-    ENROLL_SUBJECT,
-    {
-      refetchQueries: ["authUser"],
-    }
-  );
+  const { data:classData, loading, refetch } = useQuery(CLASSES_DATA);
+  
+  const [EnrollSubject, { data,error, loading: enrollloading }] = useMutation(ENROLL_SUBJECT);
 
   const dispatch = useDispatch();
 
@@ -41,8 +41,8 @@ const SubjectCart = () => {
       await EnrollSubject({ variables: { input: subjects } });
      
       const dd = data?.enrollSubject
-     
-      return toast.success(dd);
+      refetch();
+      return toast.success("Subject Enrolled");
     } catch (err:any) {
       console.error(err);
       return toast.error(err.message);
@@ -53,10 +53,10 @@ const SubjectCart = () => {
    <div className="relative h-full items-center flex sm:flex-col justify-between w-full">
 
        {CartItem.length > 0 ? (
-       <div className="sm:w-full w-[70%] h-[400px] flex flex-col relative">
+       <div  className="sm:w-full w-[70%] h-[400px] flex flex-col relative">
         <section className="w-full h-full flex overflow-x-scroll scr relative">
        {CartItem.map((item,index)=>(
-        <div className="w-[90%] shrink-0 mx-2 shadow-2xl rounded-xl   bg-red-500 box-border relative p-2 min-h-[350px]">
+        <div key={index} className="w-[90%] shrink-0 mx-2 shadow-2xl rounded-xl   bg-red-500 box-border relative p-2 min-h-[350px]">
         {item.title}
         <span className="absolute right-0 top-0 box-border p-4 rounded-xl bg-orange-400">{item.price}</span>
         </div>

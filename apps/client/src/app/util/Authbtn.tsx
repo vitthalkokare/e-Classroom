@@ -16,12 +16,12 @@ const Authbtn = ({ btn }: { btn: any }) => {
   const { isAuthenticated, loading, error } = useAuth();
 
   return (
-    <div className="wrap mt-4">
+    <div className="wrap">
       {isAuthenticated ? (
         <></>
       ) : (
         <button onClick={() => userHandler()} className={`anibtn`}>
-          <strong>{loading ? <>Loagind...</> : <>{btn}</>}</strong>
+          <strong>{loading ? <>Loading...</> : <>{btn}</>}</strong>
         </button>
       )}
     </div>

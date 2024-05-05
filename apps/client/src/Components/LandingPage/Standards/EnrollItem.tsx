@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import Faculty from "./Faculty";
 
-import AutoSlide from "@/Components/ui/compo/AutoSlide";
+import AutoSlide from "@/Components/custom/AutoSlide";
 import SubjectData from "@/Components/(Classroom)/Subjects/SubjectData";
 
 const STD: React.FC = () => {
