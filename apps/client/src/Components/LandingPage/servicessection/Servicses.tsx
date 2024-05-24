@@ -40,7 +40,7 @@ const Servicses:React.FC = () => {
   }
 
   return (
-    <div className='w-full flex text-white flex-col justify-center items-center'>
+    <div className='w-full dark:text-white flex text-black flex-col justify-center items-center'>
          <div className=" flex flex-col justify-center items-center   box-border p-4 text-center">
           <strong>
             Comprehensive learning programs <br />& classes for all students
@@ -51,7 +51,7 @@ const Servicses:React.FC = () => {
           </p>
         </div>
         <div className='h-[300px] sm:h-[400px] w-[90%] sm:w-full relative flex items-center justify-evenly'>
-           <button onClick={prevbtn} className='box-border text-white text-3xl outline-none hover:scale-105 p-2'><FaAnglesLeft/></button>
+           <button onClick={prevbtn} className='box-border text-3xl outline-none hover:scale-105 p-2'><FaAnglesLeft/></button>
             <div className='w-full relative  items-center h-full overflow-hidden flex scr box-border '>
               {
                 divarr.map((item,index)=>(
@@ -71,7 +71,7 @@ const Servicses:React.FC = () => {
 
 
             </div>
-            <button onClick={Nextbtn} className='box-border text-white text-3xl outline-none border-none hover:scale-105 p-2'><FaAnglesRight/></button>
+            <button onClick={Nextbtn} className='box-border  text-3xl outline-none border-none hover:scale-105 p-2'><FaAnglesRight/></button>
         </div>
         <Servicecard/>
       

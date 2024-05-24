@@ -9,6 +9,7 @@ export {StoreProvider}
 import GqlProvider from "./lib/GqlProvider";
 import Dashboard from "./Components/Common/Dashboard";
 import Navigate from "./Components/Dashboard/Navigate";
+import { context } from "./context";
 
 export {GqlProvider} 
 
@@ -21,6 +22,7 @@ export * as studentSlice from './lib/features/Classroom/Student/StudentSlice'
 export { store, type RootState } from "./lib/store";
 
 
+export {context}
 export {setCard} from './lib/features/Classroom/Auth/Slices/AuthCardSlice'
 
 export {Dashboard}  

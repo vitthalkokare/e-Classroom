@@ -9,6 +9,7 @@ import { FacultyProvider } from './contexts/useFaculty';
 import {SocketProvider } from './contexts/socketContext'
 import {useSelector} from 'react-redux'
 import Mobilenav from './Components/Navigation/Mobilenav';
+import { CommonContextProvider } from './contexts/common';
 
 const Layout = ({children}:{children:ReactNode}) => {
 
@@ -18,7 +19,7 @@ const Layout = ({children}:{children:ReactNode}) => {
 
   
   return (
-   <>
+   <CommonContextProvider>
      
      {loading ? (<commonUi.Loading/>): (
 
@@ -47,7 +48,7 @@ const Layout = ({children}:{children:ReactNode}) => {
       </main>
      )}
 
-     </>
+     </CommonContextProvider>
 
 
   

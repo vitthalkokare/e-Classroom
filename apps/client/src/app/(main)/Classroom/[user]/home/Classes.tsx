@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { ClassesProps, useUserContext } from '@/app/contexts/UserContext'
 import Countdown from './Countdown'
+import useMountedState from '@/Components/custom/UseMounted'
 
 
 
 const Classes = () => {
   const [subData,setSubdata] = useState<ClassesProps[]>([])
+  const [mount,setMount] = useState(false);
 
   const {classData,refetch} = useUserContext();
   const {remainingTime,countEndTime} = Countdown()
+  const {isMounted} = useMountedState(mount)
 
-
+  useEffect(()=>{
+    setMount(true);
+    
+  },[isMounted])
 
  
 
@@ -21,7 +27,7 @@ const Classes = () => {
       {countEndTime.map((time, index) => (
         <div
           key={index}
-          className={`w-[70%] ${time === 0 ? `bg-green-300` : 'bg-purple-300'} rounded-lg shrink-0  m-1 sm:w-[95%]   flex box-border  h-[80px] p-4  justify-evenly items-center`}
+          className={`sm:w-[70%] ${time === 0 ? `bg-green-300` : 'bg-purple-300'} rounded-lg shrink-0  m-1 w-[95%]   flex box-border  h-[80px] p-4  justify-evenly items-center`}
         >
           <div className="flex flex-col gap-2 p-2 box-border ">
             <span>{classData[index]?.standard}</span>

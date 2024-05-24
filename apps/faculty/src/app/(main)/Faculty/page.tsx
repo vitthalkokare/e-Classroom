@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import NavigatorHandler from './(faculty)/Home/NavigatorHandler'
 import { useFacultyContext } from './contexts/useFaculty'
 import SocketioRoom from './(faculty)/classroom/SocketioRoom'
+import { useCommonContext } from './contexts/common'
 
 
 export interface ClassesProps{
@@ -21,31 +22,17 @@ export interface CountdownState {
 
 
 const page = () => {
-  const [Joinbtn,setJoinbtn] = useState(false)
 
 
-  const [LiveDriver,setLiveDriver] = useState(250);
+ 
 
 
+  const {LiveDriver,handleLiveDriver} = useCommonContext();
   const {allotSubject} = useFacultyContext()
 
   
 
 useEffect(()=>{},[allotSubject]);
-
-
-  
-  const liveDrawerHandler =()=>{
-    if(LiveDriver === 250 || LiveDriver === 160){
-      setJoinbtn(true);
-      setLiveDriver(600);
-
-    }
-    else{
-      setJoinbtn(false);
-      setLiveDriver(250);
-    }
-  }
 
 
 
@@ -56,7 +43,7 @@ useEffect(()=>{},[allotSubject]);
       
      <div className='w-full z-20 flex overflow-y-scroll  scr dark:bg-darkmodes1   flex-col items-center  justify-center box-border p-2  sticky top-0 rounded-xl bg-white   transition-all duration-300' style={{height:`${LiveDriver}px`}}>
      <div className=' absolute top-0 w-[100%] z-50  min-h-fit '>
-      {Joinbtn  && <SocketioRoom/>}
+      <SocketioRoom/>
 
       </div>
 
@@ -74,7 +61,7 @@ useEffect(()=>{},[allotSubject]);
 
 
           
-          <NavigatorHandler livedrawer={liveDrawerHandler}/> 
+          <NavigatorHandler/> 
 
           </div>
 

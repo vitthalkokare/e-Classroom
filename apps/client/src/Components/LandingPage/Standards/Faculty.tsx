@@ -17,7 +17,7 @@ const Faculty:React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const Faculty = useSelector((state:RootState) => state.subslice.Facultys)
+  const Faculty = useSelector((state:RootState) => state.querysubdata.Facultys)
 
 
   const showSlides = () => {

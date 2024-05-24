@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { FaMessage, FaMicrophone, FaMicrophoneSlash, FaUserGear, FaVideo, FaVideoSlash } from 'react-icons/fa6';
-import { ClassesProps } from '../../page';
 import Countdown from './Countdown';
 import CurrentLecture from './CurrentLecture';
 import { useRouter } from 'next/navigation';
+import { useCommonContext } from '../../contexts/common';
 
-const NavigatorHandler = (props:any) => {
+const NavigateHandler = () => {
     const [Mic,setMic] = useState(true);
     const [Vdo,setVdo] = useState(true);
-    const [Room,closeRoom] = useState(true);
-
-    const {filteredArray,startIN,Fcurrent,Frem} = Countdown()
-
+    const [Room,closeRoom] = useState<boolean>();
 
     const router = useRouter();
+    const {handleLiveDriver} = useCommonContext();
 
     useEffect(()=>{
       window.location.pathname === '/Faculty/live' ? closeRoom(false) : closeRoom(true);
     },[])
 
-
+    const {filteredArray,startIN,Fcurrent,Frem} = Countdown()
     const micHandler =()=>{
         Mic ? setMic(false) : setMic(true);
     }
@@ -29,13 +27,11 @@ const NavigatorHandler = (props:any) => {
 
 
     const roomHandler =()=>{
-      props.livedrawer(); 
-      closeRoom((pre)=>!pre);
+     handleLiveDriver(); 
+      
     }
-
-
   return (
-    <section className='absolute flex z-20 justify-between items-center bottom-3 p-1 w-[90%] box-border rounded-lg bg-purple-300 shadow-xl  '>
+    <section className='absolute flex z-20 justify-between items-center bottom-2 p-1 w-[90%] box-border rounded-lg bg-purple-300 shadow-xl  '>
            <div className='box-border flex gap-2 text-xl'>
            <span className=''>
            {Mic ? (<button className='hover:scale-125 transition-all duration-200' onClick={()=>{micHandler()}}><FaMicrophone /></button>):(<button onClick={micHandler}><FaMicrophoneSlash /></button>)}
@@ -58,18 +54,14 @@ const NavigatorHandler = (props:any) => {
 
           
               
-          {Room && <CurrentLecture label='' onclick={()=>{roomHandler()}}/>}
+          {Room && <CurrentLecture/>}
            
 
            <div>
-           <button onClick={()=>{roomHandler()}} className='bg-green-500 box-border p-2 text-black'>{Room ? `Room` : 'CloseRoom'}</button>
+            {Room && <button onClick={()=>{roomHandler()}} className='bg-green-500 box-border p-2 text-black'>Room</button>}
            </div>
           </section>
   )
 }
 
-
-export default NavigatorHandler;
-
-
-
+export default NavigateHandler;

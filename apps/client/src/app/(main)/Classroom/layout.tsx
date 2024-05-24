@@ -58,8 +58,6 @@ export default function Mainlayout({children}:{children:React.ReactNode},props:a
      </>
       
     )}
-    			
-
     </SocketProvider>
 
   )

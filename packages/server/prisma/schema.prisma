@@ -99,7 +99,8 @@ model Lectures {
   students      Student[]
   Admin         Admin?    @relation(fields: [adminId], references: [id])
   adminId       String?
-  studentId     String[]  @map("student_id")
+  socketid   String[]
+  classroomInfo Json[]    @map("classroom_info")
 }
 
 model Chats {

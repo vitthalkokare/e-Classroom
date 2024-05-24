@@ -37,22 +37,23 @@ export const studetnQueryResolver = {
     },
 
     studentData:async(P:any,args:any,ctx:any)=>{
+      const authuser = await ctx.auth
 
-      const uid = await ctx.auth;
-      console.log(uid);
-      if(!uid) throw new Error("not authenticated");
-
-      const student = await prisma.student.findUnique({where:{email:uid.email}});
-      if(!student){
-        throw new Error("student not Registered");
-        
+      if(!authuser){
+        throw new Error("not authenticated");
       }
-      
       try{
+        const student = await prisma.student.findUnique({where:{userId: authuser.id}});
+        if(!student){
+          throw new Error("Student not Registered");
+        }
         return student;
-      }catch(error){
-        console.log(error);
+
+
+      }catch(err){
+        console.log(err);
       }
+
 
     }
   }

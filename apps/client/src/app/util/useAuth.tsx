@@ -10,6 +10,7 @@ export interface StudentInfoProps{
   state:string;
   standard:string
   boardName:string
+  email:string
   
   
 }
@@ -24,7 +25,8 @@ export default function useAuth() {
   const [sInfo,setSinfo] = useState<StudentInfoProps>({
     state:"",
     standard:"",
-    boardName:""
+    boardName:"",
+    email:"",
   })
 
   const {user} = useUser()
@@ -49,13 +51,13 @@ export default function useAuth() {
         setIsAuthenticated(true)
         const sdata =  await  data?.authUser?.studentData
         setStudentInfo(sdata)
-      const {state,standard,boardName,name} = sdata
+      const {state,standard,boardName,name,email} = sdata
 
         if(name){
           setRoute(name)
         }
         setSinfo((pre)=>({
-          ...pre,state:state,standard:standard,boardName:boardName
+          ...pre,state:state,standard:standard,boardName:boardName,email:email
         }));
         
         const subdata = await sdata?.subjects

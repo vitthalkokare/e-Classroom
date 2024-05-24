@@ -6,22 +6,18 @@ import { useUserContext } from "@/app/contexts/UserContext";
 
 interface messageProps {
   msg?: string
-  info?:{name:string,email:string}
+  info?:{username:string,email:string}
 }
 
-interface joinStudentProps {
-  email?: string
-  name?: string
-}
+
 const Chats = () => {
   const [Chats, setChats] = useState(true);
   const [Messages, setMessages] = useState<messageProps[]>([]);
   const [Students, setStudents] = useState(false);
   const [Msg,setMsg] = useState<string>();
   const [currentStudent,setCurrentStudent] = useState(false)
-  const [JoinStudent,setJoinStudent] = useState<joinStudentProps[]>([]);
 
-  const socket = useSocket();
+  const {socket,JoinStudent} = useSocket();
   const {StudentInfo} = useUserContext();
 
   const studentemail = useMemo(()=>StudentInfo?.email,[]);
@@ -31,25 +27,9 @@ const Chats = () => {
 
 
 
-  const getRoomStatus = useCallback((data: RoomProps) => {
-
-    console.log("data",JSON.stringify(data));
-    setJoinStudent((pre)=>[...pre,{name:data.info.fullname,email:data.info.email}])
-
-  }, []);
-
-  useEffect(() => {
-    socket.on("Class:Status", getRoomStatus);
-
-    return () => {
-      socket.off("Class:Status", getRoomStatus);
-    };
-  }, [socket, getRoomStatus]);
-
-
   const getMessages = useCallback((data:RoomProps)=>{
-
-    setMessages((pre)=>[...pre,{msg:data.message,info:{email:data.info.email,name:data.info.fullname}}])
+    console.log("data" + JSON.stringify(data));
+    setMessages((pre)=>[...pre,{msg:data.message,info:{email:data.info.email,username:data.info.username}}])
   },[]);
 
   useEffect(()=>{
@@ -65,11 +45,14 @@ const Chats = () => {
   }, [Chats]);
 
   const handleSendMessage = ()=>{
+    console.log("semail" + StudentInfo);
     if(Msg !== undefined && Msg !== ''){
      socket.emit("send:msg",Msg);
      setMsg('');
 
     }
+    console.log(JoinStudent?.length);
+
      return;
   }
   
@@ -131,13 +114,13 @@ const Chats = () => {
         </>
       ) : (
         <section className="h-[500px] w-full flex flex-col box-border p-2">
-          {JoinStudent.length > 0 ? (<>
-            {JoinStudent.map((item,index)=>(
+          {JoinStudent && JoinStudent.length > 0 ? (<>
+            {JoinStudent?.map((item,index)=>(
             <div key={index} className="w-full my-1 rounded-xl bg-slate-400 flex justify-around box-border p-2">
               <span>img</span>
               <span className="flex flex-col gap-2">
-                <span>{item.name}</span>
-                <span>{item.email}</span>
+                <span>{item.username}username</span>
+
               </span>
             </div>
           ))}

@@ -4,16 +4,15 @@ import useAuth from '@/app/util/useAuth'
 import { useUserContext } from '@/app/contexts/UserContext'
 import NavigateHandler from './[user]/home/NavigateHandler'
 import SocketioRoom from './[user]/live/SocketioRoom'
+import { useCommonContext } from '@/app/contexts/common'
 
 
 
 const page = () => {
-  const [Joinbtn,setJoinbtn] = useState(false)
 
 
-  const [LiveDriver,setLiveDriver] = useState(250);
 
-
+  const {LiveDriver} = useCommonContext();
   const {StudentInfo} = useAuth();
   const {classData} = useUserContext()
 
@@ -23,17 +22,7 @@ useEffect(()=>{},[classData]);
 
 
   
-  const liveDrawerHandler =()=>{
-    if(LiveDriver === 250 || LiveDriver === 160){
-      setJoinbtn(true);
-      setLiveDriver(600);
-
-    }
-    else{
-      setJoinbtn(false);
-      setLiveDriver(250);
-    }
-  }
+  
 
 
 
@@ -44,7 +33,7 @@ useEffect(()=>{},[classData]);
       
      <div className='w-full z-20 flex overflow-y-scroll  scr dark:bg-darkmodes1   flex-col items-center  justify-center box-border p-2  sticky top-0 rounded-xl bg-white   transition-all duration-300' style={{height:`${LiveDriver}px`}}>
      <div className=' absolute top-0 w-[100%] z-50  min-h-fit '>
-      {Joinbtn  && <SocketioRoom/>}
+     <SocketioRoom/>
 
       </div>              
               
@@ -59,7 +48,7 @@ useEffect(()=>{},[classData]);
 
 
           
-          <NavigateHandler livedrawer={liveDrawerHandler}/> 
+          <NavigateHandler/> 
 
           </div>
 

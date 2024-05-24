@@ -3,13 +3,15 @@ import { FaMessage, FaMicrophone, FaMicrophoneSlash, FaUserGear, FaVideo, FaVide
 import Countdown from './Countdown';
 import CurrentLecture from './CurrentLecture';
 import { useRouter } from 'next/navigation';
+import { useCommonContext } from '@/app/contexts/common';
 
-const NavigateHandler = (props:any) => {
+const NavigateHandler = () => {
     const [Mic,setMic] = useState(true);
     const [Vdo,setVdo] = useState(true);
     const [Room,closeRoom] = useState<boolean>();
 
     const router = useRouter();
+    const {handleLiveDriver} = useCommonContext();
 
     useEffect(()=>{
       window.location.pathname === '/Faculty/live' ? closeRoom(false) : closeRoom(true);
@@ -25,11 +27,11 @@ const NavigateHandler = (props:any) => {
 
 
     const roomHandler =()=>{
-      props.livedrawer(); 
+     handleLiveDriver(); 
       
     }
   return (
-    <section className='absolute flex z-20 justify-between items-center bottom-5 p-1 w-[90%] box-border rounded-lg bg-purple-300 shadow-xl  '>
+    <section className='absolute flex z-20 justify-between items-center bottom-0 p-1 w-[90%] box-border rounded-lg bg-purple-300 shadow-xl  '>
            <div className='box-border flex gap-2 text-xl'>
            <span className=''>
            {Mic ? (<button className='hover:scale-125 transition-all duration-200' onClick={()=>{micHandler()}}><FaMicrophone /></button>):(<button onClick={micHandler}><FaMicrophoneSlash /></button>)}

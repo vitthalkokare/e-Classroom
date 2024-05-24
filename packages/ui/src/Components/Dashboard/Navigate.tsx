@@ -71,7 +71,7 @@ const Navigate = ({navItem,Tmode,toplabel,drawerhandler,navHandler,logouthandler
   return (
     
  <nav 
-      className={`h-full  top-[5%]   relative  sm:p-4  sm:bg-darkmode sm:${mobnav}  flex flex-col justify-around   min-w-fit dark:text-darktext  sm:rounded-xl  box-border transition-all duration-300`}
+      className={`h-full  top-[5%]   relative    sm:bg-darkmode sm:${mobnav}  flex flex-col justify-around   min-w-fit dark:text-darktext  sm:rounded-xl  box-border transition-all duration-300`}
       style={{ width: `${Tog.width}`, minWidth:'fit-content' }}
       onMouseEnter={()=>{handleToggle("enter"); }}
       onMouseLeave={()=>{handleToggle("leave");navHandler()}}
@@ -91,7 +91,7 @@ const Navigate = ({navItem,Tmode,toplabel,drawerhandler,navHandler,logouthandler
           </div> 
       
 
-      <nav className="h-[70%] rounded-xl p-2 dark:bg-darkmodes1  shadow-2xl bg-lightmode   justify-around w-full items-center  flex flex-col">
+      <nav className="h-[70%] rounded-xl dark:bg-darkmodes1  shadow-2xl bg-lightmode   justify-around w-full items-center  flex flex-col">
         {navItem.map((item, index) => (
           <div
             
@@ -102,7 +102,7 @@ const Navigate = ({navItem,Tmode,toplabel,drawerhandler,navHandler,logouthandler
             className={`flex ${index === Active && `bg-black dark:text-gray-300 dark:bg-darkmodes1 text-white  font-bold  transition-all   p-2 duration-200`} rounded-full my-2  relative flex flex-col justify-center items-center    box-border`}
           >
             {index === 0 ? (
-              <span className="  flex rounded-full justify-center items-center flex-col box-border p-4 h-fit bg-slate-400 text-5xl ">
+              <span className="  flex rounded-full justify-center items-center flex-col box-border sm:p-0 sm:text-2xl p-4 h-fit bg-slate-400 text-5xl ">
                 <Link href={item.path}>{item.icon}</Link>
                 
               </span>

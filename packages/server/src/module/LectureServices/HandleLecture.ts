@@ -12,10 +12,10 @@ class HandleLecture{
         try{
             const lecture = await prisma.lectures.findUnique({where:{roomName:roomName}});
             if(!lecture){
-                throw new Error("Not Room Host Yet");
+                return;
             }
             return lecture;
-        }catch(e){}
+        }catch(error){console.log(error)}
     }
 
 
@@ -23,26 +23,37 @@ class HandleLecture{
 
         const {title,roomName,facultyId,} = data;
 
-        
-        try{
-            const currentLecture = prisma.lectures.create({
-                data:{
-                    title: title,
-                    facultyId: facultyId,
-                    roomName:roomName,
-                    
-                    
-                   
+        const prelecture = await prisma.lectures.findUnique({where:{roomName:roomName}});
 
-                }
-            });
+        if(prelecture){
+            return prelecture;
+        }
+        else{
 
-            return currentLecture;
-
-
-
-        }catch(err){console.log(err);}
+            try{
+                const currentLecture = await prisma.lectures.create({
+                    data:{
+                        title: title,
+                        facultyId: facultyId,
+                        roomName:roomName,
+                        
+                        
+                       
     
+                    }
+                });
+    
+                return currentLecture;
+    
+    
+    
+            }catch(err){console.log(err);}
+        
+
+        }
+
+        
+      
 
 
     }
